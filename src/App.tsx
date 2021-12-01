@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+
+import { Layout } from "antd";
+
+import Actions from "./routes/actions";
+import Action from "./routes/action";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
+const { Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Header />
+      <Content
+        className="site-layout"
+        style={{ padding: "0 50px", marginTop: 64 }}
+      >
+        <Routes>
+          <Route path="/" element={<Navigate to="/actions" />} />
+          <Route path="actions">
+            <Route index element={<Actions />} />
+            <Route path=":name" element={<Action />} />
+          </Route>
+          <Route path="*" element={<p>Route not found</p>} />
+        </Routes>
+      </Content>
+      <Footer />
+    </Layout>
   );
 }
 

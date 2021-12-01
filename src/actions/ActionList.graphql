@@ -1,0 +1,19 @@
+query ActionList {
+    actions {
+        ...ActionListItemFields
+    }
+}
+
+fragment ActionListItemFields on Action {
+    name
+    createdAt
+    actionRef {
+        path
+        revision
+    }
+    status {
+        phase
+        timestamp
+        message
+    }
+}

@@ -1,0 +1,24 @@
+overwrite: true
+schema: 
+  - "${REACT_APP_GRAPHQL_ENDPOINT}":
+      headers:
+        Authorization: "${REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}"
+documents: "src/**/*.graphql"
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-query"
+    config:
+      fetcher:
+        endpoint: "process.env.REACT_APP_GRAPHQL_ENDPOINT"
+        fetchParams: >
+          {
+            headers: {
+              "Authorization": `${process.env.REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}`
+            }
+          }
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
