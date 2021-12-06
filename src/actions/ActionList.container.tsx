@@ -1,14 +1,17 @@
 import React from "react";
+import { QUERY_REFETCH_INTERVAL_MS } from "../config";
 
 import { useActionListQuery } from "../generated/graphql";
 
-import ActionList from "./ActionList";
+import ActionList, { ActionItem } from "./ActionList";
 
 function ActionListContainer() {
-  const query = useActionListQuery();
+  const query = useActionListQuery(undefined, {
+    refetchInterval: QUERY_REFETCH_INTERVAL_MS,
+  });
 
   const rawData = query.data?.actions ?? [];
-  const data = rawData.map((item) => {
+  const data: ActionItem[] = rawData.map((item) => {
     const actionRef = `${item.actionRef?.path}:${item.actionRef?.revision}`;
     return {
       key: item.name,

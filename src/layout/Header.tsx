@@ -13,16 +13,20 @@ function Header() {
       name: "Actions",
       route: "/actions",
     },
-    {
-      name: "New",
-      route: "/actions/new",
-    },
   ];
+
+  const currentRoute = links.find((elem) =>
+    location.pathname.startsWith(elem.route)
+  );
 
   return (
     <AntHeader style={{ position: "fixed", zIndex: 1, width: "100%" }}>
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" selectedKeys={[location.pathname]}>
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        selectedKeys={[currentRoute?.route ?? ""]}
+      >
         {links.map(({ route, name }) => (
           <Menu.Item key={route}>
             <Link to={route}>{name}</Link>

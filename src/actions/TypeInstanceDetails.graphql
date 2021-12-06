@@ -1,0 +1,31 @@
+query TypeInstance($typeInstanceID: ID!) {
+  typeInstance(id: $typeInstanceID) {
+    ...TypeInstanceFields
+  }
+}
+
+fragment TypeInstanceFields on TypeInstance {
+  id
+  typeRef {
+    path
+    revision
+  }
+  lockedBy
+  latestResourceVersion {
+    ...TypeInstanceResourceVersionFields
+  }
+}
+
+fragment TypeInstanceResourceVersionFields on TypeInstanceResourceVersion {
+  resourceVersion
+  createdBy
+  metadata {
+    attributes {
+      path
+      revision
+    }
+  }
+  spec {
+    value
+  }
+}

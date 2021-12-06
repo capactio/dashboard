@@ -1,4 +1,9 @@
-import { useQuery, UseQueryOptions } from "react-query";
+import {
+  useQuery,
+  UseQueryOptions,
+  useMutation,
+  UseMutationOptions,
+} from "react-query";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -1305,6 +1310,336 @@ export enum _RelationDirections {
   Out = "OUT",
 }
 
+export type ActionQueryVariables = Exact<{
+  actionName: Scalars["String"];
+}>;
+
+export type ActionQuery = {
+  __typename?: "Query";
+  action?:
+    | {
+        __typename?: "Action";
+        name: string;
+        createdAt: any;
+        renderedAction?: any | null | undefined;
+        input?:
+          | {
+              __typename?: "ActionInput";
+              parameters?: any | null | undefined;
+              typeInstances: Array<{
+                __typename?: "InputTypeInstanceDetails";
+                id: string;
+                name: string;
+              }>;
+              actionPolicy?:
+                | {
+                    __typename?: "Policy";
+                    rules: Array<{
+                      __typename?: "RulesForInterface";
+                      interface: {
+                        __typename?: "ManifestReferenceWithOptionalRevision";
+                        path: any;
+                        revision?: any | null | undefined;
+                      };
+                      oneOf: Array<{
+                        __typename?: "PolicyRule";
+                        implementationConstraints?:
+                          | {
+                              __typename?: "PolicyRuleImplementationConstraints";
+                              path?: any | null | undefined;
+                              requires?:
+                                | Array<{
+                                    __typename?: "ManifestReferenceWithOptionalRevision";
+                                    path: any;
+                                    revision?: any | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                              attributes?:
+                                | Array<{
+                                    __typename?: "ManifestReferenceWithOptionalRevision";
+                                    path: any;
+                                    revision?: any | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                            }
+                          | null
+                          | undefined;
+                        inject?:
+                          | {
+                              __typename?: "PolicyRuleInjectData";
+                              requiredTypeInstances?:
+                                | Array<{
+                                    __typename?: "RequiredTypeInstanceReference";
+                                    id: string;
+                                    description?: string | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                              additionalParameters?:
+                                | Array<{
+                                    __typename?: "AdditionalParameter";
+                                    name: string;
+                                    value: any;
+                                  }>
+                                | null
+                                | undefined;
+                              additionalTypeInstances?:
+                                | Array<{
+                                    __typename?: "AdditionalTypeInstanceReference";
+                                    name: string;
+                                    id: string;
+                                  }>
+                                | null
+                                | undefined;
+                            }
+                          | null
+                          | undefined;
+                      }>;
+                    }>;
+                  }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+        output?:
+          | {
+              __typename?: "ActionOutput";
+              typeInstances: Array<{
+                __typename?: "OutputTypeInstanceDetails";
+                id: string;
+                typeRef: {
+                  __typename?: "ManifestReference";
+                  path: any;
+                  revision: any;
+                };
+              }>;
+            }
+          | null
+          | undefined;
+        actionRef: {
+          __typename?: "ManifestReference";
+          path: any;
+          revision: any;
+        };
+        status?:
+          | {
+              __typename?: "ActionStatus";
+              phase: ActionStatusPhase;
+              timestamp: any;
+              message?: string | null | undefined;
+              runner?:
+                | {
+                    __typename?: "RunnerStatus";
+                    status?: any | null | undefined;
+                  }
+                | null
+                | undefined;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type RunActionMutationVariables = Exact<{
+  actionName: Scalars["String"];
+}>;
+
+export type RunActionMutation = {
+  __typename?: "Mutation";
+  runAction: { __typename?: "Action"; name: string };
+};
+
+export type ActionFieldsFragment = {
+  __typename?: "Action";
+  name: string;
+  createdAt: any;
+  renderedAction?: any | null | undefined;
+  input?:
+    | {
+        __typename?: "ActionInput";
+        parameters?: any | null | undefined;
+        typeInstances: Array<{
+          __typename?: "InputTypeInstanceDetails";
+          id: string;
+          name: string;
+        }>;
+        actionPolicy?:
+          | {
+              __typename?: "Policy";
+              rules: Array<{
+                __typename?: "RulesForInterface";
+                interface: {
+                  __typename?: "ManifestReferenceWithOptionalRevision";
+                  path: any;
+                  revision?: any | null | undefined;
+                };
+                oneOf: Array<{
+                  __typename?: "PolicyRule";
+                  implementationConstraints?:
+                    | {
+                        __typename?: "PolicyRuleImplementationConstraints";
+                        path?: any | null | undefined;
+                        requires?:
+                          | Array<{
+                              __typename?: "ManifestReferenceWithOptionalRevision";
+                              path: any;
+                              revision?: any | null | undefined;
+                            }>
+                          | null
+                          | undefined;
+                        attributes?:
+                          | Array<{
+                              __typename?: "ManifestReferenceWithOptionalRevision";
+                              path: any;
+                              revision?: any | null | undefined;
+                            }>
+                          | null
+                          | undefined;
+                      }
+                    | null
+                    | undefined;
+                  inject?:
+                    | {
+                        __typename?: "PolicyRuleInjectData";
+                        requiredTypeInstances?:
+                          | Array<{
+                              __typename?: "RequiredTypeInstanceReference";
+                              id: string;
+                              description?: string | null | undefined;
+                            }>
+                          | null
+                          | undefined;
+                        additionalParameters?:
+                          | Array<{
+                              __typename?: "AdditionalParameter";
+                              name: string;
+                              value: any;
+                            }>
+                          | null
+                          | undefined;
+                        additionalTypeInstances?:
+                          | Array<{
+                              __typename?: "AdditionalTypeInstanceReference";
+                              name: string;
+                              id: string;
+                            }>
+                          | null
+                          | undefined;
+                      }
+                    | null
+                    | undefined;
+                }>;
+              }>;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+  output?:
+    | {
+        __typename?: "ActionOutput";
+        typeInstances: Array<{
+          __typename?: "OutputTypeInstanceDetails";
+          id: string;
+          typeRef: {
+            __typename?: "ManifestReference";
+            path: any;
+            revision: any;
+          };
+        }>;
+      }
+    | null
+    | undefined;
+  actionRef: { __typename?: "ManifestReference"; path: any; revision: any };
+  status?:
+    | {
+        __typename?: "ActionStatus";
+        phase: ActionStatusPhase;
+        timestamp: any;
+        message?: string | null | undefined;
+        runner?:
+          | { __typename?: "RunnerStatus"; status?: any | null | undefined }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type PolicyFieldsFragment = {
+  __typename?: "Policy";
+  rules: Array<{
+    __typename?: "RulesForInterface";
+    interface: {
+      __typename?: "ManifestReferenceWithOptionalRevision";
+      path: any;
+      revision?: any | null | undefined;
+    };
+    oneOf: Array<{
+      __typename?: "PolicyRule";
+      implementationConstraints?:
+        | {
+            __typename?: "PolicyRuleImplementationConstraints";
+            path?: any | null | undefined;
+            requires?:
+              | Array<{
+                  __typename?: "ManifestReferenceWithOptionalRevision";
+                  path: any;
+                  revision?: any | null | undefined;
+                }>
+              | null
+              | undefined;
+            attributes?:
+              | Array<{
+                  __typename?: "ManifestReferenceWithOptionalRevision";
+                  path: any;
+                  revision?: any | null | undefined;
+                }>
+              | null
+              | undefined;
+          }
+        | null
+        | undefined;
+      inject?:
+        | {
+            __typename?: "PolicyRuleInjectData";
+            requiredTypeInstances?:
+              | Array<{
+                  __typename?: "RequiredTypeInstanceReference";
+                  id: string;
+                  description?: string | null | undefined;
+                }>
+              | null
+              | undefined;
+            additionalParameters?:
+              | Array<{
+                  __typename?: "AdditionalParameter";
+                  name: string;
+                  value: any;
+                }>
+              | null
+              | undefined;
+            additionalTypeInstances?:
+              | Array<{
+                  __typename?: "AdditionalTypeInstanceReference";
+                  name: string;
+                  id: string;
+                }>
+              | null
+              | undefined;
+          }
+        | null
+        | undefined;
+    }>;
+  }>;
+};
+
 export type ActionListQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ActionListQuery = {
@@ -1342,6 +1677,170 @@ export type ActionListItemFieldsFragment = {
     | undefined;
 };
 
+export type TypeInstanceQueryVariables = Exact<{
+  typeInstanceID: Scalars["ID"];
+}>;
+
+export type TypeInstanceQuery = {
+  __typename?: "Query";
+  typeInstance?:
+    | {
+        __typename?: "TypeInstance";
+        id: string;
+        lockedBy?: any | null | undefined;
+        typeRef: {
+          __typename?: "TypeInstanceTypeReference";
+          path: any;
+          revision: any;
+        };
+        latestResourceVersion?:
+          | {
+              __typename?: "TypeInstanceResourceVersion";
+              resourceVersion: number;
+              createdBy?: string | null | undefined;
+              metadata: {
+                __typename?: "TypeInstanceResourceVersionMetadata";
+                attributes?:
+                  | Array<{
+                      __typename?: "AttributeReference";
+                      path: any;
+                      revision: any;
+                    }>
+                  | null
+                  | undefined;
+              };
+              spec: {
+                __typename?: "TypeInstanceResourceVersionSpec";
+                value: any;
+              };
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type TypeInstanceFieldsFragment = {
+  __typename?: "TypeInstance";
+  id: string;
+  lockedBy?: any | null | undefined;
+  typeRef: {
+    __typename?: "TypeInstanceTypeReference";
+    path: any;
+    revision: any;
+  };
+  latestResourceVersion?:
+    | {
+        __typename?: "TypeInstanceResourceVersion";
+        resourceVersion: number;
+        createdBy?: string | null | undefined;
+        metadata: {
+          __typename?: "TypeInstanceResourceVersionMetadata";
+          attributes?:
+            | Array<{
+                __typename?: "AttributeReference";
+                path: any;
+                revision: any;
+              }>
+            | null
+            | undefined;
+        };
+        spec: { __typename?: "TypeInstanceResourceVersionSpec"; value: any };
+      }
+    | null
+    | undefined;
+};
+
+export type TypeInstanceResourceVersionFieldsFragment = {
+  __typename?: "TypeInstanceResourceVersion";
+  resourceVersion: number;
+  createdBy?: string | null | undefined;
+  metadata: {
+    __typename?: "TypeInstanceResourceVersionMetadata";
+    attributes?:
+      | Array<{ __typename?: "AttributeReference"; path: any; revision: any }>
+      | null
+      | undefined;
+  };
+  spec: { __typename?: "TypeInstanceResourceVersionSpec"; value: any };
+};
+
+export const PolicyFieldsFragmentDoc = `
+    fragment PolicyFields on Policy {
+  rules {
+    interface {
+      path
+      revision
+    }
+    oneOf {
+      implementationConstraints {
+        requires {
+          path
+          revision
+        }
+        attributes {
+          path
+          revision
+        }
+        path
+      }
+      inject {
+        requiredTypeInstances {
+          id
+          description
+        }
+        additionalParameters {
+          name
+          value
+        }
+        additionalTypeInstances {
+          name
+          id
+        }
+      }
+    }
+  }
+}
+    `;
+export const ActionFieldsFragmentDoc = `
+    fragment ActionFields on Action {
+  name
+  createdAt
+  input {
+    parameters
+    typeInstances {
+      id
+      name
+    }
+    actionPolicy {
+      ...PolicyFields
+    }
+  }
+  output {
+    typeInstances {
+      id
+      typeRef {
+        path
+        revision
+      }
+    }
+  }
+  actionRef {
+    path
+    revision
+  }
+  renderedAction
+  status {
+    phase
+    timestamp
+    message
+    runner {
+      status
+    }
+  }
+}
+    ${PolicyFieldsFragmentDoc}`;
 export const ActionListItemFieldsFragmentDoc = `
     fragment ActionListItemFields on Action {
   name
@@ -1357,6 +1856,74 @@ export const ActionListItemFieldsFragmentDoc = `
   }
 }
     `;
+export const TypeInstanceResourceVersionFieldsFragmentDoc = `
+    fragment TypeInstanceResourceVersionFields on TypeInstanceResourceVersion {
+  resourceVersion
+  createdBy
+  metadata {
+    attributes {
+      path
+      revision
+    }
+  }
+  spec {
+    value
+  }
+}
+    `;
+export const TypeInstanceFieldsFragmentDoc = `
+    fragment TypeInstanceFields on TypeInstance {
+  id
+  typeRef {
+    path
+    revision
+  }
+  lockedBy
+  latestResourceVersion {
+    ...TypeInstanceResourceVersionFields
+  }
+}
+    ${TypeInstanceResourceVersionFieldsFragmentDoc}`;
+export const ActionDocument = `
+    query Action($actionName: String!) {
+  action(name: $actionName) {
+    ...ActionFields
+  }
+}
+    ${ActionFieldsFragmentDoc}`;
+export const useActionQuery = <TData = ActionQuery, TError = unknown>(
+  variables: ActionQueryVariables,
+  options?: UseQueryOptions<ActionQuery, TError, TData>
+) =>
+  useQuery<ActionQuery, TError, TData>(
+    ["Action", variables],
+    fetcher<ActionQuery, ActionQueryVariables>(ActionDocument, variables),
+    options
+  );
+export const RunActionDocument = `
+    mutation RunAction($actionName: String!) {
+  runAction(name: $actionName) {
+    name
+  }
+}
+    `;
+export const useRunActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    RunActionMutation,
+    TError,
+    RunActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<RunActionMutation, TError, RunActionMutationVariables, TContext>(
+    "RunAction",
+    (variables?: RunActionMutationVariables) =>
+      fetcher<RunActionMutation, RunActionMutationVariables>(
+        RunActionDocument,
+        variables
+      )(),
+    options
+  );
 export const ActionListDocument = `
     query ActionList {
   actions {
@@ -1372,6 +1939,28 @@ export const useActionListQuery = <TData = ActionListQuery, TError = unknown>(
     variables === undefined ? ["ActionList"] : ["ActionList", variables],
     fetcher<ActionListQuery, ActionListQueryVariables>(
       ActionListDocument,
+      variables
+    ),
+    options
+  );
+export const TypeInstanceDocument = `
+    query TypeInstance($typeInstanceID: ID!) {
+  typeInstance(id: $typeInstanceID) {
+    ...TypeInstanceFields
+  }
+}
+    ${TypeInstanceFieldsFragmentDoc}`;
+export const useTypeInstanceQuery = <
+  TData = TypeInstanceQuery,
+  TError = unknown
+>(
+  variables: TypeInstanceQueryVariables,
+  options?: UseQueryOptions<TypeInstanceQuery, TError, TData>
+) =>
+  useQuery<TypeInstanceQuery, TError, TData>(
+    ["TypeInstance", variables],
+    fetcher<TypeInstanceQuery, TypeInstanceQueryVariables>(
+      TypeInstanceDocument,
       variables
     ),
     options

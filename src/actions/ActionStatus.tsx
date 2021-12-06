@@ -1,30 +1,33 @@
 import React from "react";
 import { Badge } from "antd";
 import { PresetColorType, PresetStatusColorType } from "antd/lib/_util/colors";
+import { ActionStatusPhase } from "../generated/graphql";
 
 interface ActionStatusProps {
-  phase: string;
+  phase?: ActionStatusPhase;
 }
 
-function ActionStatus({ phase }: ActionStatusProps) {
+function ActionStatus({
+  phase = ActionStatusPhase.Initial,
+}: ActionStatusProps) {
   let badgeStatus: PresetStatusColorType | undefined;
   let badgeColor: PresetColorType | undefined;
   switch (phase) {
-    case "READY_TO_RUN":
+    case ActionStatusPhase.ReadyToRun:
       badgeColor = "cyan";
       break;
-    case "RUNNING":
-    case "BEING_RENDERED":
+    case ActionStatusPhase.Running:
+    case ActionStatusPhase.BeingRendered:
       badgeStatus = "processing";
       break;
-    case "FAILED":
+    case ActionStatusPhase.Failed:
       badgeStatus = "error";
       break;
-    case "SUCCEEDED":
+    case ActionStatusPhase.Succeeded:
       badgeStatus = "success";
       break;
-    case "BEING_CANCELED":
-    case "CANCELED":
+    case ActionStatusPhase.BeingCanceled:
+    case ActionStatusPhase.Canceled:
       badgeStatus = "warning";
       break;
     default:

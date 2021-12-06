@@ -6,22 +6,22 @@ import { Table, Typography } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import ActionStatus from "./ActionStatus";
+import ErrorAlert from "../layout/ErrorAlert";
 
 const { Text } = Typography;
 
+export interface ActionItem {
+  key: string;
+  name: string;
+  actionRef: string;
+  createdAt: any;
+  status?: ActionStatusPhase;
+}
+
 interface ActionListProps {
   isLoading: boolean;
-  error: Error | undefined;
-  data:
-    | {
-        key: string;
-        name: string;
-        actionRef: string;
-        createdAt: any;
-        status: ActionStatusPhase | undefined;
-      }[]
-    | undefined
-    | null;
+  error?: Error;
+  data?: ActionItem[];
 }
 
 const columns = [
@@ -57,6 +57,7 @@ const columns = [
     dataIndex: "status",
     key: "status",
     render: (phase: any) => <ActionStatus phase={phase} />,
+    sorter: (a: any, b: any) => a.status.localeCompare(b.status),
   },
   {
     title: "Action",
@@ -73,7 +74,7 @@ const columns = [
 
 function ActionList({ data, isLoading, error }: ActionListProps) {
   if (error) {
-    return <p>{error as Error}</p>;
+    return <ErrorAlert error={error} />;
   }
 
   const dataSource = data ?? [];

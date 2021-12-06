@@ -1,8 +1,9 @@
 import React from "react";
-import { Breadcrumb } from "antd";
-import { Link } from "react-router-dom";
+import { Breadcrumb, Button } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import ActionListContainer from "../actions/ActionList.container";
 import Page from "../layout/Page";
+import { PlusCircleOutlined } from "@ant-design/icons";
 
 function Actions() {
   const breadcrumb = (
@@ -13,8 +14,22 @@ function Actions() {
     </Breadcrumb>
   );
 
+  const navigate = useNavigate();
+
   return (
-    <Page breadcrumb={breadcrumb} title="Actions">
+    <Page
+      breadcrumb={breadcrumb}
+      title="Actions"
+      extra={
+        <Button
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          onClick={() => navigate("/actions/new")}
+        >
+          New Action
+        </Button>
+      }
+    >
       <ActionListContainer />
     </Page>
   );

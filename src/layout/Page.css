@@ -1,3 +1,7 @@
 .site-layout-background {
   background: #fff;
 }
+
+.site-page-header {
+  margin-top: 12px;
+}

@@ -27,3 +27,7 @@ label.huge-radio.ant-radio-button-wrapper p {
   text-align: center;
   margin-top: 40px;
 }
+
+.ant-descriptions-item-label {
+  font-weight: bold;
+}

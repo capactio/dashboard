@@ -1,0 +1,5 @@
+.scrollable-ti {
+  max-height: 200px;
+  overflow-y: scroll;
+  font-size: 0.9em;
+}
