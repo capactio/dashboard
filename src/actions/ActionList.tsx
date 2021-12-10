@@ -1,7 +1,5 @@
 import React from "react";
-
-import { ActionStatusPhase, useActionListQuery } from "../generated/graphql";
-
+import { ActionStatusPhase } from "../generated/graphql";
 import { Table, Typography } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";

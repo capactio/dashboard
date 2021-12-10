@@ -1,0 +1,7 @@
+mutation CreateActionWithInput($input: ActionDetailsInput!) {
+    createAction(
+        in: $input
+    ) {
+        name
+    }
+}

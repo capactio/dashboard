@@ -1,0 +1,39 @@
+query ListInterfaceGroups {
+  interfaceGroups {
+
+    metadata {
+      displayName
+      path
+    }
+
+    interfaces {
+      latestRevision {
+        revision
+        metadata {
+          path
+          displayName
+          iconURL
+        }
+        spec {
+          input {
+            parameters {
+              name
+              jsonSchema
+              typeRef {
+                path
+                revision
+              }
+            }
+            typeInstances {
+              name
+              typeRef {
+                path
+                revision
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

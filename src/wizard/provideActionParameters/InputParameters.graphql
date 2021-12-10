@@ -1,0 +1,18 @@
+query GetInterfaceProvisionParameters($path: NodePath!, $rev: Version!) {
+    interface(path: $path) {
+        revision(revision: $rev) {
+            spec {
+                input {
+                    parameters {
+                        name
+                        jsonSchema
+                        typeRef {
+                            path
+                            revision
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

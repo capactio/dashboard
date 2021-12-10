@@ -1,0 +1,6 @@
+.form-submit-btn {
+    /* important needs to be set as the loading class `.ant-btn.ant-btn-loading` has the `position: relative;` property */
+    position: absolute !important;
+    bottom: 24px;
+    right: 24px;
+}
