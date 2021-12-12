@@ -14,7 +14,6 @@ function SelectActionInterfaceContainer({
 }: SelectActionInterfaceContainerProps) {
   const { data, error, isLoading } = useListInterfaceGroupsQuery();
 
-  // filter out the runner and validation interfaces
   const setValue = (actionInterface?: InterfaceRevision) => {
     if (actionInterface === wizardData?.actionInterface) {
       return;

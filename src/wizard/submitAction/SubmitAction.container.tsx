@@ -42,6 +42,7 @@ function actionCreateArgs(
 ): CreateActionWithInputMutationVariables {
   const out = {
     input: {
+      // TODO(https://github.com/capactio/backlog/issues/32): human-friendly names.
       name: "act-" + (Math.random() + 1).toString(36).substring(7),
       advancedRendering: false,
       dryRun: false,
@@ -137,7 +138,7 @@ function specificImplRule(
           path: implPath,
         },
         inject: {
-          // TODO: requiredTypeInstances
+          // TODO(https://github.com/capactio/backlog/issues/32): requiredTypeInstances
           additionalParameters: [],
         },
       },

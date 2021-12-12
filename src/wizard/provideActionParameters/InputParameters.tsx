@@ -104,7 +104,7 @@ function InputParameters({
 
 function verticalStepper(inputParams: InputParameter[], current: number) {
   const steps = inputParams.map(({ name }) => {
-    return <Step title={name} />;
+    return <Step key={name} title={name} />;
   });
 
   return (

@@ -78,7 +78,7 @@ function InputTypeInstances({
 
 function verticalStepper(inputParams: InputTypeInstance[], current: number) {
   const steps = inputParams.map(({ name }) => {
-    return <Step title={name} />;
+    return <Step key={name} title={name} />;
   });
 
   return (

@@ -8,7 +8,6 @@ import InputParametersContainer from "./provideActionParameters/InputParameters.
 import InputTypeInstancesContainer from "./provideActionTypeInstances/InputTypeInstances.container";
 import SubmitActionContainer from "./submitAction/SubmitAction.container";
 
-export type InputCollection = Map<string, any>;
 export type InputCollectionObj = { [key: string]: any };
 
 export interface WizardData {
@@ -25,6 +24,8 @@ export interface WizardData {
 export type WizardSteps = {
   title: string;
   content: StepComponent;
+
+  // TODO(https://github.com/capactio/backlog/issues/32): Logic associated with buttons will be moved to proper containers.
   canProceed: (data: WizardData) => boolean;
   replaceNextBtn: (data: WizardData) => boolean;
 }[];
@@ -95,12 +96,12 @@ function WizardContainer() {
 
   return (
     <Wizard
-      isNextBtnTakenOver={takeOverNextBtn}
       steps={steps}
       currentStepIndex={currentStepIdx}
       canProceed={canProceed}
       nextStepFn={nextStep}
       previousStepFn={previousStep}
+      isNextBtnTakenOver={takeOverNextBtn}
       submitBtn={<SubmitActionContainer {...stepProps} />}
     />
   );

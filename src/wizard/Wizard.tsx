@@ -10,7 +10,7 @@ interface WizardProps {
   currentStepIndex: number;
   previousStepFn: () => void;
   nextStepFn: () => void;
-  canProceed: boolean; // applicable both for the next step and submit buttons
+  canProceed: boolean;
   isNextBtnTakenOver: boolean;
   submitBtn: StepComponent;
 }
