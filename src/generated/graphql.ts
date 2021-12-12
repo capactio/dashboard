@@ -18,15 +18,18 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch(process.env.REACT_APP_GRAPHQL_ENDPOINT as string, {
-      method: "POST",
-      ...{
-        headers: {
-          Authorization: `${process.env.REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}`,
+    const res = await fetch(
+      process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT as string,
+      {
+        method: "POST",
+        ...{
+          headers: {
+            Authorization: `${process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}`,
+          },
         },
-      },
-      body: JSON.stringify({ query, variables }),
-    });
+        body: JSON.stringify({ query, variables }),
+      }
+    );
 
     const json = await res.json();
 

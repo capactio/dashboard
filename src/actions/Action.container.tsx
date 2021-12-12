@@ -1,7 +1,7 @@
 import { message } from "antd";
 import React, { useState } from "react";
 import {
-  ARGO_WORKFLOWS_UI_BASE_URL,
+  REACT_APP_ARGO_WORKFLOWS_UI_BASE_URL,
   QUERY_REFETCH_INTERVAL_MS,
 } from "../config";
 import {
@@ -68,7 +68,7 @@ function ActionContainer({ name }: ActionContainerProps) {
     // Unfortunately we cannot do that now as Runner reports its status at the end of this workflow,
     // which is a tad late
     const namespace = "default";
-    argoWorkflowLink = `${ARGO_WORKFLOWS_UI_BASE_URL}/workflows/${namespace}/${name}?tab=workflow`;
+    argoWorkflowLink = `${REACT_APP_ARGO_WORKFLOWS_UI_BASE_URL}/workflows/${namespace}/${name}?tab=workflow`;
   }
 
   return (

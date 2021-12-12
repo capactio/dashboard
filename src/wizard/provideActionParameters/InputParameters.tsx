@@ -7,7 +7,7 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import InputParametersFromTypeSectionContainer from "./InputParametersFromType.container";
 import InputParametersForm from "./InputParametersForm";
 import { InputCollectionObj } from "../Wizard.container";
-
+import "./InputParameters.css";
 const { Step } = Steps;
 
 interface InputParametersProps {
@@ -93,7 +93,7 @@ function InputParameters({
           <Col className="gutter-row" flex="none">
             {verticalStepper(inputParamsSchemas, current)}
           </Col>
-          <Col className="gutter-row" flex="auto">
+          <Col className="gutter-row position-static-col" flex="auto">
             {forms[current]}
           </Col>
         </Row>

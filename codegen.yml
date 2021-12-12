@@ -1,8 +1,8 @@
 overwrite: true
-schema: 
-  - "${REACT_APP_GRAPHQL_ENDPOINT}":
+schema:
+  - "${REACT_APP_CAPACT_GATEWAY_ENDPOINT}":
       headers:
-        Authorization: "${REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}"
+        Authorization: "${REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}"
 documents: "src/**/*.graphql"
 generates:
   src/generated/graphql.ts:
@@ -12,11 +12,11 @@ generates:
       - "typescript-react-query"
     config:
       fetcher:
-        endpoint: "process.env.REACT_APP_GRAPHQL_ENDPOINT"
+        endpoint: "process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT"
         fetchParams: >
           {
             headers: {
-              "Authorization": `${process.env.REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}`
+              "Authorization": `${process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}`
             }
           }
   ./graphql.schema.json:

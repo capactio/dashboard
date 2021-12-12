@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Empty, Radio, Typography } from "antd";
+import { Empty, Radio, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { TypeInstance } from "../../generated/graphql";
@@ -60,9 +60,7 @@ function InputTypeInstanceGroup({
               Couldn't find TypeInstance for <strong>{name}</strong>.
             </span>
           }
-        >
-          <Button type="primary">Register New</Button>
-        </Empty>
+        />
       )}
 
       {radioBtns.length > 0 && (

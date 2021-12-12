@@ -1,5 +1,6 @@
 .site-layout-background {
   background: #fff;
+  position: relative;
 }
 
 .site-page-header {

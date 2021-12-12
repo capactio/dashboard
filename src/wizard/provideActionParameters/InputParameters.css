@@ -4,3 +4,7 @@
     bottom: 24px;
     right: 24px;
 }
+
+.position-static-col {
+    position: unset;
+}
