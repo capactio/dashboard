@@ -1,6 +1,6 @@
 # Dashboard
 
-> **🚧* UNDER CONSTRUCTION:**  This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.   
+> **🚧 UNDER CONSTRUCTION:**  This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.
 
 ## Overview 
 

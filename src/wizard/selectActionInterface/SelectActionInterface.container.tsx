@@ -19,10 +19,12 @@ function SelectActionInterfaceContainer({
       return;
     }
 
-    const actionInputParameters = new Map();
+    const actionInputParameters = {};
+    const actionInputTypeInstances = {};
     setWizardData({
       ...wizardData,
       actionInterface,
+      actionInputTypeInstances,
       actionInputParameters,
     } as WizardData);
   };

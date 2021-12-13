@@ -36,12 +36,12 @@ function InputTypeInstanceGroup({
         <Radio.Button
           className="huge-radio"
           key={id}
-          disabled={!!lockedBy}
+          disabled={lockedBy}
           value={id}
           onClick={() => setInputTypeInstanceID(id)}
         >
-          {!!createdBy && <strong>Created by: {createdBy}</strong>}
-          {!!lockedBy && <Text>Locked by: {lockedBy}</Text>}
+          {createdBy && <strong>Created by: {createdBy}</strong>}
+          {lockedBy && <Text>Locked by: {lockedBy}</Text>}
           <p>{id}</p>
         </Radio.Button>
       );
