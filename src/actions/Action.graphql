@@ -1,85 +1,84 @@
 query Action($actionName: String!) {
-    action(name: $actionName) {
-        ...ActionFields
-    }
+  action(name: $actionName) {
+    ...ActionFields
+  }
 }
 
 mutation RunAction($actionName: String!) {
-    runAction(name: $actionName) {
-        name
-    }
+  runAction(name: $actionName) {
+    name
+  }
 }
 
 fragment ActionFields on Action {
-    name
-    createdAt
-    input {
-        parameters
-        typeInstances {
-            id
-            name
-        }
-        actionPolicy {
-            ...PolicyFields
-        }
+  name
+  createdAt
+  input {
+    parameters
+    typeInstances {
+      id
+      name
     }
-    output {
-        typeInstances {
-            id
-            typeRef {
-                path
-                revision
-            }
-        }
+    actionPolicy {
+      ...PolicyFields
     }
-    actionRef {
+  }
+  output {
+    typeInstances {
+      id
+      typeRef {
         path
         revision
+      }
     }
-    renderedAction
-    status {
-        phase
-        timestamp
-        message
-        runner {
-            status
-        }
+  }
+  actionRef {
+    path
+    revision
+  }
+  renderedAction
+  status {
+    phase
+    timestamp
+    message
+    runner {
+      status
     }
+  }
 }
 
-
 fragment PolicyFields on Policy {
-    rules {
-        interface {
-            path
-            revision
-        }
-        oneOf {
-            implementationConstraints {
-                requires {
-                    path
-                    revision
-                }
-                attributes {
-                    path
-                    revision
-                }
-                path
-            }
-            inject {
-                requiredTypeInstances {
-                    id
-                    description
-                }
-                additionalParameters {
-                    name
-                    value
-                }
-                additionalTypeInstances {
-                    name
-                    id
-                }
-            }
-        }
+  rules {
+    interface {
+      path
+      revision
     }
+    oneOf {
+      implementationConstraints {
+        requires {
+          path
+          revision
+        }
+        attributes {
+          path
+          revision
+        }
+        path
+      }
+      inject {
+        requiredTypeInstances {
+          id
+          description
+        }
+        additionalParameters {
+          name
+          value
+        }
+        additionalTypeInstances {
+          name
+          id
+        }
+      }
+    }
+  }
 }

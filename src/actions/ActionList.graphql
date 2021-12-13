@@ -1,19 +1,19 @@
 query ActionList {
-    actions {
-        ...ActionListItemFields
-    }
+  actions {
+    ...ActionListItemFields
+  }
 }
 
 fragment ActionListItemFields on Action {
-    name
-    createdAt
-    actionRef {
-        path
-        revision
-    }
-    status {
-        phase
-        timestamp
-        message
-    }
+  name
+  createdAt
+  actionRef {
+    path
+    revision
+  }
+  status {
+    phase
+    timestamp
+    message
+  }
 }

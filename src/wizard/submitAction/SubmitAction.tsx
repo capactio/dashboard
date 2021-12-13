@@ -8,11 +8,9 @@ interface SubmitActionProps {
 
 function SubmitAction({ isLoading, submitFn }: SubmitActionProps) {
   return (
-    <>
-      <Button type="primary" onClick={submitFn} loading={isLoading}>
-        Submit
-      </Button>
-    </>
+    <Button type="primary" onClick={submitFn} loading={isLoading}>
+      Submit
+    </Button>
   );
 }
 

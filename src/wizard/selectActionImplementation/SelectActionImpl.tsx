@@ -39,7 +39,6 @@ function SelectActionImpl({
   const radioBtns = implementation.map(({ displayName, implRef, typeRef }) => {
     return (
       <Radio.Button
-        style={{ margin: 5 }}
         className="huge-radio"
         key={implRef.key()}
         value={implRef.key()}

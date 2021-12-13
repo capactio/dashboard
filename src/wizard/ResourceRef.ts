@@ -1,12 +1,12 @@
 export class ResourceReference {
   path: string;
   revision: string;
-  name: string;
+  name?: string;
 
   constructor(path: string, rev: string, name?: string) {
     this.path = path;
     this.revision = rev;
-    this.name = name ?? "";
+    this.name = name;
   }
 
   key(): string {

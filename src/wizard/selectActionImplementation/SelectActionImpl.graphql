@@ -1,33 +1,33 @@
 query ListImplForInterface($path: NodePath!, $rev: Version!) {
-    interface(path: $path)  {
-        revision(revision: $rev) {
-            ...ImplementationsMetadataForInterface
-        }
+  interface(path: $path) {
+    revision(revision: $rev) {
+      ...ImplementationsMetadataForInterface
     }
+  }
 }
 
 fragment ImplementationsMetadataForInterface on InterfaceRevision {
-    implementationRevisions {
-        revision
+  implementationRevisions {
+    revision
+    metadata {
+      attributes {
         metadata {
-            attributes {
-                metadata {
-                    path
-                }
-            }
-            path
-            displayName
+          path
         }
-        spec {
-            additionalInput {
-                parameters {
-                    name
-                    typeRef {
-                        path
-                        revision
-                    }
-                }
-            }
-        }
+      }
+      path
+      displayName
     }
+    spec {
+      additionalInput {
+        parameters {
+          name
+          typeRef {
+            path
+            revision
+          }
+        }
+      }
+    }
+  }
 }

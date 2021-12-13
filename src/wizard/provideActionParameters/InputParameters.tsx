@@ -4,10 +4,10 @@ import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { InputParameter } from "../../generated/graphql";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import InputParametersFromTypeSectionContainer from "./InputParametersFromType.container";
-import InputParametersForm from "./InputParametersForm";
 import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";
+import InputParametersFormContainer from "./InputParametersForm.container";
+
 const { Step } = Steps;
 
 interface InputParametersProps {
@@ -45,27 +45,14 @@ function InputParameters({
       next();
     };
 
-    const initData = initInputParametersData
-      ? initInputParametersData[name]
-      : undefined;
-    if (typeRef) {
-      return (
-        <InputParametersFromTypeSectionContainer
-          key={name}
-          initData={initData}
-          typeRef={typeRef}
-          setInputParameter={onSuccessSubmit}
-        />
-      );
-    }
-
+    const initData = initInputParametersData && initInputParametersData[name];
     return (
-      <InputParametersForm
-        key={name}
+      <InputParametersFormContainer
         initData={initData}
-        isLoading={false}
-        schema={jsonSchema}
-        setInputParameter={onSuccessSubmit}
+        name={name}
+        typeRef={typeRef}
+        rawJSONSchema={jsonSchema}
+        onSuccessSubmit={onSuccessSubmit}
       />
     );
   });

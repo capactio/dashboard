@@ -1,6 +1,6 @@
 # Dashboard
 
-> **🏗️**  This project is in early stage but already gives value for end-users. In the near future Dashboard will be embedded into Capact.   
+> **🚧* UNDER CONSTRUCTION:**  This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.   
 
 ## Overview 
 
@@ -63,7 +63,7 @@ The following environment variables can be set:
 
 ## Development
 
-In the project directory, you can run:
+The application has been initialized using [Create React App](https://create-react-app.dev/). In the project directory, you can run:
 
 ### `npm start`
 

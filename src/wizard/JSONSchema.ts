@@ -1,6 +1,6 @@
 import { JSONSchema7 } from "json-schema";
 
-export function ParseToJSONSchema7(input: string): {
+export function parseToJSONSchema7(input: string): {
   error?: any;
   schema: JSONSchema7;
 } {
@@ -16,7 +16,7 @@ export function ParseToJSONSchema7(input: string): {
   }
 }
 
-export function ErrorOrUndefined(
+export function errorOrUndefined(
   msgs: (string | undefined)[]
 ): Error | undefined {
   const errMsgs: string | undefined = msgs.filter((x) => !!x).join(",");

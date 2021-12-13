@@ -5,14 +5,14 @@ import { StepComponentProps, WizardData } from "../Wizard.container";
 interface InputParametersContainerProps extends StepComponentProps {}
 
 function InputParametersContainer({
-  wizardData,
+  wizardData = {},
   setWizardData,
 }: InputParametersContainerProps) {
   const inputParams = wizardData?.actionInterface?.spec.input.parameters ?? [];
 
   const submitFn = async (name: string, data: any) => {
     const actionInputParameters = {
-      ...wizardData!.actionInputParameters,
+      ...wizardData.actionInputParameters,
       [name]: data,
     };
     setWizardData({ ...wizardData, actionInputParameters } as WizardData);

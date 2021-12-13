@@ -6,6 +6,7 @@ import {
 } from "../../generated/graphql";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
+import { ResourceReference } from "../ResourceRef";
 
 const { TabPane } = Tabs;
 
@@ -36,12 +37,13 @@ function SelectActionInterface({
   const tabs = groups.map(({ metadata, interfaces }) => {
     const ifaces = interfaces.map(({ latestRevision }) => {
       const rev = latestRevision as InterfaceRevision;
+      const key = new ResourceReference(rev.metadata.path, rev.revision).key();
+
       return (
         <Radio.Button
-          style={{ margin: 5 }}
           className="huge-radio"
-          key={getKey(rev)}
-          value={getKey(rev)}
+          key={key}
+          value={key}
           onClick={() => setValue(rev)}
         >
           <strong>{rev?.metadata.displayName}</strong>
@@ -49,14 +51,15 @@ function SelectActionInterface({
         </Radio.Button>
       );
     });
+
+    const currentKey = new ResourceReference(
+      currentValue?.metadata.path,
+      currentValue?.revision
+    ).key();
     return (
       <TabPane tab={metadata.displayName} key={metadata.path}>
         <Col span={24} className="huge-radio-group">
-          <Radio.Group
-            size="large"
-            buttonStyle="solid"
-            value={getKey(currentValue)}
-          >
+          <Radio.Group size="large" buttonStyle="solid" value={currentKey}>
             {ifaces}
           </Radio.Group>
         </Col>
@@ -81,10 +84,6 @@ function SelectActionInterface({
       {tabs}
     </Tabs>
   );
-}
-
-function getKey(ifaceRev?: InterfaceRevision): string {
-  return `${ifaceRev?.metadata.path}:${ifaceRev?.revision}`;
 }
 
 export default SelectActionInterface;

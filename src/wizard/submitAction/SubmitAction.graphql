@@ -1,7 +1,5 @@
 mutation CreateActionWithInput($input: ActionDetailsInput!) {
-    createAction(
-        in: $input
-    ) {
-        name
-    }
+  createAction(in: $input) {
+    name
+  }
 }

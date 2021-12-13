@@ -31,3 +31,7 @@ label.huge-radio.ant-radio-button-wrapper p {
 .ant-descriptions-item-label {
   font-weight: bold;
 }
+
+.huge-radio {
+  margin: 5px;
+}

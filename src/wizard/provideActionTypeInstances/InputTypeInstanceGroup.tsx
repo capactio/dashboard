@@ -34,7 +34,6 @@ function InputTypeInstanceGroup({
       const createdBy = latestResourceVersion?.createdBy;
       return (
         <Radio.Button
-          style={{ margin: 5 }}
           className="huge-radio"
           key={id}
           disabled={!!lockedBy}

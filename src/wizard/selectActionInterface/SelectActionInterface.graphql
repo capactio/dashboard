@@ -1,6 +1,5 @@
 query ListInterfaceGroups {
   interfaceGroups {
-
     metadata {
       displayName
       path
