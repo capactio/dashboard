@@ -1,0 +1,9 @@
+query GetTypeJSONSchema($path: NodePath!, $rev: Version!) {
+  type(path: $path) {
+    revision(revision: $rev) {
+      spec {
+        jsonSchema
+      }
+    }
+  }
+}

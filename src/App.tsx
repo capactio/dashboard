@@ -3,6 +3,7 @@ import "./App.css";
 
 import { Layout } from "antd";
 
+import NewAction from "./routes/new-action";
 import Actions from "./routes/actions";
 import Action from "./routes/action";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Navigate to="/actions" />} />
           <Route path="actions">
             <Route index element={<Actions />} />
+            <Route path="new" element={<NewAction />} />
             <Route path=":name" element={<Action />} />
           </Route>
           <Route path="*" element={<p>Route not found</p>} />

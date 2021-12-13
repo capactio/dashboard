@@ -1,0 +1,24 @@
+query ListTypeInstances($path: NodePath!, $rev: Version!) {
+  typeInstances(filter: { typeRef: { path: $path, revision: $rev } }) {
+    ...TypeInstanceData
+  }
+}
+
+fragment TypeInstanceData on TypeInstance {
+  id
+  lockedBy
+
+  latestResourceVersion {
+    createdBy
+    metadata {
+      attributes {
+        path
+        revision
+      }
+    }
+
+    spec {
+      value
+    }
+  }
+}

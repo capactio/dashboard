@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@fluentui/react": "^8.46.3",
     "@graphql-codegen/typescript-react-query": "^3.2.1",
+    "@rjsf/core": "^3.2.1",
+    "@rjsf/fluent-ui": "^3.2.1",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

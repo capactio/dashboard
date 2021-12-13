@@ -3,4 +3,4 @@ export const QUERY_REFETCH_INTERVAL_MS = Number(
 );
 
 export const ARGO_WORKFLOWS_UI_BASE_URL =
-  process.env.ARGO_WORKFLOWS_UI_BASE_URL ?? "http://localhost:2746";
+  process.env.REACT_APP_ARGO_WORKFLOWS_UI_BASE_URL ?? "http://localhost:2746";

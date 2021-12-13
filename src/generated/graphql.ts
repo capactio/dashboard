@@ -18,15 +18,18 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 
 function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
   return async (): Promise<TData> => {
-    const res = await fetch(process.env.REACT_APP_GRAPHQL_ENDPOINT as string, {
-      method: "POST",
-      ...{
-        headers: {
-          Authorization: `${process.env.REACT_APP_GRAPHQL_ENDPOINT_AUTH_HEADER}`,
+    const res = await fetch(
+      process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT as string,
+      {
+        method: "POST",
+        ...{
+          headers: {
+            Authorization: `${process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}`,
+          },
         },
-      },
-      body: JSON.stringify({ query, variables }),
-    });
+        body: JSON.stringify({ query, variables }),
+      }
+    );
 
     const json = await res.json();
 
@@ -1766,6 +1769,289 @@ export type TypeInstanceResourceVersionFieldsFragment = {
   spec: { __typename?: "TypeInstanceResourceVersionSpec"; value: any };
 };
 
+export type GetTypeJsonSchemaQueryVariables = Exact<{
+  path: Scalars["NodePath"];
+  rev: Scalars["Version"];
+}>;
+
+export type GetTypeJsonSchemaQuery = {
+  __typename?: "Query";
+  type?:
+    | {
+        __typename?: "Type";
+        revision?:
+          | {
+              __typename?: "TypeRevision";
+              spec: {
+                __typename?: "TypeSpec";
+                jsonSchema?: any | null | undefined;
+              };
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type GetInterfaceProvisionParametersQueryVariables = Exact<{
+  path: Scalars["NodePath"];
+  rev: Scalars["Version"];
+}>;
+
+export type GetInterfaceProvisionParametersQuery = {
+  __typename?: "Query";
+  interface?:
+    | {
+        __typename?: "Interface";
+        revision?:
+          | {
+              __typename?: "InterfaceRevision";
+              spec: {
+                __typename?: "InterfaceSpec";
+                input: {
+                  __typename?: "InterfaceInput";
+                  parameters: Array<{
+                    __typename?: "InputParameter";
+                    name: string;
+                    jsonSchema?: any | null | undefined;
+                    typeRef?:
+                      | {
+                          __typename?: "TypeReference";
+                          path: any;
+                          revision: any;
+                        }
+                      | null
+                      | undefined;
+                  }>;
+                };
+              };
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type ListTypeInstancesQueryVariables = Exact<{
+  path: Scalars["NodePath"];
+  rev: Scalars["Version"];
+}>;
+
+export type ListTypeInstancesQuery = {
+  __typename?: "Query";
+  typeInstances: Array<{
+    __typename?: "TypeInstance";
+    id: string;
+    lockedBy?: any | null | undefined;
+    latestResourceVersion?:
+      | {
+          __typename?: "TypeInstanceResourceVersion";
+          createdBy?: string | null | undefined;
+          metadata: {
+            __typename?: "TypeInstanceResourceVersionMetadata";
+            attributes?:
+              | Array<{
+                  __typename?: "AttributeReference";
+                  path: any;
+                  revision: any;
+                }>
+              | null
+              | undefined;
+          };
+          spec: { __typename?: "TypeInstanceResourceVersionSpec"; value: any };
+        }
+      | null
+      | undefined;
+  }>;
+};
+
+export type TypeInstanceDataFragment = {
+  __typename?: "TypeInstance";
+  id: string;
+  lockedBy?: any | null | undefined;
+  latestResourceVersion?:
+    | {
+        __typename?: "TypeInstanceResourceVersion";
+        createdBy?: string | null | undefined;
+        metadata: {
+          __typename?: "TypeInstanceResourceVersionMetadata";
+          attributes?:
+            | Array<{
+                __typename?: "AttributeReference";
+                path: any;
+                revision: any;
+              }>
+            | null
+            | undefined;
+        };
+        spec: { __typename?: "TypeInstanceResourceVersionSpec"; value: any };
+      }
+    | null
+    | undefined;
+};
+
+export type ListImplForInterfaceQueryVariables = Exact<{
+  path: Scalars["NodePath"];
+  rev: Scalars["Version"];
+}>;
+
+export type ListImplForInterfaceQuery = {
+  __typename?: "Query";
+  interface?:
+    | {
+        __typename?: "Interface";
+        revision?:
+          | {
+              __typename?: "InterfaceRevision";
+              implementationRevisions: Array<{
+                __typename?: "ImplementationRevision";
+                revision: any;
+                metadata: {
+                  __typename?: "ImplementationMetadata";
+                  path: any;
+                  displayName?: string | null | undefined;
+                  attributes: Array<{
+                    __typename?: "AttributeRevision";
+                    metadata: { __typename?: "GenericMetadata"; path: any };
+                  }>;
+                };
+                spec: {
+                  __typename?: "ImplementationSpec";
+                  additionalInput?:
+                    | {
+                        __typename?: "ImplementationAdditionalInput";
+                        parameters?:
+                          | Array<{
+                              __typename?: "ImplementationAdditionalInputParameter";
+                              name: string;
+                              typeRef: {
+                                __typename?: "TypeReference";
+                                path: any;
+                                revision: any;
+                              };
+                            }>
+                          | null
+                          | undefined;
+                      }
+                    | null
+                    | undefined;
+                };
+              }>;
+            }
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
+};
+
+export type ImplementationsMetadataForInterfaceFragment = {
+  __typename?: "InterfaceRevision";
+  implementationRevisions: Array<{
+    __typename?: "ImplementationRevision";
+    revision: any;
+    metadata: {
+      __typename?: "ImplementationMetadata";
+      path: any;
+      displayName?: string | null | undefined;
+      attributes: Array<{
+        __typename?: "AttributeRevision";
+        metadata: { __typename?: "GenericMetadata"; path: any };
+      }>;
+    };
+    spec: {
+      __typename?: "ImplementationSpec";
+      additionalInput?:
+        | {
+            __typename?: "ImplementationAdditionalInput";
+            parameters?:
+              | Array<{
+                  __typename?: "ImplementationAdditionalInputParameter";
+                  name: string;
+                  typeRef: {
+                    __typename?: "TypeReference";
+                    path: any;
+                    revision: any;
+                  };
+                }>
+              | null
+              | undefined;
+          }
+        | null
+        | undefined;
+    };
+  }>;
+};
+
+export type ListInterfaceGroupsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListInterfaceGroupsQuery = {
+  __typename?: "Query";
+  interfaceGroups: Array<{
+    __typename?: "InterfaceGroup";
+    metadata: {
+      __typename?: "GenericMetadata";
+      displayName?: string | null | undefined;
+      path: any;
+    };
+    interfaces: Array<{
+      __typename?: "Interface";
+      latestRevision?:
+        | {
+            __typename?: "InterfaceRevision";
+            revision: any;
+            metadata: {
+              __typename?: "GenericMetadata";
+              path: any;
+              displayName?: string | null | undefined;
+              iconURL?: string | null | undefined;
+            };
+            spec: {
+              __typename?: "InterfaceSpec";
+              input: {
+                __typename?: "InterfaceInput";
+                parameters: Array<{
+                  __typename?: "InputParameter";
+                  name: string;
+                  jsonSchema?: any | null | undefined;
+                  typeRef?:
+                    | { __typename?: "TypeReference"; path: any; revision: any }
+                    | null
+                    | undefined;
+                }>;
+                typeInstances: Array<
+                  | {
+                      __typename?: "InputTypeInstance";
+                      name: string;
+                      typeRef: {
+                        __typename?: "TypeReference";
+                        path: any;
+                        revision: any;
+                      };
+                    }
+                  | null
+                  | undefined
+                >;
+              };
+            };
+          }
+        | null
+        | undefined;
+    }>;
+  }>;
+};
+
+export type CreateActionWithInputMutationVariables = Exact<{
+  input: ActionDetailsInput;
+}>;
+
+export type CreateActionWithInputMutation = {
+  __typename?: "Mutation";
+  createAction: { __typename?: "Action"; name: string };
+};
+
 export const PolicyFieldsFragmentDoc = `
     fragment PolicyFields on Policy {
   rules {
@@ -1884,6 +2170,51 @@ export const TypeInstanceFieldsFragmentDoc = `
   }
 }
     ${TypeInstanceResourceVersionFieldsFragmentDoc}`;
+export const TypeInstanceDataFragmentDoc = `
+    fragment TypeInstanceData on TypeInstance {
+  id
+  lockedBy
+  latestResourceVersion {
+    createdBy
+    metadata {
+      attributes {
+        path
+        revision
+      }
+    }
+    spec {
+      value
+    }
+  }
+}
+    `;
+export const ImplementationsMetadataForInterfaceFragmentDoc = `
+    fragment ImplementationsMetadataForInterface on InterfaceRevision {
+  implementationRevisions {
+    revision
+    metadata {
+      attributes {
+        metadata {
+          path
+        }
+      }
+      path
+      displayName
+    }
+    spec {
+      additionalInput {
+        parameters {
+          name
+          typeRef {
+            path
+            revision
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const ActionDocument = `
     query Action($actionName: String!) {
   action(name: $actionName) {
@@ -1963,5 +2294,200 @@ export const useTypeInstanceQuery = <
       TypeInstanceDocument,
       variables
     ),
+    options
+  );
+export const GetTypeJsonSchemaDocument = `
+    query GetTypeJSONSchema($path: NodePath!, $rev: Version!) {
+  type(path: $path) {
+    revision(revision: $rev) {
+      spec {
+        jsonSchema
+      }
+    }
+  }
+}
+    `;
+export const useGetTypeJsonSchemaQuery = <
+  TData = GetTypeJsonSchemaQuery,
+  TError = unknown
+>(
+  variables: GetTypeJsonSchemaQueryVariables,
+  options?: UseQueryOptions<GetTypeJsonSchemaQuery, TError, TData>
+) =>
+  useQuery<GetTypeJsonSchemaQuery, TError, TData>(
+    ["GetTypeJSONSchema", variables],
+    fetcher<GetTypeJsonSchemaQuery, GetTypeJsonSchemaQueryVariables>(
+      GetTypeJsonSchemaDocument,
+      variables
+    ),
+    options
+  );
+export const GetInterfaceProvisionParametersDocument = `
+    query GetInterfaceProvisionParameters($path: NodePath!, $rev: Version!) {
+  interface(path: $path) {
+    revision(revision: $rev) {
+      spec {
+        input {
+          parameters {
+            name
+            jsonSchema
+            typeRef {
+              path
+              revision
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useGetInterfaceProvisionParametersQuery = <
+  TData = GetInterfaceProvisionParametersQuery,
+  TError = unknown
+>(
+  variables: GetInterfaceProvisionParametersQueryVariables,
+  options?: UseQueryOptions<GetInterfaceProvisionParametersQuery, TError, TData>
+) =>
+  useQuery<GetInterfaceProvisionParametersQuery, TError, TData>(
+    ["GetInterfaceProvisionParameters", variables],
+    fetcher<
+      GetInterfaceProvisionParametersQuery,
+      GetInterfaceProvisionParametersQueryVariables
+    >(GetInterfaceProvisionParametersDocument, variables),
+    options
+  );
+export const ListTypeInstancesDocument = `
+    query ListTypeInstances($path: NodePath!, $rev: Version!) {
+  typeInstances(filter: {typeRef: {path: $path, revision: $rev}}) {
+    ...TypeInstanceData
+  }
+}
+    ${TypeInstanceDataFragmentDoc}`;
+export const useListTypeInstancesQuery = <
+  TData = ListTypeInstancesQuery,
+  TError = unknown
+>(
+  variables: ListTypeInstancesQueryVariables,
+  options?: UseQueryOptions<ListTypeInstancesQuery, TError, TData>
+) =>
+  useQuery<ListTypeInstancesQuery, TError, TData>(
+    ["ListTypeInstances", variables],
+    fetcher<ListTypeInstancesQuery, ListTypeInstancesQueryVariables>(
+      ListTypeInstancesDocument,
+      variables
+    ),
+    options
+  );
+export const ListImplForInterfaceDocument = `
+    query ListImplForInterface($path: NodePath!, $rev: Version!) {
+  interface(path: $path) {
+    revision(revision: $rev) {
+      ...ImplementationsMetadataForInterface
+    }
+  }
+}
+    ${ImplementationsMetadataForInterfaceFragmentDoc}`;
+export const useListImplForInterfaceQuery = <
+  TData = ListImplForInterfaceQuery,
+  TError = unknown
+>(
+  variables: ListImplForInterfaceQueryVariables,
+  options?: UseQueryOptions<ListImplForInterfaceQuery, TError, TData>
+) =>
+  useQuery<ListImplForInterfaceQuery, TError, TData>(
+    ["ListImplForInterface", variables],
+    fetcher<ListImplForInterfaceQuery, ListImplForInterfaceQueryVariables>(
+      ListImplForInterfaceDocument,
+      variables
+    ),
+    options
+  );
+export const ListInterfaceGroupsDocument = `
+    query ListInterfaceGroups {
+  interfaceGroups {
+    metadata {
+      displayName
+      path
+    }
+    interfaces {
+      latestRevision {
+        revision
+        metadata {
+          path
+          displayName
+          iconURL
+        }
+        spec {
+          input {
+            parameters {
+              name
+              jsonSchema
+              typeRef {
+                path
+                revision
+              }
+            }
+            typeInstances {
+              name
+              typeRef {
+                path
+                revision
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const useListInterfaceGroupsQuery = <
+  TData = ListInterfaceGroupsQuery,
+  TError = unknown
+>(
+  variables?: ListInterfaceGroupsQueryVariables,
+  options?: UseQueryOptions<ListInterfaceGroupsQuery, TError, TData>
+) =>
+  useQuery<ListInterfaceGroupsQuery, TError, TData>(
+    variables === undefined
+      ? ["ListInterfaceGroups"]
+      : ["ListInterfaceGroups", variables],
+    fetcher<ListInterfaceGroupsQuery, ListInterfaceGroupsQueryVariables>(
+      ListInterfaceGroupsDocument,
+      variables
+    ),
+    options
+  );
+export const CreateActionWithInputDocument = `
+    mutation CreateActionWithInput($input: ActionDetailsInput!) {
+  createAction(in: $input) {
+    name
+  }
+}
+    `;
+export const useCreateActionWithInputMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    CreateActionWithInputMutation,
+    TError,
+    CreateActionWithInputMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateActionWithInputMutation,
+    TError,
+    CreateActionWithInputMutationVariables,
+    TContext
+  >(
+    "CreateActionWithInput",
+    (variables?: CreateActionWithInputMutationVariables) =>
+      fetcher<
+        CreateActionWithInputMutation,
+        CreateActionWithInputMutationVariables
+      >(CreateActionWithInputDocument, variables)(),
     options
   );
