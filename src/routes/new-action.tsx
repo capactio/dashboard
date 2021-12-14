@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 import Page from "../layout/Page";
-import WizzardContainer from "../wizard/Wizard.container";
+import WizardContainer from "../wizard/Wizard.container";
 
 function NewAction() {
   const breadcrumb = (
@@ -16,7 +16,7 @@ function NewAction() {
 
   return (
     <Page breadcrumb={breadcrumb} title="Create a new Action">
-      <WizzardContainer />
+      <WizardContainer />
     </Page>
   );
 }

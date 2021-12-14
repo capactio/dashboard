@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Empty, Row, Steps } from "antd";
+import { Empty } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { InputParameter } from "../../generated/graphql";
@@ -7,8 +7,7 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";
 import InputParametersFormContainer from "./InputParametersForm.container";
-
-const { Step } = Steps;
+import Tabbing from "../Tabbing";
 
 interface InputParametersProps {
   setInputParameter: (name: string, data: any) => void;
@@ -16,6 +15,10 @@ interface InputParametersProps {
   error?: Error;
   inputParamsSchemas: InputParameter[];
   initInputParametersData?: InputCollectionObj;
+}
+
+interface InputParameterWithInit extends InputParameter {
+  initData?: any;
 }
 
 function InputParameters({
@@ -35,30 +38,33 @@ function InputParameters({
     return <ErrorAlert error={error} />;
   }
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
-
-  const forms = inputParamsSchemas.map(({ name, typeRef, jsonSchema }) => {
-    const onSuccessSubmit = (data: any) => {
-      setInputParameter(name, data);
-      next();
+  const data: InputParameterWithInit[] = inputParamsSchemas.map((item) => {
+    const initData =
+      initInputParametersData && initInputParametersData[item.name];
+    return {
+      ...item,
+      initData,
     };
+  });
 
-    const initData = initInputParametersData && initInputParametersData[name];
+  const createForm = (input: InputParameterWithInit) => {
+    const onSuccessSubmit = (data: any) => {
+      setInputParameter(input.name, data);
+      setCurrent(current + 1);
+    };
     return (
       <InputParametersFormContainer
-        initData={initData}
-        name={name}
-        typeRef={typeRef}
-        rawJSONSchema={jsonSchema}
+        initData={input.initData}
+        name={input.name}
+        typeRef={input.typeRef}
+        rawJSONSchema={input.jsonSchema}
         onSuccessSubmit={onSuccessSubmit}
       />
     );
-  });
+  };
 
-  const wasAllDataProvided = current === inputParamsSchemas.length;
-  const allDataProvidedMsg = inputParamsSchemas.length
+  const wasAllDataProvided = current === data.length;
+  const allDataProvidedMsg = data.length
     ? "All input parameters were provided."
     : "Action does not require any input parameters.";
   return (
@@ -72,32 +78,18 @@ function InputParameters({
           description={<span>{allDataProvidedMsg}</span>}
         />
       )}
-      {!wasAllDataProvided && inputParamsSchemas.length === 1 && (
-        <div>{forms[0]}</div>
-      )}
-      {!wasAllDataProvided && inputParamsSchemas.length > 1 && (
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col className="gutter-row" flex="none">
-            {verticalStepper(inputParamsSchemas, current)}
-          </Col>
-          <Col className="gutter-row position-static-col" flex="auto">
-            {forms[current]}
-          </Col>
-        </Row>
+      {!wasAllDataProvided && (
+        <Tabbing
+          setCurrentIdx={setCurrent}
+          renderContent={createForm}
+          currentIdx={current}
+          data={data}
+          satisfiedNameTuple={(data: InputParameterWithInit) => {
+            return [data.initData, data.name];
+          }}
+        />
       )}
     </>
-  );
-}
-
-function verticalStepper(inputParams: InputParameter[], current: number) {
-  const steps = inputParams.map(({ name }) => {
-    return <Step key={name} title={name} />;
-  });
-
-  return (
-    <Steps key={current} current={current} direction="vertical">
-      {steps}
-    </Steps>
   );
 }
 

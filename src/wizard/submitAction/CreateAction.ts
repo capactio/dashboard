@@ -4,14 +4,29 @@ import {
   PolicyInput,
   RulesForInterfaceInput,
 } from "../../generated/graphql";
+import {
+  Config,
+  adjectives,
+  colors,
+  names,
+  uniqueNamesGenerator,
+} from "unique-names-generator";
+
+// generated name must match: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+const genAdjsColorsAndNames: Config = {
+  dictionaries: [adjectives, colors, names],
+  separator: "-",
+  length: 3,
+};
 
 export function createActionInput(
   wizardData: WizardData
 ): CreateActionWithInputMutationVariables {
+  const actName: string = uniqueNamesGenerator(genAdjsColorsAndNames);
+
   const out = {
     input: {
-      // TODO(https://github.com/capactio/backlog/issues/32): human-friendly names.
-      name: "act-" + (Math.random() + 1).toString(36).substring(7),
+      name: actName.toLocaleLowerCase(),
       advancedRendering: false,
       dryRun: false,
       actionRef: {

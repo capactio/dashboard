@@ -1,22 +1,28 @@
 import React, { useState } from "react";
-import { Col, Empty, Row, Steps } from "antd";
+import { Empty } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import { InputTypeInstance } from "../../generated/graphql";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import InputParametersFromTypeSectionContainer from "./InputTypeInstanceGroup.container";
-
-const { Step } = Steps;
+import { InputCollectionObj } from "../Wizard.container";
+import Tabbing from "../Tabbing";
 
 interface InputParametersProps {
   setInputTypeInstance: (name: string, data: any) => void;
+  inputTypeInstances?: InputCollectionObj;
   isLoading: boolean;
   inputTypeInstancesRefs: InputTypeInstance[];
+}
+
+interface InputTypeInstanceWithInit extends InputTypeInstance {
+  initData?: any;
 }
 
 function InputTypeInstances({
   isLoading,
   inputTypeInstancesRefs,
   setInputTypeInstance,
+  inputTypeInstances,
 }: InputParametersProps) {
   const [current, setCurrent] = useState(0);
 
@@ -24,24 +30,28 @@ function InputTypeInstances({
     return <CenteredSpinner />;
   }
 
-  const next = () => {
-    setCurrent(current + 1);
-  };
-
-  const groups = inputTypeInstancesRefs.map(({ name, typeRef }) => {
-    const onSuccessSubmit = (data: string) => {
-      setInputTypeInstance(name, data);
-      next();
+  const data = inputTypeInstancesRefs.map((item) => {
+    const initData = inputTypeInstances && inputTypeInstances[item.name];
+    return {
+      ...item,
+      initData,
     };
+  });
 
+  const renderContent = (input: InputTypeInstanceWithInit) => {
+    const onSuccessSubmit = (data: string) => {
+      setInputTypeInstance(input.name, data);
+      setCurrent(current + 1);
+    };
     return (
       <InputParametersFromTypeSectionContainer
-        key={name}
-        typeRef={typeRef}
+        key={input.name}
+        typeRef={input.typeRef}
+        inputTypeInstanceID={input.initData}
         setInputTypeInstanceID={onSuccessSubmit}
       />
     );
-  });
+  };
 
   const wasAllDataProvided = current === inputTypeInstancesRefs.length;
   const allDataProvidedMsg = inputTypeInstancesRefs.length
@@ -59,32 +69,18 @@ function InputTypeInstances({
           description={<span>{allDataProvidedMsg}</span>}
         />
       )}
-      {!wasAllDataProvided && inputTypeInstancesRefs.length === 1 && (
-        <div>{groups[0]}</div>
-      )}
-      {!wasAllDataProvided && inputTypeInstancesRefs.length > 1 && (
-        <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-          <Col className="gutter-row" span={3}>
-            {verticalStepper(inputTypeInstancesRefs, current)}
-          </Col>
-          <Col className="huge-radio-group" span={21}>
-            {groups[current]}
-          </Col>
-        </Row>
+      {!wasAllDataProvided && (
+        <Tabbing
+          setCurrentIdx={setCurrent}
+          renderContent={renderContent}
+          currentIdx={current}
+          data={data}
+          satisfiedNameTuple={(data: InputTypeInstanceWithInit) => {
+            return [data.initData, data.name];
+          }}
+        />
       )}
     </>
-  );
-}
-
-function verticalStepper(inputParams: InputTypeInstance[], current: number) {
-  const steps = inputParams.map(({ name }) => {
-    return <Step key={name} title={name} />;
-  });
-
-  return (
-    <Steps key={current} current={current} direction="vertical">
-      {steps}
-    </Steps>
   );
 }
 

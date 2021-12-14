@@ -17,7 +17,7 @@ function InputTypeInstancesContainer({
 
   const submitFn = async (name: string, data: any) => {
     const actionInputTypeInstances = {
-      ...wizardData!.actionInputTypeInstances,
+      ...wizardData?.actionInputTypeInstances,
       [name]: data,
     };
     setWizardData({ ...wizardData, actionInputTypeInstances } as WizardData);
@@ -26,6 +26,7 @@ function InputTypeInstancesContainer({
   return (
     <InputTypeInstances
       setInputTypeInstance={submitFn}
+      inputTypeInstances={wizardData?.actionInputTypeInstances}
       isLoading={false}
       inputTypeInstancesRefs={inputTI}
     />
