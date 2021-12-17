@@ -47,10 +47,22 @@ function InputParameters({
     };
   });
 
+  const getFirstNotSetItemIdx = () => {
+    return inputParamsSchemas.findIndex((item, idx) => {
+      const initData =
+        initInputParametersData && initInputParametersData[item.name];
+      return !initData;
+    });
+  };
+
   const createForm = (input: InputParameterWithInit) => {
     const onSuccessSubmit = (data: any) => {
       setInputParameter(input.name, data);
-      setCurrent(current + 1);
+      if (current + 1 >= inputParamsSchemas.length) {
+        setCurrent(getFirstNotSetItemIdx());
+      } else {
+        setCurrent(current + 1);
+      }
     };
     return (
       <InputParametersFormContainer
@@ -63,10 +75,14 @@ function InputParameters({
     );
   };
 
-  const wasAllDataProvided = current === data.length;
-  const allDataProvidedMsg = data.length
-    ? "All input parameters were provided."
-    : "Action does not require any input parameters.";
+  const requiredLen = inputParamsSchemas.length ?? 0;
+  const submittedLen = Object.keys(initInputParametersData ?? {}).length;
+
+  const wasAllDataProvided = requiredLen === submittedLen;
+  const allDataProvidedMsg =
+    requiredLen > 0
+      ? "All input parameters were provided."
+      : "Action does not require any input parameters.";
   return (
     <>
       {wasAllDataProvided && (

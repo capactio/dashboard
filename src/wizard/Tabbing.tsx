@@ -1,6 +1,6 @@
 import { CheckCircleOutlined } from "@ant-design/icons";
 import React from "react";
-import { Tabs } from "antd";
+import { Tabs, Typography } from "antd";
 
 const { TabPane } = Tabs;
 
@@ -21,7 +21,7 @@ function Tabbing({
 }: TabbingProps) {
   switch (data.length) {
     case 0:
-      return <></>;
+      return <Typography.Text key="empty">No data to display</Typography.Text>;
     case 1:
       return renderContent(data[0]);
     default:
@@ -40,7 +40,7 @@ function Tabbing({
       return (
         <Tabs
           tabPosition="left"
-          style={{ maxHeight: 550, minHeight: 420 }}
+          style={{ maxHeight: 550, minHeight: 420, overflow: "auto" }}
           onChange={(item) => setCurrentIdx(Number(item))}
           activeKey={currentIdx.toString()}
         >

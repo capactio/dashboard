@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Empty, Radio, Typography } from "antd";
+import { Col, Empty, Radio, Row, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { TypeInstance } from "../../generated/graphql";
@@ -66,15 +66,17 @@ function InputTypeInstanceGroup({
       )}
 
       {radioBtns.length > 0 && (
-        <Col span={24} className="huge-radio-group">
-          <Radio.Group
-            size="large"
-            buttonStyle="solid"
-            value={inputTypeInstanceID}
-          >
-            {radioBtns}
-          </Radio.Group>
-        </Col>
+        <Row>
+          <Col span={24} className="huge-radio-group">
+            <Radio.Group
+              size="large"
+              buttonStyle="solid"
+              value={inputTypeInstanceID}
+            >
+              {radioBtns}
+            </Radio.Group>
+          </Col>
+        </Row>
       )}
     </>
   );

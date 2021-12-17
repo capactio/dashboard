@@ -38,10 +38,22 @@ function InputTypeInstances({
     };
   });
 
+  const getFirstNotSetItemIdx = () => {
+    return inputTypeInstancesRefs.findIndex((item, idx) => {
+      const initData = inputTypeInstances && inputTypeInstances[item.name];
+      return !initData;
+    });
+  };
+
   const renderContent = (input: InputTypeInstanceWithInit) => {
     const onSuccessSubmit = (data: string) => {
       setInputTypeInstance(input.name, data);
       setCurrent(current + 1);
+      if (current + 1 >= inputTypeInstancesRefs.length) {
+        setCurrent(getFirstNotSetItemIdx());
+      } else {
+        setCurrent(current + 1);
+      }
     };
     return (
       <InputParametersFromTypeSectionContainer
@@ -53,10 +65,13 @@ function InputTypeInstances({
     );
   };
 
-  const wasAllDataProvided = current === inputTypeInstancesRefs.length;
-  const allDataProvidedMsg = inputTypeInstancesRefs.length
-    ? "All TypeInstances were provided."
-    : "Action does not require any input TypeInstances.";
+  const requiredLen = inputTypeInstancesRefs.length ?? 0;
+  const selectedLen = Object.keys(inputTypeInstances ?? {}).length;
+  const wasAllDataProvided = requiredLen === selectedLen;
+  const allDataProvidedMsg =
+    requiredLen > 0
+      ? "All TypeInstances were provided."
+      : "Action does not require any input TypeInstances.";
 
   return (
     <>
