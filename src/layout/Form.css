@@ -1,10 +1,41 @@
-.json-schema-form .fieldset-title {
-  font-size: 20px;
+/* 
+  Styles for JSON schema headers
+
+  These selectors aren't nice-looking, but in order to get rid of them
+  we would need to fork the form fields and templates and modify code.
+  That would be even uglier and harder to maintain.
+
+  We picked the lesser evil.
+*/
+
+/* general styles for object field labels  */
+.json-schema-form fieldset > .ant-row > .ant-col.ant-form-item-label > label {
   line-height: 1.4;
   margin-bottom: 0.5em;
   font-weight: 600;
+  height: auto;
+
+  /* used for h2 (2nd level of nested object field) */
+  font-size: 24px;
 }
 
-.json-schema-form label[for="root-title"].fieldset-title {
+/* h1 - object field label for root (whole form)  */
+.json-schema-form
+  fieldset#root
+  > .ant-row
+  > .ant-col.ant-form-item-label
+  > label {
   font-size: 30px;
+}
+
+/* h3 - nested object fields (3rd level, 4th level and so on...)  */
+.json-schema-form
+  fieldset#root
+  .field-object
+  .field-object
+  fieldset
+  > .ant-row
+  > .ant-col.ant-form-item-label
+  > label {
+  font-size: 20px;
 }
