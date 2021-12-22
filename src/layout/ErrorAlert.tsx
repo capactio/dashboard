@@ -10,7 +10,7 @@ function ErrorAlert({
   error?: Error;
   errorMessage?: string;
 }) {
-  let alertMessage = error ? `${error.name}: ${error.message}` : errorMessage;
+  const alertMessage = error ? `${error.name}: ${error.message}` : errorMessage;
 
   return (
     <div className="spinner-wrapper">

@@ -12,7 +12,7 @@ export interface ActionItem {
   key: string;
   name: string;
   actionRef: string;
-  createdAt: any;
+  createdAt: string;
   status?: ActionStatusPhase;
 }
 
@@ -27,26 +27,27 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (name: any) => (
+    render: (name: string) => (
       <Link to={`/actions/${name}`}>
         <strong>{name}</strong>
       </Link>
     ),
-    sorter: (a: any, b: any) => a.name.localeCompare(b.name),
+    sorter: (a: ActionItem, b: ActionItem) => a.name.localeCompare(b.name),
   },
   {
     title: "Interface",
     dataIndex: "actionRef",
     key: "actionRef",
-    render: (actionRef: any) => <Text code>{actionRef}</Text>,
-    sorter: (a: any, b: any) => a.actionRef.localeCompare(b.actionRef),
+    render: (actionRef: string) => <Text code>{actionRef}</Text>,
+    sorter: (a: ActionItem, b: ActionItem) =>
+      a.actionRef.localeCompare(b.actionRef),
   },
   {
     title: "Created",
     dataIndex: "createdAt",
     key: "createdAt",
-    render: (date: any) => <Text>{new Date(date).toUTCString()}</Text>,
-    sorter: (a: any, b: any) =>
+    render: (date: string) => <Text>{new Date(date).toUTCString()}</Text>,
+    sorter: (a: ActionItem, b: ActionItem) =>
       new Date(a.createdAt as string).getTime() -
       new Date(b.createdAt as string).getTime(),
   },
@@ -54,15 +55,22 @@ const columns = [
     title: "Status",
     dataIndex: "status",
     key: "status",
-    render: (phase: any) => <ActionStatus phase={phase} />,
-    sorter: (a: any, b: any) => a.status.localeCompare(b.status),
+    render: (phase: ActionStatusPhase | undefined) => (
+      <ActionStatus phase={phase} />
+    ),
+    sorter: (a: ActionItem, b: ActionItem) => {
+      const { status: aStatus = "" } = a;
+      const { status: bStatus = "" } = b;
+
+      return aStatus.localeCompare(bStatus);
+    },
   },
   {
     title: "Action",
     dataIndex: "name",
     align: "center" as const,
     key: "action",
-    render: (name: any) => (
+    render: (name: string) => (
       <Link to={`/actions/${name}`}>
         <EyeOutlined />
       </Link>
