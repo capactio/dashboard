@@ -1,0 +1,10 @@
+.json-schema-form .fieldset-title {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.json-schema-form label[for="root-title"].fieldset-title {
+  font-size: 30px;
+}
