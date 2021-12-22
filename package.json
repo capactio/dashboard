@@ -29,6 +29,7 @@
     "postinstall": "npm run setup-hooks",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint ./src",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-graphql": "set -o allexport;. .env; set +o allexport; graphql-codegen --config codegen.yml",
@@ -57,6 +58,7 @@
     "@graphql-codegen/introspection": "2.1.0",
     "@graphql-codegen/typescript": "2.4.1",
     "@graphql-codegen/typescript-operations": "2.2.1",
+    "@typescript-eslint/parser": "^5.8.0",
     "prettier": "^2.5.0"
   }
 }
