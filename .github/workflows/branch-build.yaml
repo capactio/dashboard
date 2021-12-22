@@ -42,4 +42,7 @@ jobs:
         run: npm run lint
 
       - name: Build application
-        run: npm run build
+        # Unfortunately, the only way to not treat warnings as errors
+        # on CI is setting `CI` env to `false`.
+        # See the issuehttps://github.com/facebook/create-react-app/issues/3657
+        run: CI=false npm run build
