@@ -4,6 +4,7 @@ import {
   useMutation,
   UseMutationOptions,
 } from "react-query";
+import { Fetcher } from "../http/graphql-fetcher";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -15,33 +16,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
   [SubKey in K]: Maybe<T[SubKey]>;
 };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(
-      process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT as string,
-      {
-        method: "POST",
-        ...{
-          headers: {
-            Authorization: `${process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}`,
-          },
-        },
-        body: JSON.stringify({ query, variables }),
-      }
-    );
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  };
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -1313,6 +1287,13 @@ export enum _RelationDirections {
   Out = "OUT",
 }
 
+export type TestConnectionQueryVariables = Exact<{ [key: string]: never }>;
+
+export type TestConnectionQuery = {
+  __typename?: "Query";
+  policy: { __typename: "Policy" };
+};
+
 export type ActionQueryVariables = Exact<{
   actionName: Scalars["String"];
 }>;
@@ -2323,6 +2304,30 @@ export const ImplementationsMetadataForInterfaceFragmentDoc = `
   }
 }
     `;
+export const TestConnectionDocument = `
+    query TestConnection {
+  policy {
+    __typename
+  }
+}
+    `;
+export const useTestConnectionQuery = <
+  TData = TestConnectionQuery,
+  TError = unknown
+>(
+  variables?: TestConnectionQueryVariables,
+  options?: UseQueryOptions<TestConnectionQuery, TError, TData>
+) =>
+  useQuery<TestConnectionQuery, TError, TData>(
+    variables === undefined
+      ? ["TestConnection"]
+      : ["TestConnection", variables],
+    Fetcher<TestConnectionQuery, TestConnectionQueryVariables>(
+      TestConnectionDocument,
+      variables
+    ),
+    options
+  );
 export const ActionDocument = `
     query Action($actionName: String!) {
   action(name: $actionName) {
@@ -2336,7 +2341,7 @@ export const useActionQuery = <TData = ActionQuery, TError = unknown>(
 ) =>
   useQuery<ActionQuery, TError, TData>(
     ["Action", variables],
-    fetcher<ActionQuery, ActionQueryVariables>(ActionDocument, variables),
+    Fetcher<ActionQuery, ActionQueryVariables>(ActionDocument, variables),
     options
   );
 export const RunActionDocument = `
@@ -2357,7 +2362,7 @@ export const useRunActionMutation = <TError = unknown, TContext = unknown>(
   useMutation<RunActionMutation, TError, RunActionMutationVariables, TContext>(
     "RunAction",
     (variables?: RunActionMutationVariables) =>
-      fetcher<RunActionMutation, RunActionMutationVariables>(
+      Fetcher<RunActionMutation, RunActionMutationVariables>(
         RunActionDocument,
         variables
       )(),
@@ -2376,7 +2381,7 @@ export const useActionListQuery = <TData = ActionListQuery, TError = unknown>(
 ) =>
   useQuery<ActionListQuery, TError, TData>(
     variables === undefined ? ["ActionList"] : ["ActionList", variables],
-    fetcher<ActionListQuery, ActionListQueryVariables>(
+    Fetcher<ActionListQuery, ActionListQueryVariables>(
       ActionListDocument,
       variables
     ),
@@ -2398,7 +2403,7 @@ export const useTypeInstanceQuery = <
 ) =>
   useQuery<TypeInstanceQuery, TError, TData>(
     ["TypeInstance", variables],
-    fetcher<TypeInstanceQuery, TypeInstanceQueryVariables>(
+    Fetcher<TypeInstanceQuery, TypeInstanceQueryVariables>(
       TypeInstanceDocument,
       variables
     ),
@@ -2432,7 +2437,7 @@ export const useListInterfaceGroupsQuery = <
     variables === undefined
       ? ["ListInterfaceGroups"]
       : ["ListInterfaceGroups", variables],
-    fetcher<ListInterfaceGroupsQuery, ListInterfaceGroupsQueryVariables>(
+    Fetcher<ListInterfaceGroupsQuery, ListInterfaceGroupsQueryVariables>(
       ListInterfaceGroupsDocument,
       variables
     ),
@@ -2499,7 +2504,7 @@ export const useListInterfacesFromInterfaceGroupQuery = <
 ) =>
   useQuery<ListInterfacesFromInterfaceGroupQuery, TError, TData>(
     ["ListInterfacesFromInterfaceGroup", variables],
-    fetcher<
+    Fetcher<
       ListInterfacesFromInterfaceGroupQuery,
       ListInterfacesFromInterfaceGroupQueryVariables
     >(ListInterfacesFromInterfaceGroupDocument, variables),
@@ -2525,7 +2530,7 @@ export const useGetTypeJsonSchemaQuery = <
 ) =>
   useQuery<GetTypeJsonSchemaQuery, TError, TData>(
     ["GetTypeJSONSchema", variables],
-    fetcher<GetTypeJsonSchemaQuery, GetTypeJsonSchemaQueryVariables>(
+    Fetcher<GetTypeJsonSchemaQuery, GetTypeJsonSchemaQueryVariables>(
       GetTypeJsonSchemaDocument,
       variables
     ),
@@ -2574,7 +2579,7 @@ export const useListInterfaceRevisionQuery = <
 ) =>
   useQuery<ListInterfaceRevisionQuery, TError, TData>(
     ["ListInterfaceRevision", variables],
-    fetcher<ListInterfaceRevisionQuery, ListInterfaceRevisionQueryVariables>(
+    Fetcher<ListInterfaceRevisionQuery, ListInterfaceRevisionQueryVariables>(
       ListInterfaceRevisionDocument,
       variables
     ),
@@ -2609,7 +2614,7 @@ export const useGetInterfaceProvisionParametersQuery = <
 ) =>
   useQuery<GetInterfaceProvisionParametersQuery, TError, TData>(
     ["GetInterfaceProvisionParameters", variables],
-    fetcher<
+    Fetcher<
       GetInterfaceProvisionParametersQuery,
       GetInterfaceProvisionParametersQueryVariables
     >(GetInterfaceProvisionParametersDocument, variables),
@@ -2631,7 +2636,7 @@ export const useListTypeInstancesQuery = <
 ) =>
   useQuery<ListTypeInstancesQuery, TError, TData>(
     ["ListTypeInstances", variables],
-    fetcher<ListTypeInstancesQuery, ListTypeInstancesQueryVariables>(
+    Fetcher<ListTypeInstancesQuery, ListTypeInstancesQueryVariables>(
       ListTypeInstancesDocument,
       variables
     ),
@@ -2655,7 +2660,7 @@ export const useListImplForInterfaceQuery = <
 ) =>
   useQuery<ListImplForInterfaceQuery, TError, TData>(
     ["ListImplForInterface", variables],
-    fetcher<ListImplForInterfaceQuery, ListImplForInterfaceQueryVariables>(
+    Fetcher<ListImplForInterfaceQuery, ListImplForInterfaceQueryVariables>(
       ListImplForInterfaceDocument,
       variables
     ),
@@ -2687,7 +2692,7 @@ export const useCreateActionWithInputMutation = <
   >(
     "CreateActionWithInput",
     (variables?: CreateActionWithInputMutationVariables) =>
-      fetcher<
+      Fetcher<
         CreateActionWithInputMutation,
         CreateActionWithInputMutationVariables
       >(CreateActionWithInputDocument, variables)(),

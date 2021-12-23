@@ -34,7 +34,7 @@ function InterfaceGroup({
   const cards = interfaceGroups.map(({ metadata, interfaces }) => {
     const ifaceCnt = interfaces.length;
     return (
-      <Col span={6}>
+      <Col span={6} key={metadata.path}>
         <Badge.Ribbon text={ifaceCnt}>
           <Card
             hoverable={ifaceCnt > 0}
@@ -62,19 +62,21 @@ function InterfaceGroup({
 }
 
 function loadingCards() {
-  const skeletons = Array(skeletonsTabsNumber).fill(
-    <Col span={6}>
-      <Card bordered={false}>
-        <Skeleton
-          active
-          loading
-          avatar={{ shape: "square" }}
-          title
-          paragraph={{ rows: 1 }}
-        />
-      </Card>
-    </Col>
-  );
+  const skeletons = Array(skeletonsTabsNumber)
+    .fill(null)
+    .map((item, idx) => (
+      <Col span={6} key={idx}>
+        <Card bordered={false}>
+          <Skeleton
+            active
+            loading
+            avatar={{ shape: "square" }}
+            title
+            paragraph={{ rows: 1 }}
+          />
+        </Card>
+      </Col>
+    ));
   return <Row gutter={[24, 24]}>{skeletons}</Row>;
 }
 
