@@ -17,7 +17,6 @@ jobs:
     # https://github.com/styfle/cancel-workflow-action#advanced-token-permissions
     permissions:
       actions: write
-
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.9.0
@@ -29,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     env:
       DOCKER_TAG: PR-${{ github.event.pull_request.number }}
       DOCKER_REPOSITORY: "ghcr.io/capactio/pr"

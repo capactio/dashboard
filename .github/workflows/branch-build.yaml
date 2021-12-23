@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     env:
       DOCKER_REPOSITORY: "ghcr.io/capactio"
 
@@ -49,7 +50,7 @@ jobs:
       - name: Build application
         # Unfortunately, the only way to not treat warnings as errors
         # on CI is setting `CI` env to `false`.
-        # See the issuehttps://github.com/facebook/create-react-app/issues/3657
+        # See the issue https://github.com/facebook/create-react-app/issues/3657
         run: CI=false npm run build
 
       - name: Build Docker image
