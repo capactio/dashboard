@@ -1,12 +1,20 @@
 import React from "react";
 import InterfaceGroup from "./InterfaceGroup";
-import { useListInterfaceGroupsOnlyQuery } from "../generated/graphql";
+import {
+  InterfaceGroup as InterfaceGroupGQL,
+  useListInterfaceGroupsQuery,
+} from "../generated/graphql";
 
 function InterfaceGroupsContainer() {
-  const { data, error, isLoading } = useListInterfaceGroupsOnlyQuery();
+  const { data, error, isLoading } = useListInterfaceGroupsQuery();
 
+  const groups = (data?.interfaceGroups as InterfaceGroupGQL[]) ?? [];
   return (
-    <InterfaceGroup data={data} error={error as Error} isLoading={isLoading} />
+    <InterfaceGroup
+      interfaceGroups={groups}
+      error={error as Error}
+      isLoading={isLoading}
+    />
   );
 }
 

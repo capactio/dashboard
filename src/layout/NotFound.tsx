@@ -1,5 +1,4 @@
 import React from "react";
-import "./Page.css";
 import { Result } from "antd";
 import Page from "./Page";
 

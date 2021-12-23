@@ -1,34 +1,34 @@
-import { Avatar, Badge, Card, Col, Row, Typography } from "antd";
+import { Avatar, Badge, Card, Col, Row, Skeleton, Typography } from "antd";
 import React from "react";
-import { ListInterfaceGroupsOnlyQuery } from "../generated/graphql";
-import CenteredSpinner from "../layout/CenteredSpinner";
+import { InterfaceGroup as InterfaceGroupGQL } from "../generated/graphql";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useNavigate } from "react-router-dom";
+import "./InterfaceGroup.css";
 
 const { Paragraph } = Typography;
 
-interface SelectActionInterfaceProps {
-  data?: ListInterfaceGroupsOnlyQuery;
+interface InterfaceGroupProps {
+  interfaceGroups: InterfaceGroupGQL[];
   error?: Error;
   isLoading: boolean;
 }
 
 function InterfaceGroup({
-  data,
+  interfaceGroups,
   error,
   isLoading,
-}: SelectActionInterfaceProps) {
+}: InterfaceGroupProps) {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <CenteredSpinner />;
+    return loadingCards();
   }
 
   if (error) {
     return <ErrorAlert error={error} />;
   }
-  const groups = data?.interfaceGroups ?? [];
-  const cards = groups.map(({ metadata, interfaces }) => {
+
+  const cards = interfaceGroups.map(({ metadata, interfaces }) => {
     const ifaceCnt = interfaces.length;
     return (
       <Col span={6}>
@@ -36,10 +36,7 @@ function InterfaceGroup({
           <Card
             hoverable={ifaceCnt > 0}
             onClick={() => {
-              if (!ifaceCnt) {
-                return;
-              }
-              navigate(`/hub/interface-groups/${metadata.path}`);
+              ifaceCnt && navigate(`/hub/interface-groups/${metadata.path}`);
             }}
             bordered={false}
           >
@@ -59,6 +56,23 @@ function InterfaceGroup({
   });
 
   return <Row gutter={[24, 24]}> {cards} </Row>;
+}
+
+function loadingCards() {
+  const skeletons = Array(3).fill(
+    <Col span={6}>
+      <Card bordered={false}>
+        <Skeleton
+          active
+          loading
+          avatar={{ shape: "square" }}
+          title
+          paragraph={{ rows: 1 }}
+        />
+      </Card>
+    </Col>
+  );
+  return <Row gutter={[24, 24]}>{skeletons}</Row>;
 }
 
 export default InterfaceGroup;

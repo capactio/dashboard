@@ -1,0 +1,6 @@
+.list-item {
+  padding-left: 12px;
+}
+.list-item:hover {
+  background: rgba(0, 0, 0, 0.02);
+}

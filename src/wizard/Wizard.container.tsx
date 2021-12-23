@@ -132,7 +132,7 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
   }
 
   steps.push({
-    title: "Summary",
+    title: "Advanced mode",
     content: <SelectActionImplContainer {...stepProps} />,
     canProceed: (data) => {
       return data.actionImplPath !== undefined;

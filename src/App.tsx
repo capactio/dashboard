@@ -15,8 +15,8 @@ const { Header } = Layout;
 
 function App() {
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header className="header">
+    <Layout>
+      <Header className="layout-header">
         <div className="logo" />
       </Header>
       <Layout>

@@ -8,10 +8,11 @@ import {
   Tooltip,
   Typography,
 } from "antd";
+import "./InterfacesList.css";
 import React, { useState } from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
-import { InfoCircleOutlined, RightOutlined } from "@ant-design/icons";
+import { RightOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { InterfaceRevisionWithKey } from "./Interfaces.container";
 
@@ -19,17 +20,13 @@ const { Text } = Typography;
 const { Search } = Input;
 const { Item } = List;
 
-interface SelectActionInterfaceProps {
+interface InterfacesListProps {
   interfaces?: InterfaceRevisionWithKey[];
   error?: Error;
   isLoading: boolean;
 }
 
-function InterfacesList({
-  interfaces,
-  error,
-  isLoading,
-}: SelectActionInterfaceProps) {
+function InterfacesList({ interfaces, error, isLoading }: InterfacesListProps) {
   const [namePrefix, setNamePrefix] = useState("");
 
   if (isLoading) {
@@ -69,18 +66,13 @@ function InterfacesList({
         dataSource={ifaces}
         style={{ background: "#fff" }}
         renderItem={(rev) => {
-          const inputParams = rev?.spec.input.parameters.map((v) => {
-            return <Text code>{v?.name}</Text>;
-          });
-          const inputTIss = rev?.spec.input.typeInstances.map((v) => {
-            return <Text code>{v?.name}</Text>;
-          });
-          const output = rev?.spec.output.typeInstances.map((v) => {
-            return <Text code>{v?.name}</Text>;
-          });
+          const inputParams = toCodeItemList(rev?.spec.input.parameters);
+          const inputTIss = toCodeItemList(rev?.spec.input.typeInstances);
+          const output = toCodeItemList(rev?.spec.output.typeInstances);
 
           return (
             <Item
+              className="list-item"
               actions={[
                 <Link
                   style={{ fontSize: 22 }}
@@ -123,6 +115,22 @@ function InterfacesList({
       />
     </Card>
   );
+}
+
+interface namedEntry {
+  name: string;
+}
+
+function toCodeItemList(arg?: Array<namedEntry | undefined | null>) {
+  return arg?.map((v) => {
+    return (
+      v && (
+        <Text key={v.name} code>
+          {v.name}
+        </Text>
+      )
+    );
+  });
 }
 
 export default InterfacesList;

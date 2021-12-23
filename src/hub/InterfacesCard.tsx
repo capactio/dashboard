@@ -6,17 +6,13 @@ import { InfoCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { InterfaceRevisionWithKey } from "./Interfaces.container";
 
-interface SelectActionInterfaceProps {
+interface InterfacesCardProps {
   interfaces?: InterfaceRevisionWithKey[];
   error?: Error;
   isLoading: boolean;
 }
 
-function InterfacesCard({
-  interfaces,
-  error,
-  isLoading,
-}: SelectActionInterfaceProps) {
+function InterfacesCard({ interfaces, error, isLoading }: InterfacesCardProps) {
   if (isLoading) {
     return <CenteredSpinner />;
   }

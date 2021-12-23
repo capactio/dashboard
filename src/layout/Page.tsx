@@ -1,5 +1,4 @@
 import React from "react";
-import "./Page.css";
 import { Breadcrumb, Layout, PageHeader } from "antd";
 import Footer from "./Footer";
 

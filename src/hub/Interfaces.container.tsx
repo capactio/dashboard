@@ -42,7 +42,7 @@ function InterfacesContainer({ path, view }: InterfacesContainerProps) {
   };
 
   switch (view) {
-    case InterfacesView.Card:
+    case InterfacesView.Card: // TODO: Remove?
       return <InterfacesCard {...props} />;
     case InterfacesView.List:
       return <InterfacesList {...props} />;

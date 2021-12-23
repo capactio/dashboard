@@ -1,4 +1,4 @@
-query ListInterfaceGroupsOnly {
+query ListInterfaceGroups {
   interfaceGroups {
     metadata {
       displayName

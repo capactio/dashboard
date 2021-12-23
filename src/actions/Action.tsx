@@ -63,14 +63,7 @@ function Action({
   );
 
   return (
-    <Content
-      className="site-layout-background"
-      style={{
-        padding: 24,
-        margin: 0,
-        minHeight: 280,
-      }}
-    >
+    <Content className="site-layout-background" style={{ padding: 24 }}>
       <Descriptions column={1} bordered title="General" extra={runActionBtn}>
         <Descriptions.Item label="Name">{action?.name}</Descriptions.Item>
         <Descriptions.Item label="Created at">
