@@ -5,17 +5,13 @@ import { InputTypeInstance } from "../../generated/graphql";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import InputParametersFromTypeSectionContainer from "./InputTypeInstanceGroup.container";
 import { InputCollectionObj } from "../Wizard.container";
-import Tabbing from "../Tabbing";
+import Tabbing, { Tab } from "../Tabbing";
 
 interface InputParametersProps {
   setInputTypeInstance: (name: string, data: any) => void;
   inputTypeInstances?: InputCollectionObj;
   isLoading: boolean;
   inputTypeInstancesRefs: InputTypeInstance[];
-}
-
-interface InputTypeInstanceWithInit extends InputTypeInstance {
-  initData?: any;
 }
 
 function InputTypeInstances({
@@ -30,40 +26,37 @@ function InputTypeInstances({
     return <CenteredSpinner />;
   }
 
-  const data = inputTypeInstancesRefs.map((item) => {
-    const initData = inputTypeInstances && inputTypeInstances[item.name];
-    return {
-      ...item,
-      initData,
-    };
-  });
-
   const getFirstNotSetItemIdx = () => {
-    return inputTypeInstancesRefs.findIndex((item, idx) => {
+    return inputTypeInstancesRefs.findIndex((item) => {
       const initData = inputTypeInstances && inputTypeInstances[item.name];
       return !initData;
     });
   };
 
-  const renderContent = (input: InputTypeInstanceWithInit) => {
+  const tabs: Tab[] = inputTypeInstancesRefs.map((item) => {
+    const initData = inputTypeInstances && inputTypeInstances[item.name];
     const onSuccessSubmit = (data: string) => {
-      setInputTypeInstance(input.name, data);
-      setCurrent(current + 1);
+      setInputTypeInstance(item.name, data);
       if (current + 1 >= inputTypeInstancesRefs.length) {
         setCurrent(getFirstNotSetItemIdx());
       } else {
         setCurrent(current + 1);
       }
     };
-    return (
-      <InputParametersFromTypeSectionContainer
-        key={input.name}
-        typeRef={input.typeRef}
-        inputTypeInstanceID={input.initData}
-        setInputTypeInstanceID={onSuccessSubmit}
-      />
-    );
-  };
+
+    return {
+      name: item.name,
+      showCheckmarkIcon: Boolean(initData),
+      content: (
+        <InputParametersFromTypeSectionContainer
+          key={item.name}
+          typeRef={item.typeRef}
+          inputTypeInstanceID={initData}
+          setInputTypeInstanceID={onSuccessSubmit}
+        />
+      ),
+    };
+  });
 
   const requiredLen = inputTypeInstancesRefs.length ?? 0;
   const selectedLen = Object.keys(inputTypeInstances ?? {}).length;
@@ -73,29 +66,20 @@ function InputTypeInstances({
       ? "All TypeInstances were provided."
       : "Action does not require any input TypeInstances.";
 
+  if (wasAllDataProvided) {
+    return (
+      <Empty
+        image={<CheckCircleOutlined />}
+        imageStyle={{
+          fontSize: "60px",
+        }}
+        description={<span>{allDataProvidedMsg}</span>}
+      />
+    );
+  }
+
   return (
-    <>
-      {wasAllDataProvided && (
-        <Empty
-          image={<CheckCircleOutlined />}
-          imageStyle={{
-            fontSize: "60px",
-          }}
-          description={<span>{allDataProvidedMsg}</span>}
-        />
-      )}
-      {!wasAllDataProvided && (
-        <Tabbing
-          setCurrentIdx={setCurrent}
-          renderContent={renderContent}
-          currentIdx={current}
-          data={data}
-          satisfiedNameTuple={(data: InputTypeInstanceWithInit) => {
-            return [data.initData, data.name];
-          }}
-        />
-      )}
-    </>
+    <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />
   );
 }
 

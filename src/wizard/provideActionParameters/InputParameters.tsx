@@ -7,7 +7,7 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";
 import InputParametersFormContainer from "./InputParametersForm.container";
-import Tabbing from "../Tabbing";
+import Tabbing, { Tab } from "../Tabbing";
 
 interface InputParametersProps {
   setInputParameter: (name: string, data: any) => void;
@@ -15,10 +15,6 @@ interface InputParametersProps {
   error?: Error;
   inputParamsSchemas: InputParameter[];
   initInputParametersData?: InputCollectionObj;
-}
-
-interface InputParameterWithInit extends InputParameter {
-  initData?: any;
 }
 
 function InputParameters({
@@ -38,42 +34,41 @@ function InputParameters({
     return <ErrorAlert error={error} />;
   }
 
-  const data: InputParameterWithInit[] = inputParamsSchemas.map((item) => {
+  const tabs: Tab[] = inputParamsSchemas.map((item) => {
     const initData =
       initInputParametersData && initInputParametersData[item.name];
-    return {
-      ...item,
-      initData,
+
+    const getFirstNotSetItemIdx = () => {
+      return inputParamsSchemas.findIndex((item, idx) => {
+        const initData =
+          initInputParametersData && initInputParametersData[item.name];
+        return !initData;
+      });
     };
-  });
 
-  const getFirstNotSetItemIdx = () => {
-    return inputParamsSchemas.findIndex((item, idx) => {
-      const initData =
-        initInputParametersData && initInputParametersData[item.name];
-      return !initData;
-    });
-  };
-
-  const createForm = (input: InputParameterWithInit) => {
     const onSuccessSubmit = (data: any) => {
-      setInputParameter(input.name, data);
+      setInputParameter(item.name, data);
       if (current + 1 >= inputParamsSchemas.length) {
         setCurrent(getFirstNotSetItemIdx());
       } else {
         setCurrent(current + 1);
       }
     };
-    return (
-      <InputParametersFormContainer
-        initData={input.initData}
-        name={input.name}
-        typeRef={input.typeRef}
-        rawJSONSchema={input.jsonSchema}
-        onSuccessSubmit={onSuccessSubmit}
-      />
-    );
-  };
+
+    return {
+      name: item.name,
+      showCheckmarkIcon: Boolean(initData),
+      content: (
+        <InputParametersFormContainer
+          initData={initData}
+          name={item.name}
+          typeRef={item.typeRef}
+          rawJSONSchema={item.jsonSchema}
+          onSuccessSubmit={onSuccessSubmit}
+        />
+      ),
+    };
+  });
 
   const requiredLen = inputParamsSchemas.length ?? 0;
   const submittedLen = Object.keys(initInputParametersData ?? {}).length;
@@ -83,29 +78,21 @@ function InputParameters({
     requiredLen > 0
       ? "All input parameters were provided."
       : "Action does not require any input parameters.";
+
+  if (wasAllDataProvided) {
+    return (
+      <Empty
+        image={<CheckCircleOutlined />}
+        imageStyle={{
+          fontSize: "60px",
+        }}
+        description={<span>{allDataProvidedMsg}</span>}
+      />
+    );
+  }
+
   return (
-    <>
-      {wasAllDataProvided && (
-        <Empty
-          image={<CheckCircleOutlined />}
-          imageStyle={{
-            fontSize: "60px",
-          }}
-          description={<span>{allDataProvidedMsg}</span>}
-        />
-      )}
-      {!wasAllDataProvided && (
-        <Tabbing
-          setCurrentIdx={setCurrent}
-          renderContent={createForm}
-          currentIdx={current}
-          data={data}
-          satisfiedNameTuple={(data: InputParameterWithInit) => {
-            return [data.initData, data.name];
-          }}
-        />
-      )}
-    </>
+    <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />
   );
 }
 

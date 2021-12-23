@@ -4,35 +4,36 @@ import { Tabs, Typography } from "antd";
 
 const { TabPane } = Tabs;
 
+export interface Tab {
+  name: string;
+  showCheckmarkIcon: boolean;
+  content: React.ReactElement;
+}
+
 interface TabbingProps {
-  data: any[];
-  renderContent: (data: any) => React.ReactElement;
-  satisfiedNameTuple: (data: any) => [satisfied: boolean, name: string];
+  data: Tab[];
   setCurrentIdx: (idx: number) => void;
   currentIdx: number;
 }
 
-function Tabbing({
-  data,
-  renderContent,
-  satisfiedNameTuple,
-  setCurrentIdx,
-  currentIdx,
-}: TabbingProps) {
+function Tabbing({ data, setCurrentIdx, currentIdx }: TabbingProps) {
   switch (data.length) {
     case 0:
       return <Typography.Text key="empty">No data to display</Typography.Text>;
     case 1:
-      return renderContent(data[0]);
+      return data[0].content;
     default:
-      const tabs = data.map((item, idx) => {
-        const form = renderContent(item);
+      const tabs = data.map(({ name, content, showCheckmarkIcon }, idx) => {
+        const tabPaneNameComponent = (
+          <>
+            {showCheckmarkIcon && <CheckCircleOutlined />}
+            {name}
+          </>
+        );
+
         return (
-          <TabPane
-            tab={tabPaneName(...satisfiedNameTuple(item))}
-            key={idx.toString()}
-          >
-            {form}
+          <TabPane tab={tabPaneNameComponent} key={idx.toString()}>
+            {content}
           </TabPane>
         );
       });
@@ -48,15 +49,6 @@ function Tabbing({
         </Tabs>
       );
   }
-}
-
-function tabPaneName(satisfied: boolean, name: string) {
-  return (
-    <>
-      {satisfied ? <CheckCircleOutlined /> : null}
-      {name}
-    </>
-  );
 }
 
 export default Tabbing;
