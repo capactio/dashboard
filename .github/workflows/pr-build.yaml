@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      DOCKER_TAG: PR-${{ github.event.pull_request.number }}
+      DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
 
     steps:
       - name: Checkout repository
@@ -58,5 +61,14 @@ jobs:
       - name: Build application
         # Unfortunately, the only way to not treat warnings as errors
         # on CI is setting `CI` env to `false`.
-        # See the issuehttps://github.com/facebook/create-react-app/issues/3657
+        # See the issue https://github.com/facebook/create-react-app/issues/3657
         run: CI=false npm run build
+
+      - name: Build Docker image
+        run: npm run docker:build-image
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push Docker image
+        run: npm run docker:push-image

@@ -15,8 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      DOCKER_REPOSITORY: "ghcr.io/capactio"
 
     steps:
+      - name: Set Docker tag env
+        run: echo "DOCKER_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -46,3 +51,12 @@ jobs:
         # on CI is setting `CI` env to `false`.
         # See the issuehttps://github.com/facebook/create-react-app/issues/3657
         run: CI=false npm run build
+
+      - name: Build Docker image
+        run: npm run docker:build-image
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push Docker image
+        run: npm run docker:push-image

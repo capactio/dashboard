@@ -26,14 +26,16 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "postinstall": "npm run setup-hooks",
+    "postinstall": "if [ $SKIP_POSTINSTALL != \"true\" ]; then npm run setup-hooks; else echo \"Post install script skipped as the env SKIP_POSTINSTALL is set to true.\"; fi",
+    "setup-hooks": "git config core.hooksPath ./scripts/git-hooks",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint ./src",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-graphql": "set -o allexport;. .env; set +o allexport; graphql-codegen --config codegen.yml",
-    "setup-hooks": "git config core.hooksPath ./scripts/git-hooks"
+    "docker:build-image": "./scripts/build-image.sh",
+    "docker:push-image": "./scripts/push-image.sh"
   },
   "eslintConfig": {
     "extends": [
