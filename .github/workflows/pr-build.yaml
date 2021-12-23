@@ -1,7 +1,7 @@
 name: PR build
 
 on:
-  pull_request:
+  pull_request_target:
     types: [ opened, synchronize, reopened ]
     paths-ignore:
       - "LICENSE"
@@ -24,19 +24,21 @@ jobs:
           access_token: ${{ github.token }}
 
   build:
-    name: Lint and build application
+    name: Build application
     runs-on: ubuntu-latest
     if: github.event.pull_request.draft == false
     permissions:
       contents: read
-      packages: write
     env:
       DOCKER_TAG: PR-${{ github.event.pull_request.number }}
       DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
+      APP_NAME: "dashboard"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -75,6 +77,40 @@ jobs:
 
       - name: Build Docker image
         run: npm run docker:build-image
+
+      - name: Save Docker image
+        run: docker save "${DOCKER_REPOSITORY}/${APP_NAME}:${DOCKER_TAG}" > "/tmp/${APP_NAME}.tar"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.APP_NAME }}-${{github.sha}}
+          path: /tmp/${{ env.APP_NAME }}.tar
+          retention-days: 1
+
+  push:
+    name: Push application
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event.pull_request.draft == false
+    permissions:
+      packages: write
+    env:
+      DOCKER_TAG: PR-${{ github.event.pull_request.number }}
+      DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
+      APP_NAME: "dashboard"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.APP_NAME }}-${{github.sha}}
+          path: /tmp
+
+      - name: Load Docker image
+        run: docker load --input "/tmp/${APP_NAME}.tar"
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
