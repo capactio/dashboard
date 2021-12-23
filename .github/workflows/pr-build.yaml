@@ -26,6 +26,7 @@ jobs:
   build:
     name: Lint and build application
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
     permissions:
       contents: read
       packages: write
