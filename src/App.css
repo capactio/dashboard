@@ -1,11 +1,17 @@
 .logo {
   float: left;
-  width: 120px;
+  width: 150px;
   height: 31px;
-  margin: 16px 24px 16px 0;
+  margin: 8px 0 16px;
   background: rgba(255, 255, 255, 0.2);
 }
-
+.ant-layout-header {
+  height: 48px;
+  line-height: 48px;
+  width: 100%;
+  z-index: 100;
+  padding: 0 24px;
+}
 label.huge-radio.ant-radio-button-wrapper {
   height: auto;
   padding: 30px;
@@ -34,4 +40,68 @@ label.huge-radio.ant-radio-button-wrapper p {
 
 .huge-radio {
   margin: 5px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.page-header {
+  background: #fff;
+}
+
+.page-header.has-breadcrumb {
+  padding-top: 24px;
+}
+
+.ant-layout-sider-trigger {
+  background: rgba(0, 0, 0, 0.02);
+  color: #001529;
+}
+
+.image {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 60px;
+}
+
+.ant-page-header-rtl .image {
+  margin: 0 60px 0 0;
+}
+
+.example-link {
+  margin-right: 16px;
+  line-height: 24px;
+}
+[data-theme="compact"] .example-link {
+  line-height: 20px;
+}
+.example-link-icon {
+  margin-right: 8px;
+}
+
+[data-theme="compact"] .example-link-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ant-page-header-rtl .example-link {
+  float: right;
+  margin-right: 0;
+  margin-left: 16px;
+}
+.ant-page-header-rtl .example-link-icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+  .image {
+    flex: 100%;
+    margin: 24px 0 0;
+  }
+}
+
+.ant-list-item:hover {
+  background: rgba(0, 0, 0, 0.02);
 }

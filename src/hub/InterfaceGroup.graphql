@@ -1,0 +1,16 @@
+query ListInterfaceGroupsOnly {
+  interfaceGroups {
+    metadata {
+      displayName
+      description
+      path
+      iconURL
+    }
+
+    interfaces {
+      latestRevision {
+        revision
+      }
+    }
+  }
+}

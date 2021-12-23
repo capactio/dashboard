@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Descriptions, Tooltip, Typography } from "antd";
+import { Button, Descriptions, Layout, Tooltip, Typography } from "antd";
 import ActionStatus from "./ActionStatus";
 import "./Action.css";
 import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
@@ -10,6 +10,7 @@ import ErrorAlert from "../layout/ErrorAlert";
 
 import ActionTabs from "./ActionTabs";
 
+const { Content } = Layout;
 const { Text } = Typography;
 
 interface ActionProps {
@@ -62,7 +63,14 @@ function Action({
   );
 
   return (
-    <>
+    <Content
+      className="site-layout-background"
+      style={{
+        padding: 24,
+        margin: 0,
+        minHeight: 280,
+      }}
+    >
       <Descriptions column={1} bordered title="General" extra={runActionBtn}>
         <Descriptions.Item label="Name">{action?.name}</Descriptions.Item>
         <Descriptions.Item label="Created at">
@@ -95,7 +103,7 @@ function Action({
         hasBeenRun={hasBeenRun}
         argoWorkflowLink={argoWorkflowLink}
       />
-    </>
+    </Content>
   );
 }
 

@@ -1,31 +1,37 @@
 import React from "react";
 import "./Page.css";
-
-import { Breadcrumb, PageHeader } from "antd";
+import { Breadcrumb, Layout, PageHeader } from "antd";
+import Footer from "./Footer";
 
 interface PageProps {
   children: React.ReactNode;
-  title: string;
-  breadcrumb: React.ReactElement<typeof Breadcrumb>;
+  title?: string;
+  breadcrumb?: React.ReactElement<typeof Breadcrumb>;
+  onBack?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   extra?: React.ReactNode;
 }
 
-function Page({ children, title, breadcrumb, extra }: PageProps) {
+const { Content } = Layout;
+
+function Page({ children, title, breadcrumb, extra, onBack }: PageProps) {
+  const renderHeader = title || breadcrumb || extra || onBack;
   return (
-    <>
-      <PageHeader
-        className="site-page-header"
-        title={title}
-        breadcrumb={breadcrumb}
-        extra={extra}
-      />
-      <div
-        className="site-layout-background"
-        style={{ padding: 24, minHeight: 380 }}
-      >
+    <Layout className="site-layout">
+      {renderHeader && (
+        <PageHeader
+          breadcrumb={breadcrumb}
+          className="page-header"
+          onBack={onBack}
+          title={title}
+          extra={extra}
+        />
+      )}
+
+      <Content style={{ margin: "16px", padding: 24, minHeight: "100vh" }}>
         {children}
-      </div>
-    </>
+      </Content>
+      <Footer />
+    </Layout>
   );
 }
 

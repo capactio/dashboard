@@ -1,9 +1,12 @@
 import React from "react";
 import "./Wizard.css";
-import { Button, Steps } from "antd";
+import { Button, Layout, Steps } from "antd";
 import { StepComponent, WizardSteps } from "./Wizard.container";
+import CenteredSpinner from "../layout/CenteredSpinner";
+import ErrorAlert from "../layout/ErrorAlert";
 
 const { Step } = Steps;
+const { Content } = Layout;
 
 interface WizardProps {
   steps: WizardSteps;
@@ -13,6 +16,8 @@ interface WizardProps {
   canProceed: boolean;
   isNextBtnTakenOver: boolean;
   submitBtn: StepComponent;
+  error?: Error;
+  isLoading: boolean;
 }
 
 function Wizard({
@@ -23,9 +28,26 @@ function Wizard({
   nextStepFn,
   submitBtn,
   isNextBtnTakenOver,
+  isLoading,
+  error,
 }: WizardProps) {
+  if (isLoading) {
+    return <CenteredSpinner />;
+  }
+
+  if (error) {
+    return <ErrorAlert error={error} />;
+  }
+
   return (
-    <>
+    <Content
+      className="site-layout-background"
+      style={{
+        padding: 24,
+        margin: 0,
+        minHeight: 280,
+      }}
+    >
       <Steps current={currentStepIndex}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
@@ -49,7 +71,7 @@ function Wizard({
         )}
         {currentStepIndex === steps.length - 1 && <div>{submitBtn}</div>}
       </div>
-    </>
+    </Content>
   );
 }
 

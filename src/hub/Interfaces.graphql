@@ -1,0 +1,42 @@
+query ListInterfacesFromInterfaceGroup($path: NodePath!) {
+  interfaceGroup(path: $path) {
+    interfaces {
+      latestRevision {
+        revision
+        metadata {
+          path
+          prefix
+          name
+          displayName
+          iconURL
+          documentationURL
+          description
+        }
+        spec {
+          input {
+            parameters {
+              name
+              jsonSchema
+              typeRef {
+                path
+                revision
+              }
+            }
+            typeInstances {
+              name
+              typeRef {
+                path
+                revision
+              }
+            }
+          }
+          output {
+            typeInstances {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,35 +1,40 @@
 import React from "react";
 import "./App.css";
 
-import { Layout } from "antd";
-
 import NewAction from "./routes/new-action";
 import Actions from "./routes/actions";
 import Action from "./routes/action";
-import { Route, Routes, Navigate } from "react-router-dom";
-import Header from "./layout/Header";
-import Footer from "./layout/Footer";
-const { Content } = Layout;
+import { Navigate, Route, Routes } from "react-router-dom";
+import NewInterfaceGroupCatalog from "./routes/hub-interface-groups";
+import NewInterfacesCatalog from "./routes/hub-interfaces";
+import { Layout } from "antd";
+import Menu from "./layout/Menu";
+import NotFoundPage from "./layout/NotFound";
+
+const { Header } = Layout;
 
 function App() {
   return (
-    <Layout>
-      <Header />
-      <Content
-        className="site-layout"
-        style={{ padding: "0 50px", marginTop: 64 }}
-      >
+    <Layout style={{ minHeight: "100vh" }}>
+      <Header className="header">
+        <div className="logo" />
+      </Header>
+      <Layout>
+        <Menu />
         <Routes>
-          <Route path="/" element={<Navigate to="/actions" />} />
+          <Route path="/" element={<Navigate to="/hub/interface-groups" />} />
+          <Route path="/hub/interface-groups">
+            <Route index element={<NewInterfaceGroupCatalog />} />
+            <Route path=":name" element={<NewInterfacesCatalog />} />
+          </Route>
           <Route path="actions">
             <Route index element={<Actions />} />
-            <Route path="new" element={<NewAction />} />
+            <Route path="new/:path/:revision" element={<NewAction />} />
             <Route path=":name" element={<Action />} />
           </Route>
-          <Route path="*" element={<p>Route not found</p>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Content>
-      <Footer />
+      </Layout>
     </Layout>
   );
 }
