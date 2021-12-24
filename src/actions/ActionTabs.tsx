@@ -49,7 +49,6 @@ function ActionTabs({
             column={1}
             layout="vertical"
             bordered
-            title="Inputs"
             style={{ marginTop: "24px" }}
           >
             <Descriptions.Item label="Input Parameters">
@@ -80,7 +79,6 @@ function ActionTabs({
             column={1}
             layout="vertical"
             bordered
-            title="Workflow"
             style={{ marginTop: "24px" }}
             extra={
               <Tooltip
@@ -128,7 +126,6 @@ function ActionTabs({
             column={1}
             layout="vertical"
             bordered
-            title="Outputs"
             style={{ marginTop: "24px" }}
           >
             <Descriptions.Item label="TypeInstances">

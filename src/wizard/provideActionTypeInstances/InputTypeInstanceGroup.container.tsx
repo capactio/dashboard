@@ -9,11 +9,13 @@ import InputTypeInstanceGroup from "./InputTypeInstanceGroup";
 interface InputParametersContainerProps {
   typeRef: TypeReference;
   setInputTypeInstanceID: (id: string) => void;
+  inputTypeInstanceID: string;
 }
 
 function InputParametersFromTypeSectionContainer({
   typeRef,
   setInputTypeInstanceID,
+  inputTypeInstanceID,
 }: InputParametersContainerProps) {
   const { data, isLoading, error } = useListTypeInstancesQuery({
     path: typeRef.path,
@@ -28,6 +30,7 @@ function InputParametersFromTypeSectionContainer({
         error={error as Error | undefined}
         typeInstances={data?.typeInstances as TypeInstance[]}
         setInputTypeInstanceID={setInputTypeInstanceID}
+        inputTypeInstanceID={inputTypeInstanceID}
       />
     </>
   );

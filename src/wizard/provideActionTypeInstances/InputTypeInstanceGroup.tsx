@@ -1,5 +1,5 @@
 import React from "react";
-import { Empty, Radio, Typography } from "antd";
+import { Col, Empty, Radio, Row, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { TypeInstance } from "../../generated/graphql";
@@ -12,6 +12,7 @@ interface InputTypeInstanceGroupProps {
   error?: Error;
   typeInstances: TypeInstance[];
   setInputTypeInstanceID: (data: string) => void;
+  inputTypeInstanceID: string;
 }
 
 function InputTypeInstanceGroup({
@@ -20,6 +21,7 @@ function InputTypeInstanceGroup({
   name,
   typeInstances,
   setInputTypeInstanceID,
+  inputTypeInstanceID,
 }: InputTypeInstanceGroupProps) {
   if (isLoading) {
     return <CenteredSpinner />;
@@ -64,9 +66,17 @@ function InputTypeInstanceGroup({
       )}
 
       {radioBtns.length > 0 && (
-        <Radio.Group size="large" buttonStyle="solid">
-          {radioBtns}
-        </Radio.Group>
+        <Row>
+          <Col span={24} className="huge-radio-group">
+            <Radio.Group
+              size="large"
+              buttonStyle="solid"
+              value={inputTypeInstanceID}
+            >
+              {radioBtns}
+            </Radio.Group>
+          </Col>
+        </Row>
       )}
     </>
   );
