@@ -9,7 +9,7 @@ interface InputParametersProps {
 }
 
 function InputParameters({ data }: InputParametersProps) {
-  if (!data?.length) {
+  if (!data) {
     return <Text key="empty">No input parameters</Text>;
   }
 
