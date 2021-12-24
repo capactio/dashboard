@@ -4,6 +4,7 @@ import { List, Typography } from "antd";
 const { Text, Paragraph } = Typography;
 
 interface InputParametersProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: { [key: string]: any };
 }
 

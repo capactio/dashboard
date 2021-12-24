@@ -4,6 +4,7 @@ import InputParameters from "./ActionInputParameters";
 import TypeInstancesList from "./ActionTypeInstancesList";
 import { ActionQuery, ActionStatusPhase } from "../generated/graphql";
 import { ProfileOutlined } from "@ant-design/icons";
+import ErrorAlert from "../layout/ErrorAlert";
 
 const { TabPane } = Tabs;
 const { Text, Paragraph } = Typography;
@@ -21,7 +22,11 @@ function ActionTabs({
   hasBeenRun,
   argoWorkflowLink,
 }: ActionTabsProps) {
-  const action = data.action!;
+  if (!data.action) {
+    return <ErrorAlert errorMessage="Action cannot be undefined" />;
+  }
+
+  const action = data.action;
   const renderedAction = {
     args: action.renderedAction?.args ?? {},
     runnerInterface: action.renderedAction?.runnerInterface ?? "unknown",

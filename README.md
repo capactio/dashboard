@@ -1,8 +1,8 @@
 # Dashboard
 
-> **🚧 UNDER CONSTRUCTION:**  This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.
+> **🚧 UNDER CONSTRUCTION:** This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.
 
-## Overview 
+## Overview
 
 Dashboard is a general purpose, web-based UI for Capact cluster. It allows users to manage Capact resources running in the target cluster. It is an official alternative for [CLI](https://capact.io/docs/cli/getting-started).
 
@@ -10,9 +10,9 @@ Dashboard is a general purpose, web-based UI for Capact cluster. It allows users
 
 - [Capact cluster](https://capact.io/docs/next/installation) created.
 
-   > **NOTE**: Currently, only the local version is supported. Use the latest Capact CLI and install Capact from the latest `main` branch.
-   > 
-   > `capact install --helm-repo=@latest --version=@latest`
+  > **NOTE**: Currently, only the local version is supported. Use the latest Capact CLI and install Capact from the latest `main` branch.
+  >
+  > `capact install --helm-repo=@latest --version=@latest`
 
 - [Node.js 16](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
@@ -55,7 +55,7 @@ kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
 The following environment variables can be set:
 
 | Name                                          | Required | Default                 | Description                                             |
-|-----------------------------------------------|----------|-------------------------|---------------------------------------------------------|
+| --------------------------------------------- | -------- | ----------------------- | ------------------------------------------------------- |
 | REACT_APP_CAPACT_GATEWAY_ENDPOINT             | yes      |                         | Capact Gateway endpoint.                                |
 | REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER | yes      |                         | Capact Gateway authorization header.                    |
 | REACT_APP_REFETCH_INTERVAL_MS                 | no       | `1000`                  | Re-fetch interval used by React Query to poll new data. |
@@ -95,3 +95,31 @@ The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run docker:build-image`
+
+Builds the Docker image based on already built application with `npm run build`.
+
+Supported environmental variables:
+
+- `DOCKER_REPOSITORY` (default: `ghcr.io/capactio`)
+- `DOCKER_TAG` (default: `latest`)
+
+### `npm run docker:push-image`
+
+Pushes the Docker image.
+
+Supported environmental variables:
+
+- `DOCKER_REPOSITORY` (default: `ghcr.io/capactio`)
+- `DOCKER_TAG` (default: `latest`)
+
+### Run built Docker image
+
+To run built Docker image, execute:
+
+```bash
+docker run --rm -it -p 3000:80 ghcr.io/capactio/dashboard:latest
+```
+
+To access Dashboard, open [http://127.0.0.1:3000](http://127.0.0.1:3000).
