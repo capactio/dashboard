@@ -122,4 +122,4 @@ To run built Docker image, execute:
 docker run --rm -it -p 3000:80 ghcr.io/capactio/dashboard:latest
 ```
 
-The app listens on port `3000`.
+To access Dashboard, open [http://127.0.0.1:3000](http://127.0.0.1:3000).

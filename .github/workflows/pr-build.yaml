@@ -9,6 +9,11 @@ on:
     branches:
       - "main"
 
+env:
+  DOCKER_TAG: PR-${{ github.event.pull_request.number }}
+  DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
+  APP_NAME: "dashboard"
+
 jobs:
   cancel-previous-workflows:
     name: Cancel previous workflows
@@ -29,10 +34,6 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       contents: read
-    env:
-      DOCKER_TAG: PR-${{ github.event.pull_request.number }}
-      DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
-      APP_NAME: "dashboard"
 
     steps:
       - name: Checkout repository
@@ -44,16 +45,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '17.x'
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -95,10 +87,6 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       packages: write
-    env:
-      DOCKER_TAG: PR-${{ github.event.pull_request.number }}
-      DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
-      APP_NAME: "dashboard"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

@@ -13,6 +13,6 @@ APP_NAME="dashboard"
 
 pushd "${REPO_ROOT_DIR}"
 
-docker build -t ${DOCKER_REPOSITORY}/${APP_NAME}:${DOCKER_TAG} .
+docker build -t "${DOCKER_REPOSITORY}/${APP_NAME}:${DOCKER_TAG}" .
 
 popd
