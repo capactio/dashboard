@@ -22,7 +22,7 @@ function Tabbing({ data, setCurrentIdx, currentIdx }: TabbingProps) {
       return <Typography.Text key="empty">No data to display</Typography.Text>;
     case 1:
       return data[0].content;
-    default:
+    default: {
       const tabs = data.map(({ name, content, showCheckmarkIcon }, idx) => {
         const tabPaneNameComponent = (
           <>
@@ -48,6 +48,7 @@ function Tabbing({ data, setCurrentIdx, currentIdx }: TabbingProps) {
           {tabs}
         </Tabs>
       );
+    }
   }
 }
 
