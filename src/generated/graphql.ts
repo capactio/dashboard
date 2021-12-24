@@ -1851,7 +1851,15 @@ export type ListInterfacesFromInterfaceGroupQuery = {
                   output: {
                     __typename?: "InterfaceOutput";
                     typeInstances: Array<
-                      | { __typename?: "OutputTypeInstance"; name: string }
+                      | {
+                          __typename?: "OutputTypeInstance";
+                          name: string;
+                          typeRef: {
+                            __typename?: "TypeReference";
+                            path: any;
+                            revision: any;
+                          };
+                        }
                       | null
                       | undefined
                     >;
@@ -2466,6 +2474,10 @@ export const ListInterfacesFromInterfaceGroupDocument = `
           output {
             typeInstances {
               name
+              typeRef {
+                path
+                revision
+              }
             }
           }
         }

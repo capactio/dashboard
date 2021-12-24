@@ -47,7 +47,7 @@ function InterfacesCard({ interfaces, error, isLoading }: InterfacesCardProps) {
 
     return (
       <>
-        <Col span={24 / 6}>
+        <Col span={8}>
           <Card
             key={rev.key}
             hoverable

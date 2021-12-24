@@ -1,23 +1,13 @@
-import {
-  Card,
-  Col,
-  Descriptions,
-  Input,
-  List,
-  Row,
-  Tooltip,
-  Typography,
-} from "antd";
+import { Card, Col, Descriptions, Input, List, Row, Tag, Tooltip } from "antd";
 import "./InterfacesList.css";
 import React, { useState } from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
-import { RightOutlined } from "@ant-design/icons";
+import { RightOutlined, SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { InterfaceRevisionWithKey } from "./Interfaces.container";
+import { TypeReference } from "../generated/graphql";
 
-const { Text } = Typography;
-const { Search } = Input;
 const { Item } = List;
 
 interface InterfacesListProps {
@@ -42,9 +32,10 @@ function InterfacesList({ interfaces, error, isLoading }: InterfacesListProps) {
   });
 
   const extraContent = (
-    <Search
-      allowClear
+    <Input
       placeholder="name"
+      allowClear
+      suffix={<SearchOutlined style={{ color: "rgba(0,0,0,.45)" }} />}
       onChange={(e) => {
         if (namePrefix === e.target.value) {
           return;
@@ -119,18 +110,44 @@ function InterfacesList({ interfaces, error, isLoading }: InterfacesListProps) {
 
 interface namedEntry {
   name: string;
+  typeRef?: TypeReference | null;
 }
 
 function toCodeItemList(arg?: Array<namedEntry | undefined | null>) {
-  return arg?.map((v) => {
-    return (
-      v && (
-        <Text key={v.name} code>
+  return arg
+    ?.filter((v): v is namedEntry => !!v)
+    .map((v) => (
+      <AddTypeRefTooltipIfPossible typeRef={v.typeRef}>
+        <Tag color="blue" style={{ cursor: "default" }} key={v.name}>
           {v.name}
-        </Text>
-      )
-    );
-  });
+        </Tag>
+      </AddTypeRefTooltipIfPossible>
+    ));
+}
+
+interface AddTypeRefTooltipIfPossibleProps {
+  children: React.ReactNode;
+  typeRef?: TypeReference | null;
+}
+
+function AddTypeRefTooltipIfPossible({
+  children,
+  typeRef,
+}: AddTypeRefTooltipIfPossibleProps) {
+  if (!typeRef) {
+    return <>{children}</>;
+  }
+
+  return (
+    <Tooltip
+      placement="top"
+      overlayStyle={{ maxWidth: "420px" }}
+      title={`${typeRef.path}:${typeRef.revision}`}
+      arrowPointAtCenter
+    >
+      {children}
+    </Tooltip>
+  );
 }
 
 export default InterfacesList;
