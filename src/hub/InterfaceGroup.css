@@ -1,3 +1,18 @@
 .ant-avatar > img {
   object-fit: contain;
 }
+
+.interface-group-count-wrapper {
+  margin-top: 8px;
+}
+
+.interface-group-count {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+}
+
+.interface-group-count .ant-badge-count {
+  background-color: var(--capact-gray-lighter);
+  color: var(--capact-gray-dark);
+}

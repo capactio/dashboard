@@ -1,17 +1,30 @@
-.main-header {
+.header {
   width: 100%;
   z-index: 100;
   padding: 0 24px;
 }
 
-.main-header-logo {
+.header-logo {
   float: left;
-  width: 150px;
-  height: 31px;
-  margin: 8px 0 16px;
-  background: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  display: flex;
+  font-weight: 700;
 }
 
-.main-header-menu {
-  justify-content: right;
+.header-menu {
+  flex-direction: row-reverse;
+}
+
+.header-logo-image {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+}
+
+.header-logo-title {
+  letter-spacing: 1px;
+  font-family: Barlow, Fira Sans, sans-serif;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--capact-white);
 }

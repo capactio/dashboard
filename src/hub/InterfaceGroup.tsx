@@ -35,25 +35,26 @@ function InterfaceGroup({
     const ifaceCnt = interfaces.length;
     return (
       <Col span={6} key={metadata.path}>
-        <Badge.Ribbon text={ifaceCnt}>
-          <Card
-            hoverable={ifaceCnt > 0}
-            onClick={() => {
-              ifaceCnt && navigate(`/hub/interface-groups/${metadata.path}`);
-            }}
-            bordered={false}
-          >
-            <Card.Meta
-              avatar={
-                <Avatar shape="square" size="large" src={metadata.iconURL} />
-              }
-              title={metadata.displayName}
-              description={
-                <Paragraph ellipsis={{ rows: 1 }}>{metadata.path}</Paragraph>
-              }
-            />
-          </Card>
-        </Badge.Ribbon>
+        <Card
+          hoverable={ifaceCnt > 0}
+          onClick={() => {
+            ifaceCnt && navigate(`/hub/interface-groups/${metadata.path}`);
+          }}
+          bordered={false}
+        >
+          <Card.Meta
+            avatar={
+              <Avatar shape="square" size="large" src={metadata.iconURL} />
+            }
+            title={metadata.displayName}
+            description={
+              <Paragraph ellipsis={{ rows: 1 }}>{metadata.path}</Paragraph>
+            }
+          />
+          <div className="interface-group-count-wrapper">
+            <Badge className="interface-group-count" count={ifaceCnt} />
+          </div>
+        </Card>
       </Col>
     );
   });

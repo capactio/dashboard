@@ -5,6 +5,7 @@ import { Button, Layout, Menu } from "antd";
 import { AuthContext } from "../Auth";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
+import { Link } from "react-router-dom";
 
 const { Header: AntHeader } = Layout;
 
@@ -12,9 +13,16 @@ function Header() {
   const authCtx = useContext(AuthContext);
 
   return (
-    <AntHeader className="main-header">
-      <div className="main-header-logo" />
-      <Menu theme="dark" mode="horizontal" className="main-header-menu">
+    <AntHeader className="header">
+      <Link className="header-logo" to="/">
+        <img
+          className="header-logo-image"
+          src="/logo_white.svg"
+          alt="Capact Logo"
+        />
+        <b className="header-logo-title">Capact</b>
+      </Link>
+      <Menu theme="dark" mode="horizontal" className="header-menu">
         <SubMenu key="SubMenu" title="User" icon={<UserOutlined />}>
           <Menu.Item
             key="logout"

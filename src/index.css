@@ -13,4 +13,54 @@ code {
     monospace;
 }
 
-@import "~antd/dist/antd.css";
+@import "antd/dist/antd.variable.min.css";
+
+:root {
+  /* Capact colors */
+  --capact-white: #fff;
+  --capact-black: #000;
+  --capact-blue-dark: #000c19;
+  --capact-blue: #004c91;
+  --capact-red: #d00000;
+  --capact-orange-dark: #e85d04;
+  --capact-orange: #f48c06;
+  --capact-orange-light: #faa307;
+  --capact-orange-lighter: #ffba0d;
+  --capact-gray-lighter: #f5f5f5;
+  --capact-gray-light: #ededed;
+  --capact-gray-dark: #333;
+}
+
+/* Ant UI style overrides */
+
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@700&family=Fira+Code&family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Barlow", "Fira Sans", sans-serif;
+}
+
+body {
+  font-family: "Fira Sans", sans-serif;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: "Fira Code", monospace;
+}
+
+:root {
+  --ant-primary-1: #ededed !important;
+}
+
+.ant-layout-header {
+  background: var(--capact-blue-dark);
+}
+
+.ant-card-meta-title {
+  font-weight: 700;
+}
