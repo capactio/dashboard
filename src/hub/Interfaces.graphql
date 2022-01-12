@@ -1,17 +1,16 @@
-query ListInterfaceGroups {
-  interfaceGroups {
-    metadata {
-      displayName
-      path
-    }
-
+query ListInterfacesFromInterfaceGroup($path: NodePath!) {
+  interfaceGroup(path: $path) {
     interfaces {
       latestRevision {
         revision
         metadata {
           path
+          prefix
+          name
           displayName
           iconURL
+          documentationURL
+          description
         }
         spec {
           input {
@@ -23,6 +22,15 @@ query ListInterfaceGroups {
                 revision
               }
             }
+            typeInstances {
+              name
+              typeRef {
+                path
+                revision
+              }
+            }
+          }
+          output {
             typeInstances {
               name
               typeRef {

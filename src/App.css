@@ -1,9 +1,17 @@
 .logo {
   float: left;
-  width: 120px;
+  width: 150px;
   height: 31px;
-  margin: 16px 24px 16px 0;
+  margin: 8px 0 16px;
   background: rgba(255, 255, 255, 0.2);
+}
+
+.layout-header {
+  height: 48px;
+  line-height: 48px;
+  width: 100%;
+  z-index: 100;
+  padding: 0 24px;
 }
 
 label.huge-radio.ant-radio-button-wrapper {
@@ -34,4 +42,21 @@ label.huge-radio.ant-radio-button-wrapper p {
 
 .huge-radio {
   margin: 5px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+
+.page-header {
+  background: #fff;
+}
+
+.page-header.has-breadcrumb {
+  padding-top: 24px;
+}
+
+.ant-layout-sider-trigger {
+  background: rgba(0, 0, 0, 0.02);
+  color: #001529;
 }

@@ -1,0 +1,48 @@
+import { Layout, Menu as AntMenu } from "antd";
+import React, { useState } from "react";
+import { ApartmentOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { Link, useLocation } from "react-router-dom";
+
+const { Item } = AntMenu;
+const { Sider } = Layout;
+
+function Menu() {
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+
+  const links = [
+    {
+      name: "Hub",
+      route: "/hub/interface-groups",
+      icon: <ApartmentOutlined />,
+    },
+    {
+      name: "Actions",
+      route: "/actions",
+      icon: <AppstoreOutlined />,
+    },
+  ];
+
+  const currentRoute = links.find((elem) =>
+    location.pathname.startsWith(elem.route)
+  );
+
+  return (
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={(collapsed) => setCollapsed(collapsed)}
+      className="site-layout-background"
+    >
+      <AntMenu mode="inline" selectedKeys={[currentRoute?.route ?? ""]}>
+        {links.map(({ route, name, icon }) => (
+          <Item key={route} icon={icon}>
+            <Link to={route}>{name}</Link>
+          </Item>
+        ))}
+      </AntMenu>
+    </Sider>
+  );
+}
+
+export default Menu;
