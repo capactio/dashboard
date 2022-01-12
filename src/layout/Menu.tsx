@@ -1,11 +1,6 @@
 import { Layout, Menu as AntMenu } from "antd";
 import React, { useState } from "react";
-import {
-  ApartmentOutlined,
-  AppstoreOutlined,
-  ContainerOutlined,
-  ProfileOutlined,
-} from "@ant-design/icons";
+import { ApartmentOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { Link, useLocation } from "react-router-dom";
 
 const { Item } = AntMenu;
