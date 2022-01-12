@@ -7,6 +7,9 @@ import "./InterfaceGroup.css";
 
 const { Paragraph } = Typography;
 
+// defines number of skeletons Cards to display while loading
+const skeletonsTabsNumber = 15;
+
 interface InterfaceGroupProps {
   interfaceGroups: InterfaceGroupGQL[];
   error?: Error;
@@ -59,7 +62,7 @@ function InterfaceGroup({
 }
 
 function loadingCards() {
-  const skeletons = Array(3).fill(
+  const skeletons = Array(skeletonsTabsNumber).fill(
     <Col span={6}>
       <Card bordered={false}>
         <Skeleton

@@ -6,6 +6,9 @@ import {
 import InterfacesCard from "./InterfacesCard";
 import { ResourceReference } from "../wizard/ResourceRef";
 import InterfacesList from "./InterfacesList";
+import { Result } from "antd";
+import { Link } from "react-router-dom";
+import { InfoCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
 
 export enum InterfacesView {
   Card,
@@ -26,6 +29,20 @@ function InterfacesContainer({ path, view }: InterfacesContainerProps) {
     path: path,
   });
 
+  if (!isLoading && (!data || !data.interfaceGroup)) {
+    return (
+      <Result
+        status="404"
+        title="404"
+        subTitle={
+          <>
+            Sorry, <b>{path}</b> InterfaceGroup was not found in Hub.
+          </>
+        }
+      />
+    );
+  }
+
   const ifaces = data?.interfaceGroup?.interfaces.map(
     ({ latestRevision: rev }) => {
       return {
@@ -42,11 +59,31 @@ function InterfacesContainer({ path, view }: InterfacesContainerProps) {
   };
 
   switch (view) {
-    case InterfacesView.Card: // TODO: Remove?
+    case InterfacesView.Card:
       return <InterfacesCard {...props} />;
     case InterfacesView.List:
       return <InterfacesList {...props} />;
   }
+}
+
+export function interfaceActionsButtons(rev: InterfaceRevisionWithKey) {
+  const btns = [
+    <Link to={`/actions/new/${rev?.metadata.path}/${rev?.revision}`}>
+      <PlusCircleOutlined /> Create Action
+    </Link>,
+  ];
+  if (rev?.metadata.documentationURL) {
+    btns.unshift(
+      <a
+        href={rev.metadata.documentationURL}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <InfoCircleOutlined /> Documentation
+      </a>
+    );
+  }
+  return btns;
 }
 
 export default InterfacesContainer;

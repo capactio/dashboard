@@ -3,9 +3,11 @@ import "./InterfacesList.css";
 import React, { useState } from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
-import { RightOutlined, SearchOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { InterfaceRevisionWithKey } from "./Interfaces.container";
+import { SearchOutlined } from "@ant-design/icons";
+import {
+  interfaceActionsButtons,
+  InterfaceRevisionWithKey,
+} from "./Interfaces.container";
 import { TypeReference } from "../generated/graphql";
 
 const { Item } = List;
@@ -62,19 +64,7 @@ function InterfacesList({ interfaces, error, isLoading }: InterfacesListProps) {
           const output = toCodeItemList(rev?.spec.output.typeInstances);
 
           return (
-            <Item
-              className="list-item"
-              actions={[
-                <Link
-                  style={{ fontSize: 22 }}
-                  to={`/actions/new/${rev?.metadata.path}/${rev?.revision}`}
-                >
-                  <Tooltip placement="topLeft" title="Create Action">
-                    <RightOutlined />
-                  </Tooltip>
-                </Link>,
-              ]}
-            >
+            <Item className="list-item" actions={interfaceActionsButtons(rev)}>
               <Row>
                 <Col span={10}>
                   <Item.Meta
@@ -115,7 +105,7 @@ interface namedEntry {
 
 function toCodeItemList(arg?: Array<namedEntry | undefined | null>) {
   return arg
-    ?.filter((v): v is namedEntry => !!v)
+    ?.filter((v): v is namedEntry => v !== undefined && v !== null)
     .map((v) => (
       <AddTypeRefTooltipIfPossible typeRef={v.typeRef}>
         <Tag color="blue" style={{ cursor: "default" }} key={v.name}>

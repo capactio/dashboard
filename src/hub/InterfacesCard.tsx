@@ -2,9 +2,11 @@ import { Card, Col, Row, Statistic } from "antd";
 import React from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
-import { InfoCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
-import { InterfaceRevisionWithKey } from "./Interfaces.container";
+import {
+  interfaceActionsButtons,
+  InterfaceRevisionWithKey,
+} from "./Interfaces.container";
+import "./InterfacesCard.css";
 
 interface InterfacesCardProps {
   interfaces?: InterfaceRevisionWithKey[];
@@ -21,25 +23,6 @@ function InterfacesCard({ interfaces, error, isLoading }: InterfacesCardProps) {
     return <ErrorAlert error={error} />;
   }
 
-  const cardActions = (rev: InterfaceRevisionWithKey) => {
-    const btns = [
-      <Link to={`/actions/new/${rev?.metadata.path}/${rev?.revision}`}>
-        <PlusCircleOutlined /> Create
-      </Link>,
-    ];
-    if (rev?.metadata.documentationURL) {
-      btns.unshift(
-        <a
-          href={rev.metadata.documentationURL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <InfoCircleOutlined /> Action Doc
-        </a>
-      );
-    }
-    return btns;
-  };
   const cards = interfaces?.map((rev) => {
     const inputParams = rev?.spec.input.parameters.length ?? "None";
     const inputTIss = rev?.spec.input.typeInstances.length ?? "None";
@@ -47,34 +30,29 @@ function InterfacesCard({ interfaces, error, isLoading }: InterfacesCardProps) {
 
     return (
       <>
-        <Col span={8}>
+        <Col span={6}>
           <Card
             key={rev.key}
             hoverable
-            actions={cardActions(rev)}
+            actions={interfaceActionsButtons(rev)}
             bordered={false}
           >
             <Card.Meta
+              className="interfaces-card"
               title={rev?.metadata.displayName}
-              description={
-                <>
-                  <Row gutter={2}>
-                    <Col span={12}>
-                      <Statistic title="Input Parameters" value={inputParams} />
-                    </Col>
-                    <Col span={12}>
-                      <Statistic
-                        title="Input TypeInstances"
-                        value={inputTIss}
-                      />
-                    </Col>
-                    <Col span={24}>
-                      <Statistic title="Output TypeInstances" value={output} />
-                    </Col>
-                  </Row>
-                </>
-              }
+              description={rev?.key}
             />
+            <Row gutter={2}>
+              <Col span={8}>
+                <Statistic title="Input Parameters" value={inputParams} />
+              </Col>
+              <Col span={8}>
+                <Statistic title="Input TypeInstances" value={inputTIss} />
+              </Col>
+              <Col span={8}>
+                <Statistic title="Output TypeInstances" value={output} />
+              </Col>
+            </Row>
           </Card>
         </Col>
       </>

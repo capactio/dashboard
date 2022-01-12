@@ -1,0 +1,6 @@
+.interfaces-card {
+  margin-bottom: 20px;
+}
+.interfaces-card .ant-card-meta-detail > div:not(:last-child) {
+  margin-bottom: 0;
+}
