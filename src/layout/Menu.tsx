@@ -26,16 +26,6 @@ function Menu() {
       route: "/actions",
       icon: <AppstoreOutlined />,
     },
-    {
-      name: "TypeInstances",
-      route: "/type-instances",
-      icon: <ProfileOutlined />,
-    },
-    {
-      name: "Policy",
-      route: "/policy",
-      icon: <ContainerOutlined />,
-    },
   ];
 
   const currentRoute = links.find((elem) =>
