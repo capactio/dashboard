@@ -33,6 +33,7 @@ export type StepComponent = React.ReactElement<StepComponentProps>;
 export interface StepComponentProps {
   wizardData: WizardData;
   setWizardData: (data: WizardData) => void;
+  navigateToNextStep: () => void;
 }
 
 interface WizardContainerProps {
@@ -61,12 +62,6 @@ function WizardContainer({
       actionInterface,
     } as WizardData);
   }
-
-  const stepProps = { wizardData, setWizardData };
-  const steps = collectRequiredSteps(stepProps);
-  const canProceed = steps[currentStepIdx].canProceed(wizardData);
-  const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
-
   const nextStep = () => {
     setCurrentStep(currentStepIdx + 1);
   };
@@ -74,6 +69,11 @@ function WizardContainer({
   const previousStep = () => {
     setCurrentStep(currentStepIdx - 1);
   };
+
+  const stepProps = { wizardData, setWizardData, navigateToNextStep: nextStep };
+  const steps = collectRequiredSteps(stepProps);
+  const canProceed = steps[currentStepIdx].canProceed(wizardData);
+  const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
 
   return (
     <Wizard

@@ -100,7 +100,7 @@ function ActionSummary({
 
   // maybe extra as switch to advance mode?
   return (
-    <Content className="action-overview">
+    <Content className="action-summary">
       <Descriptions column={1} bordered>
         <Descriptions.Item label="Name">{actionNameField()}</Descriptions.Item>
         <Descriptions.Item label="Interface">
@@ -161,9 +161,8 @@ function ActionSummary({
           />
         </TabPane>
       </Tabs>
-      {/*TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor */}
       <Button
-        className="overview-submit-btn"
+        className="summary-submit-btn"
         type="primary"
         onClick={submitFunc}
         loading={isSubmitLoading}

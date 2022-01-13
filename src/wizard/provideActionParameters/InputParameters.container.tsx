@@ -7,6 +7,7 @@ interface InputParametersContainerProps extends StepComponentProps {}
 function InputParametersContainer({
   wizardData = {},
   setWizardData,
+  navigateToNextStep,
 }: InputParametersContainerProps) {
   const inputParams = wizardData?.actionInterface?.spec.input.parameters ?? [];
 
@@ -16,6 +17,14 @@ function InputParametersContainer({
       [name]: data,
     };
     setWizardData({ ...wizardData, actionInputParameters } as WizardData);
+
+    const requiredLen = inputParams.length ?? 0;
+    const submittedLen = Object.keys(actionInputParameters ?? {}).length;
+    const wasAllDataProvided = requiredLen === submittedLen;
+
+    if (wasAllDataProvided) {
+      navigateToNextStep();
+    }
   };
 
   return (

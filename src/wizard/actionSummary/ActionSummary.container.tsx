@@ -70,8 +70,6 @@ function ActionSummaryContainer({ wizardData }: ActionSummaryContainerProps) {
     });
   };
 
-  console.log("adv inoput", advancedInput);
-
   return (
     <ActionSummary
       data={

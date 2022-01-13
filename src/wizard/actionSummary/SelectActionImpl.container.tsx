@@ -44,7 +44,6 @@ function SelectActionImplContainer({
   };
 
   const resetActionImplAdditionalInput = (name: string) => {
-    console.log(name);
     const actionImplAdditionalInput = {
       ...advancedModeInput.actionImplAdditionalInput,
     };
