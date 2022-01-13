@@ -10,6 +10,12 @@ mutation RunAction($actionName: String!) {
   }
 }
 
+mutation DeleteAction($actionName: String!) {
+  deleteAction(name: $actionName) {
+    name
+  }
+}
+
 fragment ActionFields on Action {
   name
   createdAt

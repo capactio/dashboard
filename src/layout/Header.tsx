@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./Header.css";
 
-import { Button, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import { AuthContext } from "../Auth";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";

@@ -1438,6 +1438,15 @@ export type RunActionMutation = {
   runAction: { __typename?: "Action"; name: string };
 };
 
+export type DeleteActionMutationVariables = Exact<{
+  actionName: Scalars["String"];
+}>;
+
+export type DeleteActionMutation = {
+  __typename?: "Mutation";
+  deleteAction: { __typename?: "Action"; name: string };
+};
+
 export type ActionFieldsFragment = {
   __typename?: "Action";
   name: string;
@@ -2364,6 +2373,35 @@ export const useRunActionMutation = <TError = unknown, TContext = unknown>(
     (variables?: RunActionMutationVariables) =>
       Fetcher<RunActionMutation, RunActionMutationVariables>(
         RunActionDocument,
+        variables
+      )(),
+    options
+  );
+export const DeleteActionDocument = `
+    mutation DeleteAction($actionName: String!) {
+  deleteAction(name: $actionName) {
+    name
+  }
+}
+    `;
+export const useDeleteActionMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteActionMutation,
+    TError,
+    DeleteActionMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteActionMutation,
+    TError,
+    DeleteActionMutationVariables,
+    TContext
+  >(
+    "DeleteAction",
+    (variables?: DeleteActionMutationVariables) =>
+      Fetcher<DeleteActionMutation, DeleteActionMutationVariables>(
+        DeleteActionDocument,
         variables
       )(),
     options

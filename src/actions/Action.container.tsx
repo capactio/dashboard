@@ -1,5 +1,6 @@
 import { message } from "antd";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ARGO_WORKFLOWS_UI_BASE_URL,
   QUERY_REFETCH_INTERVAL_MS,
@@ -8,6 +9,7 @@ import {
   ActionStatusPhase,
   useActionQuery,
   useRunActionMutation,
+  useDeleteActionMutation,
 } from "../generated/graphql";
 
 import Action from "./Action";
@@ -29,7 +31,9 @@ function ActionContainer({ name }: ActionContainerProps) {
     { actionName: name },
     { refetchInterval: QUERY_REFETCH_INTERVAL_MS }
   );
+  const navigate = useNavigate();
   const runActionMutation = useRunActionMutation();
+  const deleteActionMutation = useDeleteActionMutation();
 
   const [typeInstanceDetailsState, setTypeInstanceDetailsState] =
     useState<TypeInstanceDetails>({ visible: false });
@@ -51,6 +55,12 @@ function ActionContainer({ name }: ActionContainerProps) {
   const runAction = () => {
     runActionMutation.mutate({ actionName: name });
     message.success(`Action '${name}' run successfully`);
+  };
+
+  const deleteAction = () => {
+    deleteActionMutation.mutate({ actionName: name });
+    message.success(`Action '${name}' deleted successfully`);
+    navigate("/actions");
   };
 
   const canBeRun =
@@ -85,10 +95,12 @@ function ActionContainer({ name }: ActionContainerProps) {
         isLoading={isLoading}
         canBeRun={canBeRun}
         isRunActionLoading={runActionMutation.isLoading}
+        isDeleteActionLoading={deleteActionMutation.isLoading}
         hasBeenRun={hasBeenRun}
         argoWorkflowLink={argoWorkflowLink}
         showTypeInstanceDetails={showTypeInstanceDetails}
         runAction={runAction}
+        deleteAction={deleteAction}
       />
     </>
   );
