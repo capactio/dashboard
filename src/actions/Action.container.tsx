@@ -52,25 +52,41 @@ function ActionContainer({ name }: ActionContainerProps) {
     });
   };
 
-  const runAction = () => {
-    runActionMutation.mutate({ actionName: name });
-    message.success(`Action '${name}' run successfully`);
+  const runAction = async () => {
+    try {
+      await runActionMutation.mutateAsync({ actionName: name });
+      message.success(`Action '${name}' run successfully`);
+    } catch (err) {
+      const error = err as Error;
+      message.error(
+        `Failed to run Action. Got error: ${error.name}: ${error.message}`
+      );
+    }
   };
 
-  const deleteAction = () => {
-    deleteActionMutation.mutate({ actionName: name });
-    message.success(`Action '${name}' deleted successfully`);
-    navigate("/actions");
+  const deleteAction = async () => {
+    try {
+      await deleteActionMutation.mutateAsync({ actionName: name });
+      message.success(`Successfully scheduled Action '${name}' deletion`);
+      navigate("/actions");
+    } catch (err) {
+      const error = err as Error;
+      message.error(
+        `Failed to delete Action. Got error: ${error.name}: ${error.message}`
+      );
+    }
   };
 
   const canBeRun =
     data?.action?.status?.phase === ActionStatusPhase.ReadyToRun &&
-    !(runActionMutation.isError || runActionMutation.isSuccess);
+    !runActionMutation.isSuccess;
   const hasBeenRun = [
     ActionStatusPhase.Running,
     ActionStatusPhase.Succeeded,
     ActionStatusPhase.Failed,
   ].includes(data?.action?.status?.phase ?? ActionStatusPhase.Initial);
+  const canBeDeleted =
+    data?.action?.status?.phase !== ActionStatusPhase.Running;
 
   let argoWorkflowLink;
   if (hasBeenRun) {
@@ -94,6 +110,7 @@ function ActionContainer({ name }: ActionContainerProps) {
         error={error as Error}
         isLoading={isLoading}
         canBeRun={canBeRun}
+        canBeDeleted={canBeDeleted}
         isRunActionLoading={runActionMutation.isLoading}
         isDeleteActionLoading={deleteActionMutation.isLoading}
         hasBeenRun={hasBeenRun}

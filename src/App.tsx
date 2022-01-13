@@ -10,12 +10,12 @@ import NewInterfacesCatalog from "./routes/hub-interfaces";
 import { Layout } from "antd";
 import Menu from "./layout/Menu";
 import NotFoundPage from "./layout/NotFound";
-import { RequireAuth } from "./Auth";
+import { RequireAuthContainer } from "./auth/RequireAuth.container";
 import Header from "./layout/Header";
 
 function App() {
   return (
-    <RequireAuth>
+    <RequireAuthContainer>
       <Layout>
         <Header />
         <Layout>
@@ -35,7 +35,7 @@ function App() {
           </Routes>
         </Layout>
       </Layout>
-    </RequireAuth>
+    </RequireAuthContainer>
   );
 }
 

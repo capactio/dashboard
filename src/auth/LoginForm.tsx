@@ -1,87 +1,21 @@
 import React from "react";
-import "./Auth.css";
-
-import {
-  defaultLoginDetails,
-  LoginDetails,
-  requestConfigLoader,
-} from "./http/connection";
+import "./LoginForm.css";
 import { Form, Input, Button, Card, Alert } from "antd";
-import { useTestConnectionQuery } from "./generated/graphql";
-import ErrorAlert from "./layout/ErrorAlert";
-import { useQueryClient } from "react-query";
-
-interface RequireAuthProps {
-  children?: React.ReactNode;
-}
-
-export interface AuthContextType {
-  logout: () => void;
-}
-
-export const AuthContext = React.createContext<AuthContextType>({
-  logout: () => undefined,
-});
-
-export function RequireAuth({ children }: RequireAuthProps) {
-  const [authenticated, setAuthenticated] = React.useState(false);
-  const queryClient = useQueryClient();
-
-  if (!authenticated && requestConfigLoader.existsAndValid()) {
-    setAuthenticated(true);
-  }
-
-  const query = useTestConnectionQuery(
-    {},
-    {
-      enabled: false,
-      retry: false,
-      keepPreviousData: false,
-    }
-  );
-
-  const logout = () => {
-    requestConfigLoader.reset();
-    queryClient.clear();
-    setAuthenticated(false);
-  };
-
-  const onLoginFormSubmit = (values: LoginDetails) => {
-    requestConfigLoader.save(values);
-    query.refetch();
-  };
-
-  if (!authenticated && !query.isError && query.data !== undefined) {
-    try {
-      requestConfigLoader.setValid();
-      setAuthenticated(true);
-    } catch (err) {
-      return <ErrorAlert error={err as Error | undefined} />;
-    }
-  }
-
-  if (!authenticated) {
-    return (
-      <LoginForm
-        loading={query.isLoading}
-        error={query.error as Error | undefined}
-        onLoginFormSubmit={onLoginFormSubmit}
-      />
-    );
-  }
-
-  return (
-    <AuthContext.Provider value={{ logout }}>{children}</AuthContext.Provider>
-  );
-}
+import { LoginDetails } from "../http/connection";
 
 interface LoginFormProps {
   error?: Error;
   loading: boolean;
+  defaultLoginDetails: LoginDetails;
   onLoginFormSubmit: (values: LoginDetails) => void;
 }
 
-function LoginForm({ loading, error, onLoginFormSubmit }: LoginFormProps) {
+function LoginForm({
+  loading,
+  error,
+  defaultLoginDetails,
+  onLoginFormSubmit,
+}: LoginFormProps) {
   return (
     <div className="login-form">
       <Card
@@ -145,3 +79,5 @@ function LoginForm({ loading, error, onLoginFormSubmit }: LoginFormProps) {
     </div>
   );
 }
+
+export default LoginForm;

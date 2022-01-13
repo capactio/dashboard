@@ -35,6 +35,7 @@ interface ActionProps {
   deleteAction: () => void;
   isDeleteActionLoading: boolean;
   canBeRun: boolean;
+  canBeDeleted: boolean;
   hasBeenRun: boolean;
   argoWorkflowLink?: string;
   showTypeInstanceDetails: (typeInstanceID: string) => void;
@@ -49,6 +50,7 @@ function Action({
   deleteAction,
   isDeleteActionLoading,
   canBeRun,
+  canBeDeleted,
   hasBeenRun,
   argoWorkflowLink,
   showTypeInstanceDetails,
@@ -67,6 +69,18 @@ function Action({
     return <ErrorAlert errorMessage={`Action doesn't exist`} />;
   }
 
+  const deleteButton = (
+    <Button
+      type="default"
+      danger
+      loading={isDeleteActionLoading}
+      icon={<DeleteOutlined />}
+      disabled={!canBeDeleted}
+    >
+      Delete
+    </Button>
+  );
+
   const extraButtons = (
     <Space size="middle">
       <Button
@@ -76,7 +90,7 @@ function Action({
         loading={isRunActionLoading}
         icon={hasBeenRun ? <CheckCircleOutlined /> : <PlaySquareOutlined />}
       >
-        Run Action
+        Run
       </Button>
       <Popconfirm
         title="Are you sure to delete this Action?"
@@ -84,15 +98,18 @@ function Action({
         okText="Yes"
         cancelText="No"
         placement="left"
+        disabled={!canBeDeleted}
       >
-        <Button
-          type="default"
-          danger
-          loading={isDeleteActionLoading}
-          icon={<DeleteOutlined />}
-        >
-          Delete
-        </Button>
+        {canBeDeleted ? (
+          deleteButton
+        ) : (
+          <Tooltip
+            placement="rightTop"
+            title={"Deleting running Action is not allowed"}
+          >
+            {deleteButton}
+          </Tooltip>
+        )}
       </Popconfirm>
     </Space>
   );

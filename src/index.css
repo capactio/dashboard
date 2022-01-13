@@ -57,7 +57,10 @@ samp {
   --ant-primary-1: #ededed !important;
 }
 
-.ant-layout-header {
+.ant-layout-header,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark,
+.ant-menu.ant-menu-dark .ant-menu-sub {
   background: var(--capact-blue-dark);
 }
 
