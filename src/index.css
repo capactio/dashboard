@@ -64,3 +64,8 @@ samp {
 .ant-card-meta-title {
   font-weight: 700;
 }
+
+.ant-card-actions > li > span > .anticon,
+.ant-card-actions > li > span a:not(.ant-btn) {
+  color: var(--capact-blue);
+}

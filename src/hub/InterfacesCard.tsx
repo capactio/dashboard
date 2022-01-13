@@ -29,33 +29,26 @@ function InterfacesCard({ interfaces, error, isLoading }: InterfacesCardProps) {
     const output = rev?.spec.output.typeInstances.length ?? "None";
 
     return (
-      <>
-        <Col span={6}>
-          <Card
-            key={rev.key}
-            hoverable
-            actions={interfaceActionsButtons(rev)}
-            bordered={false}
-          >
-            <Card.Meta
-              className="interfaces-card"
-              title={rev?.metadata.displayName}
-              description={rev?.key}
-            />
-            <Row gutter={2}>
-              <Col span={8}>
-                <Statistic title="Input Parameters" value={inputParams} />
-              </Col>
-              <Col span={8}>
-                <Statistic title="Input TypeInstances" value={inputTIss} />
-              </Col>
-              <Col span={8}>
-                <Statistic title="Output TypeInstances" value={output} />
-              </Col>
-            </Row>
-          </Card>
-        </Col>
-      </>
+      <Col key={rev.key} span={6}>
+        <Card hoverable actions={interfaceActionsButtons(rev)} bordered={false}>
+          <Card.Meta
+            className="interfaces-card"
+            title={rev?.metadata.displayName}
+            description={rev?.key}
+          />
+          <Row gutter={2}>
+            <Col span={8}>
+              <Statistic title="Input Parameters" value={inputParams} />
+            </Col>
+            <Col span={8}>
+              <Statistic title="Input TypeInstances" value={inputTIss} />
+            </Col>
+            <Col span={8}>
+              <Statistic title="Output TypeInstances" value={output} />
+            </Col>
+          </Row>
+        </Card>
+      </Col>
     );
   });
   return <Row gutter={[24, 24]}> {cards} </Row>;
