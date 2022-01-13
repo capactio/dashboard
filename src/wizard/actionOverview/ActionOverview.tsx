@@ -8,6 +8,7 @@ import SelectActionImplContainer from "./SelectActionImpl.container";
 import { ResourceReference } from "../ResourceRef";
 import { ActionOverviewInput } from "./ActionOverview.container";
 import { EditOutlined } from "@ant-design/icons";
+import { InputMaybe, Scalars } from "../../generated/graphql";
 
 const { Content } = Layout;
 const { Text, Paragraph } = Typography;
@@ -70,13 +71,18 @@ function ActionOverview({
     );
   };
 
-  const objParams = JSON.parse(data.input.input?.parameters);
-  const inputParamsSource = Object.keys(objParams).map((key) => {
-    return {
-      name: key,
-      value: objParams[key],
-    };
-  });
+  const inputParamsSource = (parameters?: string) => {
+    if (!parameters) {
+      return undefined;
+    }
+    const objParams = JSON.parse(data.input.input?.parameters ?? {});
+    return Object.keys(objParams).map((key) => {
+      return {
+        name: key,
+        value: objParams[key],
+      };
+    });
+  };
 
   // maybe extra as switch to advance mode?
   return (
@@ -84,6 +90,7 @@ function ActionOverview({
       <Descriptions column={1} bordered>
         <Descriptions.Item label="Name">{actionNameField()}</Descriptions.Item>
         <Descriptions.Item label="Interface">
+          g
           <Text code>
             {data.input.actionRef.path}:{data.input.actionRef.revision}
           </Text>
@@ -108,7 +115,9 @@ function ActionOverview({
             style={{ marginTop: "24px" }}
           >
             <Descriptions.Item label="Input Parameters">
-              <InputParameters dataSource={inputParamsSource} />
+              <InputParameters
+                dataSource={inputParamsSource(data.input.input?.parameters)}
+              />
             </Descriptions.Item>
             <Descriptions.Item label="Input TypeInstances">
               {/*TODO: display Input TypeInstances. The TypeInstancesList needs to be refactored:

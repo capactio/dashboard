@@ -38,12 +38,18 @@ function ActionTabs({
     action.status?.phase === ActionStatusPhase.Initial ||
     action.status?.phase === ActionStatusPhase.BeingRendered;
 
-  const inputParamsSource = Object.keys(action.input?.parameters).map((key) => {
-    return {
-      name: key,
-      value: JSON.parse(action.input?.parameters[key]),
-    };
-  });
+  const inputParamsSource = (parameters: any) => {
+    if (!parameters) {
+      return undefined;
+    }
+
+    return Object.keys(parameters).map((key) => {
+      return {
+        name: key,
+        value: JSON.parse(parameters[key]),
+      };
+    });
+  };
 
   return (
     <Spin
@@ -59,7 +65,9 @@ function ActionTabs({
             style={{ marginTop: "24px" }}
           >
             <Descriptions.Item label="Input Parameters">
-              <InputParameters dataSource={inputParamsSource} />
+              <InputParameters
+                dataSource={inputParamsSource(action.input?.parameters)}
+              />
             </Descriptions.Item>
             <Descriptions.Item label="Input TypeInstances">
               <TypeInstancesList
