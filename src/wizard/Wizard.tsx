@@ -11,24 +11,11 @@ const { Content } = Layout;
 interface WizardProps {
   steps: WizardSteps;
   currentStepIndex: number;
-  previousStepFn: () => void;
-  nextStepFn: () => void;
-  canProceed: boolean;
-  isNextBtnTakenOver: boolean;
   error?: Error;
   isLoading: boolean;
 }
 
-function Wizard({
-  steps,
-  currentStepIndex,
-  canProceed,
-  previousStepFn,
-  nextStepFn,
-  isNextBtnTakenOver,
-  isLoading,
-  error,
-}: WizardProps) {
+function Wizard({ steps, currentStepIndex, isLoading, error }: WizardProps) {
   if (isLoading) {
     return <CenteredSpinner />;
   }
@@ -45,7 +32,7 @@ function Wizard({
         ))}
       </Steps>
       <div className="steps-content">{steps[currentStepIndex].content}</div>
-      <div className="steps-action">
+      {/* <div className="steps-action">
         {currentStepIndex > 0 && (
           <Button
             type="default"
@@ -60,7 +47,7 @@ function Wizard({
             Next
           </Button>
         )}
-      </div>
+      </div> */}
     </Content>
   );
 }
