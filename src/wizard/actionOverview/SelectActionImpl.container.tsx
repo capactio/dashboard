@@ -1,6 +1,5 @@
 import React from "react";
 import SelectActionImpl from "./SelectActionImpl";
-import { StepComponentProps, WizardData } from "../Wizard.container";
 import { useListImplForInterfaceQuery } from "../../generated/graphql";
 import { ResourceReference } from "../ResourceRef";
 
@@ -10,15 +9,20 @@ export interface Implementation {
   typeRef: ResourceReference[];
 }
 
-interface SelectActionImplContainerProps extends StepComponentProps {}
+interface SelectActionImplContainerProps {
+  actRef: ResourceReference;
+  setActionImplAdditionalInput: (name: string, data: any) => void;
+  setActionImplPath: (actionImplPath: string) => void;
+}
 
 function SelectActionImplContainer({
-  wizardData,
-  setWizardData,
+  actRef,
+  setActionImplAdditionalInput,
+  setActionImplPath,
 }: SelectActionImplContainerProps) {
   const { data, isLoading, error } = useListImplForInterfaceQuery({
-    path: wizardData?.actionInterface?.metadata.path,
-    rev: wizardData?.actionInterface?.revision,
+    path: actRef.path,
+    rev: actRef.revision,
   });
 
   const rawData = data?.interface?.revision?.implementationRevisions ?? [];
@@ -34,23 +38,6 @@ function SelectActionImplContainer({
       typeRef: inputs,
     } as Implementation;
   });
-
-  const setActionImplPath = (actionImplPath: string) =>
-    setWizardData({
-      ...wizardData,
-      actionImplPath,
-    } as WizardData);
-
-  const setActionImplAdditionalInput = (name: string, data: any) => {
-    const actionImplAdditionalInput = {
-      ...wizardData!.actionImplAdditionalInput,
-      [name]: data,
-    };
-    setWizardData({
-      ...wizardData,
-      actionImplAdditionalInput,
-    } as WizardData);
-  };
 
   return (
     <SelectActionImpl

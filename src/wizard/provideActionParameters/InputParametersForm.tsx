@@ -43,6 +43,7 @@ function InputParametersForm({
         onSubmit={onSuccessSubmit}
         liveValidate={true}
       >
+        {/*TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor*/}
         <Button htmlType="submit" className="form-submit-btn" type="primary">
           Next
         </Button>

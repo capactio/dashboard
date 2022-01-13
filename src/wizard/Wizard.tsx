@@ -1,7 +1,7 @@
 import React from "react";
 import "./Wizard.css";
 import { Button, Layout, Steps } from "antd";
-import { StepComponent, WizardSteps } from "./Wizard.container";
+import { WizardSteps } from "./Wizard.container";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
 
@@ -15,7 +15,6 @@ interface WizardProps {
   nextStepFn: () => void;
   canProceed: boolean;
   isNextBtnTakenOver: boolean;
-  submitBtn: StepComponent;
   error?: Error;
   isLoading: boolean;
 }
@@ -26,7 +25,6 @@ function Wizard({
   canProceed,
   previousStepFn,
   nextStepFn,
-  submitBtn,
   isNextBtnTakenOver,
   isLoading,
   error,
@@ -68,7 +66,6 @@ function Wizard({
             Next
           </Button>
         )}
-        {currentStepIndex === steps.length - 1 && <div>{submitBtn}</div>}
       </div>
     </Content>
   );

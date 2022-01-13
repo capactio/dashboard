@@ -3,7 +3,7 @@ import CenteredSpinner from "../../layout/CenteredSpinner";
 import { ISubmitEvent } from "@rjsf/core";
 import { Button, Modal } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import { AdditionalInputSchema } from "./ImplAdditionalInput.container";
+import { AdditionalInputSchema } from "./SelectImplAdditionalInput.container";
 import ErrorAlert from "../../layout/ErrorAlert";
 import Form from "../../layout/Form";
 
@@ -20,7 +20,7 @@ function ImplAdditionalInputSection({
   isLoading,
   error,
 }: ImplAdditionalInputSectionProps) {
-  const [formData, setFormData] = React.useState(null);
+  const [formData, setFormData] = useState(null);
   const [visible, setVisible] = useState(false);
 
   if (isLoading) {

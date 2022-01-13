@@ -15,7 +15,7 @@ function InputTypeInstancesContainer({
     (item): item is InputTypeInstance => item !== null
   );
 
-  const submitFn = async (name: string, data: any) => {
+  const submitFn = async (name: string, data: string) => {
     const actionInputTypeInstances = {
       ...wizardData?.actionInputTypeInstances,
       [name]: data,
