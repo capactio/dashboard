@@ -37,14 +37,6 @@ jobs:
 
       - name: Lint code
         run: npm run lint
-      
-      # TODO: Remove once login form is implemented
-      - name: Configure environment variables for default Capact endpoint
-        run: |
-          cat > .env << ENDOFFILE
-          REACT_APP_CAPACT_GATEWAY_ENDPOINT="https://gateway.capact.local/graphql"
-          REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER="Basic Z3JhcGhxbDp0MHBfczNjcjN0"
-          ENDOFFILE
 
       - name: Build application
         # Unfortunately, the only way to not treat warnings as errors
