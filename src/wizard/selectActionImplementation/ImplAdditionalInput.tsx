@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import CenteredSpinner from "../../layout/CenteredSpinner";
-import { ISubmitEvent, withTheme } from "@rjsf/core";
+import { ISubmitEvent } from "@rjsf/core";
 import { Button, Modal } from "antd";
-import { Theme as FluentUITheme } from "@rjsf/fluent-ui";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { AdditionalInputSchema } from "./ImplAdditionalInput.container";
 import ErrorAlert from "../../layout/ErrorAlert";
+import Form from "../../layout/Form";
 
 interface ImplAdditionalInputSectionProps {
   additionalInputSchema: AdditionalInputSchema;
@@ -31,7 +31,6 @@ function ImplAdditionalInputSection({
     return <ErrorAlert error={error} />;
   }
 
-  const Form = withTheme(FluentUITheme);
   const onSuccessSubmit = ({ formData }: ISubmitEvent<any>) => {
     setImplAdditionalInput(additionalInputSchema.name, formData);
     setFormData(formData);

@@ -2,10 +2,10 @@ import React from "react";
 import "./InputParameters.css";
 import { JSONSchema7 } from "json-schema";
 import { Button } from "antd";
-import { ISubmitEvent, withTheme } from "@rjsf/core";
-import { Theme as FluentUITheme } from "@rjsf/fluent-ui";
+import { ISubmitEvent } from "@rjsf/core";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
+import Form from "../../layout/Form";
 
 interface InputParametersFormProps {
   isLoading: boolean;
@@ -34,7 +34,6 @@ function InputParametersForm({
     setInputParameter(formData);
   };
 
-  const Form = withTheme(FluentUITheme);
   return (
     <>
       <Form
