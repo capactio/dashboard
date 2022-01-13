@@ -5,7 +5,7 @@ import {
   PolicyInput,
   RulesForInterfaceInput,
 } from "../../generated/graphql";
-import { AdvancedModeInput } from "./ActionOverview.container";
+import { AdvancedModeInput } from "./ActionSummary.container";
 
 export function createActionGQLInput(
   wizardData: WizardData,

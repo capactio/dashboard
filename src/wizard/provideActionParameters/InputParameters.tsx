@@ -70,6 +70,12 @@ function InputParameters({
     };
   });
 
+  const requiredLen = inputParamsSchemas.length ?? 0;
+  const submittedLen = Object.keys(initInputParametersData ?? {}).length;
+
+  const wasAllDataProvided = requiredLen === submittedLen;
+  // TODO(https://github.com/capactio/backlog/issues/30): Enable next step
+
   return (
     <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />
   );

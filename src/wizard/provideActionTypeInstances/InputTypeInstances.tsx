@@ -61,6 +61,7 @@ function InputTypeInstances({
   const requiredLen = inputTypeInstancesRefs.length ?? 0;
   const selectedLen = Object.keys(inputTypeInstances ?? {}).length;
   const wasAllDataProvided = requiredLen === selectedLen;
+  // TODO(https://github.com/capactio/backlog/issues/30): Enable next step
 
   return (
     <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />

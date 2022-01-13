@@ -25,15 +25,13 @@ function InputParametersFromTypeSectionContainer({
   const parsedSchema = parseToJSONSchema7(rawJSONSchema);
 
   return (
-    <>
-      <InputParametersForm
-        isLoading={isLoading}
-        initData={initData}
-        error={errorOrUndefined([error, parsedSchema.error])}
-        schema={parsedSchema.schema}
-        setInputParameter={setInputParameter}
-      />
-    </>
+    <InputParametersForm
+      isLoading={isLoading}
+      initData={initData}
+      error={errorOrUndefined([error, parsedSchema.error])}
+      schema={parsedSchema.schema}
+      setInputParameter={setInputParameter}
+    />
   );
 }
 

@@ -10,7 +10,7 @@ import {
   names,
   uniqueNamesGenerator,
 } from "unique-names-generator";
-import ActionOverview from "./ActionOverview";
+import ActionSummary from "./ActionSummary";
 import React, { useState } from "react";
 import { createActionGQLInput } from "./CreateActionGQLInput";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +23,9 @@ const genAdjsColorsAndNames: Config = {
   length: 3,
 };
 
-interface ActionOverviewContainerProps extends StepComponentProps {}
+interface ActionSummaryContainerProps extends StepComponentProps {}
 
-export interface ActionOverviewInput
+export interface ActionSummaryInput
   extends CreateActionWithInputMutationVariables {
   actionImplPath: string;
 }
@@ -40,7 +40,7 @@ export interface AdvancedModeInput {
   actionImplPath?: string;
 }
 
-function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
+function ActionSummaryContainer({ wizardData }: ActionSummaryContainerProps) {
   const defaultActionRandomName = uniqueNamesGenerator(genAdjsColorsAndNames);
   const [advancedInput, setAdvancedInput] = useState<AdvancedModeInput>({
     actionName: defaultActionRandomName,
@@ -73,12 +73,12 @@ function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
   console.log("adv inoput", advancedInput);
 
   return (
-    <ActionOverview
+    <ActionSummary
       data={
         {
           ...input,
           actionImplPath: advancedInput.actionImplPath,
-        } as ActionOverviewInput
+        } as ActionSummaryInput
       }
       isSubmitLoading={isLoading}
       submitFunc={submitFn}
@@ -89,4 +89,4 @@ function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
   );
 }
 
-export default ActionOverviewContainer;
+export default ActionSummaryContainer;

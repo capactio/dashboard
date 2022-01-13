@@ -3,13 +3,13 @@ import "./SelectActionImpl.css";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { Button, Descriptions, Input, Layout, Tabs, Typography } from "antd";
 import InputParameters from "../../actions/ActionInputParameters";
-import "./ActionOverview.css";
+import "./ActionSummary.css";
 import SelectActionImplContainer from "./SelectActionImpl.container";
 import { ResourceReference } from "../ResourceRef";
 import {
-  ActionOverviewInput,
+  ActionSummaryInput,
   AdvancedModeInput,
-} from "./ActionOverview.container";
+} from "./ActionSummary.container";
 import { EditOutlined } from "@ant-design/icons";
 import TypeInstancesListContainer, {
   GenericTypeInstanceData,
@@ -19,8 +19,8 @@ const { Content } = Layout;
 const { Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
-interface ActionOverviewProps {
-  data: ActionOverviewInput;
+interface ActionSummaryProps {
+  data: ActionSummaryInput;
   error?: Error;
 
   isSubmitLoading: boolean;
@@ -31,7 +31,7 @@ interface ActionOverviewProps {
   setAdvancedModeInput: (advModeInput: AdvancedModeInput) => void;
 }
 
-function ActionOverview({
+function ActionSummary({
   error,
   data,
   isSubmitLoading,
@@ -39,7 +39,7 @@ function ActionOverview({
   submitFunc,
   setActionName,
   setAdvancedModeInput,
-}: ActionOverviewProps) {
+}: ActionSummaryProps) {
   const [editableInputName, setEditableInputName] = useState(false);
 
   if (error) {
@@ -148,7 +148,7 @@ function ActionOverview({
             </Descriptions.Item>
           </Descriptions>
         </TabPane>
-        <TabPane tab="Advanced Settings" key="2">
+        <TabPane tab={"Advanced Settings"} key="2">
           <SelectActionImplContainer
             actRef={
               new ResourceReference(
@@ -174,4 +174,4 @@ function ActionOverview({
   );
 }
 
-export default ActionOverview;
+export default ActionSummary;

@@ -1,5 +1,5 @@
-import { Col, Divider, Radio, Row, Space, Typography } from "antd";
 import React, { useState } from "react";
+import { Col, Radio, Row, Space, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import "./SelectActionImpl.css";
 import { Implementation } from "./SelectActionImpl.container";

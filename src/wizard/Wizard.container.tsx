@@ -7,7 +7,7 @@ import {
 } from "../generated/graphql";
 import InputParametersContainer from "./provideActionParameters/InputParameters.container";
 import InputTypeInstancesContainer from "./provideActionTypeInstances/InputTypeInstances.container";
-import ActionOverviewContainer from "./actionOverview/ActionOverview.container";
+import ActionSummaryContainer from "./actionSummary/ActionSummary.container";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type InputCollectionObj = { [key: string]: any };
@@ -127,8 +127,8 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
   }
 
   steps.push({
-    title: "Overview",
-    content: <ActionOverviewContainer {...stepProps} />,
+    title: "Summary",
+    content: <ActionSummaryContainer {...stepProps} />,
     canProceed: () => true,
     replaceNextBtn: () => true,
   });

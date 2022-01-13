@@ -2,7 +2,7 @@ import React from "react";
 import SelectActionImpl from "./SelectActionImpl";
 import { useListImplForInterfaceQuery } from "../../generated/graphql";
 import { ResourceReference } from "../ResourceRef";
-import { AdvancedModeInput } from "./ActionOverview.container";
+import { AdvancedModeInput } from "./ActionSummary.container";
 
 export interface Implementation {
   displayName: string;
@@ -49,11 +49,7 @@ function SelectActionImplContainer({
       ...advancedModeInput.actionImplAdditionalInput,
     };
 
-    console.log(actionImplAdditionalInput[name]);
     delete actionImplAdditionalInput[name];
-
-    console.log(actionImplAdditionalInput);
-
     setAdvancedModeInput({
       ...advancedModeInput,
       actionImplAdditionalInput,
