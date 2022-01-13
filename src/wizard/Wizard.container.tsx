@@ -22,6 +22,10 @@ export interface WizardData {
 export type WizardSteps = {
   title: string;
   content: StepComponent;
+
+  // TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor
+  canProceed: (data: WizardData) => boolean;
+  replaceNextBtn: (data: WizardData) => boolean;
 }[];
 
 export type StepComponent = React.ReactElement<StepComponentProps>;
@@ -29,10 +33,6 @@ export type StepComponent = React.ReactElement<StepComponentProps>;
 export interface StepComponentProps {
   wizardData: WizardData;
   setWizardData: (data: WizardData) => void;
-  nextStepFn: () => void;
-  previousStepFn: () => void;
-  currentStepIdx: number;
-  stepsCount: number;
 }
 
 interface WizardContainerProps {
@@ -62,22 +62,18 @@ function WizardContainer({
     } as WizardData);
   }
 
-  const nextStepFn = () => {
+  const stepProps = { wizardData, setWizardData };
+  const steps = collectRequiredSteps(stepProps);
+  const canProceed = steps[currentStepIdx].canProceed(wizardData);
+  const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
+
+  const nextStep = () => {
     setCurrentStep(currentStepIdx + 1);
   };
 
-  const previousStepFn = () => {
+  const previousStep = () => {
     setCurrentStep(currentStepIdx - 1);
   };
-  const stepProps = {
-    wizardData,
-    setWizardData,
-    nextStepFn,
-    previousStepFn,
-    currentStepIdx,
-    stepsCount: steps.length,
-  }; // It can be done but man, it won't be pretty. It's pointless..
-  const steps = collectRequiredSteps(stepProps);
 
   return (
     <Wizard
@@ -85,6 +81,10 @@ function WizardContainer({
       error={error as Error}
       steps={steps}
       currentStepIndex={currentStepIdx}
+      canProceed={canProceed}
+      nextStepFn={nextStep}
+      previousStepFn={previousStep}
+      isNextBtnTakenOver={takeOverNextBtn}
     />
   );
 }
@@ -97,18 +97,18 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
     steps.push({
       title: "Input parameters",
       content: <InputParametersContainer {...stepProps} />,
-      // canProceed: (data) => {
-      //   const { requiredLen, submittedLen } = requiredAddSubmittedParams(
-      //     stepProps.wizardData ?? {}
-      //   );
-      //   return requiredLen === 0 || submittedLen === requiredLen;
-      // },
-      // replaceNextBtn: (data) => {
-      //   const { requiredLen, submittedLen } = requiredAddSubmittedParams(
-      //     stepProps.wizardData
-      //   );
-      //   return requiredLen > 0 && submittedLen < requiredLen;
-      // },
+      canProceed: (data) => {
+        const { requiredLen, submittedLen } = requiredAddSubmittedParams(
+          stepProps.wizardData ?? {}
+        );
+        return requiredLen === 0 || submittedLen === requiredLen;
+      },
+      replaceNextBtn: (data) => {
+        const { requiredLen, submittedLen } = requiredAddSubmittedParams(
+          stepProps.wizardData
+        );
+        return requiredLen > 0 && submittedLen < requiredLen;
+      },
     });
   }
 
@@ -116,20 +116,21 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
     steps.push({
       title: "Input TypeInstances",
       content: <InputTypeInstancesContainer {...stepProps} />,
-      // canProceed: (data) => {
-      //   const { requiredLen, selectedLen } = requiredAddSelectedTI(
-      //     stepProps.wizardData
-      //   );
-      //   return requiredLen === 0 || selectedLen === requiredLen;
-      // },
+      canProceed: (data) => {
+        const { requiredLen, selectedLen } = requiredAddSelectedTI(
+          stepProps.wizardData
+        );
+        return requiredLen === 0 || selectedLen === requiredLen;
+      },
+      replaceNextBtn: () => false,
     });
   }
 
   steps.push({
     title: "Summary",
     content: <ActionSummaryContainer {...stepProps} />,
-    // canProceed: () => true,
-    // replaceNextBtn: () => true,
+    canProceed: () => true,
+    replaceNextBtn: () => true,
   });
 
   return steps;
