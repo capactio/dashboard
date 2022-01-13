@@ -9,6 +9,7 @@ import InputParametersContainer from "./provideActionParameters/InputParameters.
 import InputTypeInstancesContainer from "./provideActionTypeInstances/InputTypeInstances.container";
 import ActionOverviewContainer from "./actionOverview/ActionOverview.container";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type InputCollectionObj = { [key: string]: any };
 
 export interface WizardData {

@@ -1,31 +1,5 @@
-label.huge-radio.ant-radio-button-wrapper {
-  height: auto;
-  padding: 30px;
-  line-height: 1.5em;
-  margin-bottom: 15px;
-}
-
-label.huge-radio.ant-radio-button-wrapper h3,
-label.huge-radio.ant-radio-button-wrapper p {
-  margin: 0;
-}
-
-.huge-radio-icon {
-  font-size: 2em;
-  margin-bottom: 15px;
-}
-
-.huge-radio-group {
-  text-align: center;
-  margin-top: 40px;
-}
-
 .ant-descriptions-item-label {
   font-weight: bold;
-}
-
-.huge-radio {
-  margin: 5px;
 }
 
 .site-layout-background {

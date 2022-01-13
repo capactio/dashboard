@@ -115,7 +115,11 @@ function getSpecificImplRule(
   };
 
   if (inputs) {
-    rule.oneOf[0].inject!.additionalParameters! = Object.keys(inputs).map(
+    if (!rule.oneOf[0].inject) {
+      rule.oneOf[0].inject = {};
+    }
+
+    rule.oneOf[0].inject.additionalParameters = Object.keys(inputs).map(
       (key) => ({
         name: key,
         value: inputs[key],

@@ -38,7 +38,6 @@ interface ActionProps {
   canBeDeleted: boolean;
   hasBeenRun: boolean;
   argoWorkflowLink?: string;
-  showTypeInstanceDetails: (typeInstanceID: string) => void;
 }
 
 function Action({
@@ -53,7 +52,6 @@ function Action({
   canBeDeleted,
   hasBeenRun,
   argoWorkflowLink,
-  showTypeInstanceDetails,
 }: ActionProps) {
   if (error) {
     return <ErrorAlert error={error} />;
@@ -144,7 +142,6 @@ function Action({
 
       <ActionTabs
         data={data}
-        showTypeInstanceDetails={showTypeInstanceDetails}
         hasBeenRun={hasBeenRun}
         argoWorkflowLink={argoWorkflowLink}
       />

@@ -64,7 +64,7 @@ function InputTypeInstanceGroup({
 
       {radioBtns.length > 0 && (
         <Row>
-          <Col span={24} className="huge-radio-group">
+          <Col span={24}>
             <Radio.Group value={inputTypeInstanceID}>
               <Space direction="vertical">{radioBtns}</Space>
             </Radio.Group>

@@ -11,6 +11,9 @@ import {
   AdvancedModeInput,
 } from "./ActionOverview.container";
 import { EditOutlined } from "@ant-design/icons";
+import TypeInstancesListContainer, {
+  GenericTypeInstanceData,
+} from "../../typeinstances/TypeInstancesList.container";
 
 const { Content } = Layout;
 const { Text, Paragraph } = Typography;
@@ -86,6 +89,15 @@ function ActionOverview({
     });
   };
 
+  const inputTypeInstances = data.input.input?.typeInstances ?? [];
+  const inputTypeInstanceData: GenericTypeInstanceData[] =
+    inputTypeInstances.map((ti) => {
+      return {
+        id: ti.id,
+        name: ti.name,
+      };
+    });
+
   // maybe extra as switch to advance mode?
   return (
     <Content className="action-overview">
@@ -121,11 +133,7 @@ function ActionOverview({
               />
             </Descriptions.Item>
             <Descriptions.Item label="Input TypeInstances">
-              {/*TODO(https://github.com/capactio/backlog/issues/30): display Input TypeInstances. The TypeInstancesList needs to be refactored:
-                   - change to container and embed modal with details
-                   - change data to dataSource
-                */}
-              <Text>No Input TypeInstances</Text>
+              <TypeInstancesListContainer data={inputTypeInstanceData} />
             </Descriptions.Item>
             <Descriptions.Item label="Action Policy">
               {data.input.input?.actionPolicy ? (
