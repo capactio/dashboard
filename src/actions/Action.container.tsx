@@ -15,7 +15,7 @@ import {
 import Action from "./Action";
 import TypeInstanceDetailsContainer, {
   TypeInstanceDetailsState,
-} from "./TypeInstanceDetails.container";
+} from "../typeinstances/TypeInstanceDetails.container";
 
 interface ActionContainerProps {
   name: string;
