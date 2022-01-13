@@ -28,8 +28,8 @@
   "scripts": {
     "postinstall": "if [ $SKIP_POSTINSTALL != \"true\" ]; then npm run setup-hooks; else echo \"Post install script skipped as the env SKIP_POSTINSTALL is set to true.\"; fi",
     "setup-hooks": "git config core.hooksPath ./scripts/git-hooks",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --max_old_space_size=4096 start",
+    "build": "react-scripts --max_old_space_size=4096 build",
     "lint": "eslint ./src",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
