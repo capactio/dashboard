@@ -61,22 +61,6 @@ function InputTypeInstances({
   const requiredLen = inputTypeInstancesRefs.length ?? 0;
   const selectedLen = Object.keys(inputTypeInstances ?? {}).length;
   const wasAllDataProvided = requiredLen === selectedLen;
-  const allDataProvidedMsg =
-    requiredLen > 0
-      ? "All TypeInstances were provided."
-      : "Action does not require any input TypeInstances.";
-
-  if (wasAllDataProvided) {
-    return (
-      <Empty
-        image={<CheckCircleOutlined />}
-        imageStyle={{
-          fontSize: "60px",
-        }}
-        description={<span>{allDataProvidedMsg}</span>}
-      />
-    );
-  }
 
   return (
     <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />

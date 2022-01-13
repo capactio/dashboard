@@ -1,4 +1,4 @@
-import { Col, Divider, Radio, Row, Typography } from "antd";
+import { Col, Divider, Radio, Row, Space, Typography } from "antd";
 import React, { useState } from "react";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import "./SelectActionImpl.css";
@@ -6,6 +6,7 @@ import { Implementation } from "./SelectActionImpl.container";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { ResourceReference } from "../ResourceRef";
 import ImplAdditionalInputSectionContainer from "./SelectImplAdditionalInput.container";
+import Title from "antd/lib/typography/Title";
 
 const { Text } = Typography;
 
@@ -14,6 +15,7 @@ interface ClusterProvisioningProps {
   error?: Error;
   setActionImplAdditionalInput: (name: string, data: any) => void;
   setActionImplPath: (actionImplPath: string) => void;
+  resetActionImplAdditionalInput: (name: string) => void;
   implementation: Implementation[];
 }
 
@@ -23,6 +25,7 @@ function SelectActionImpl({
   implementation,
   setActionImplPath,
   setActionImplAdditionalInput,
+  resetActionImplAdditionalInput,
 }: ClusterProvisioningProps) {
   const [additionalInputTypes, setAdditionalInputTypes] = useState<
     ResourceReference[]
@@ -38,8 +41,7 @@ function SelectActionImpl({
 
   const radioBtns = implementation.map(({ displayName, implRef, typeRef }) => {
     return (
-      <Radio.Button
-        className="huge-radio"
+      <Radio
         key={implRef.key()}
         value={implRef.key()}
         onClick={() => {
@@ -49,52 +51,57 @@ function SelectActionImpl({
       >
         <strong>{displayName}</strong>
         <p>{implRef.key()}</p>
-      </Radio.Button>
-    );
-  });
-
-  const implInputSection = additionalInputTypes.map((typeRef) => {
-    return (
-      <ImplAdditionalInputSectionContainer
-        key={typeRef.path}
-        name={typeRef.name}
-        typeRef={typeRef}
-        setImplAdditionalInput={setActionImplAdditionalInput}
-      />
+      </Radio>
     );
   });
 
   return (
     <Row>
       <Col span={24}>
-        <Text>Optionally, select Implementation:</Text>
-      </Col>
-      <Col span={24} className="huge-radio-group">
-        <Radio.Group size="large" buttonStyle="solid">
-          {radioBtns}
-        </Radio.Group>
-      </Col>
-      {implInputSection.length > 0 && (
-        <AdvancedModeSection>{implInputSection}</AdvancedModeSection>
-      )}
-    </Row>
-  );
-}
-
-function AdvancedModeSection(props: any) {
-  return (
-    <>
-      <Col span={24}>
-        <Divider orientation="center">Optional Customization</Divider>
+        <Title level={3}>Select specific Implementation</Title>
         <Text>
-          You can change implementation specific parameters for the selected
-          provisioning method.
+          Select a specific Implementation, instead of having it resolved by
+          Engine for you.
         </Text>
       </Col>
-      <Col span={24} style={{ marginTop: "24px" }}>
-        {props.children}
+      <Col span={24}>
+        <Radio.Group style={{ margin: "24px 0" }}>
+          <Space direction="vertical">{radioBtns}</Space>
+        </Radio.Group>
       </Col>
-    </>
+      {additionalInputTypes.length > 0 && (
+        <>
+          <Col span={24}>
+            <Title level={3}>
+              Provide additional input for the Implementation
+            </Title>
+            <Text>
+              You can provide additional input for the selected Implementation.
+            </Text>
+          </Col>
+          <Col span={24} style={{ marginTop: "24px" }}>
+            {additionalInputTypes.map((typeRef) => {
+              const name = typeRef.name;
+              if (!name) {
+                return (
+                  <ErrorAlert errorMessage="name for Additional Input cannot be undefined" />
+                );
+              }
+
+              return (
+                <ImplAdditionalInputSectionContainer
+                  name={name}
+                  key={typeRef.path}
+                  typeRef={typeRef}
+                  setImplAdditionalInput={setActionImplAdditionalInput}
+                  resetImplAdditionalInput={resetActionImplAdditionalInput}
+                />
+              );
+            })}
+          </Col>
+        </>
+      )}
+    </Row>
   );
 }
 

@@ -41,34 +41,12 @@ export interface AdvancedModeInput {
 }
 
 function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
-  const [advanceInput, setAdvancedInput] = useState<AdvancedModeInput>({
-    actionName: uniqueNamesGenerator(genAdjsColorsAndNames), // default random name
+  const defaultActionRandomName = uniqueNamesGenerator(genAdjsColorsAndNames);
+  const [advancedInput, setAdvancedInput] = useState<AdvancedModeInput>({
+    actionName: defaultActionRandomName,
   });
 
-  const input = createActionGQLInput(wizardData, advanceInput);
-
-  const setActionName = (actionName: string) =>
-    setAdvancedInput({
-      ...advanceInput,
-      actionName,
-    });
-
-  const setActionImplPath = (actionImplPath: string) =>
-    setAdvancedInput({
-      ...advanceInput,
-      actionImplPath,
-    });
-
-  const setActionImplAdditionalInput = (name: string, data: any) => {
-    const actionImplAdditionalInput = {
-      ...advanceInput.actionImplAdditionalInput,
-      [name]: data,
-    };
-    setAdvancedInput({
-      ...advanceInput,
-      actionImplAdditionalInput,
-    });
-  };
+  const input = createActionGQLInput(wizardData, advancedInput);
 
   const { mutateAsync, isLoading } = useCreateActionWithInputMutation();
   const navigate = useNavigate();
@@ -85,22 +63,29 @@ function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
     }
   };
 
+  const setActionName = (actionName: string) => {
+    setAdvancedInput({
+      ...advancedInput,
+      actionName,
+    });
+  };
+
+  console.log("adv inoput", advancedInput);
+
   return (
-    <>
-      <ActionOverview
-        data={
-          {
-            ...input,
-            actionImplPath: advanceInput.actionImplPath,
-          } as ActionOverviewInput
-        }
-        isSubmitLoading={isLoading}
-        submitFunc={submitFn}
-        setActionName={setActionName}
-        setActionImplPath={setActionImplPath}
-        setActionImplAdditionalInput={setActionImplAdditionalInput}
-      />
-    </>
+    <ActionOverview
+      data={
+        {
+          ...input,
+          actionImplPath: advancedInput.actionImplPath,
+        } as ActionOverviewInput
+      }
+      isSubmitLoading={isLoading}
+      submitFunc={submitFn}
+      setAdvancedModeInput={setAdvancedInput}
+      advancedModeInput={advancedInput}
+      setActionName={setActionName}
+    />
   );
 }
 

@@ -1,3 +1,27 @@
+.wizard-content {
+  padding: 24px;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.steps-indicator {
+  margin-bottom: 24px;
+}
+
+.steps-indicator
+  .ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title:after,
+.steps-indicator
+  .ant-steps-item-wait
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title:after {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .steps-content {
   min-height: 420px;
   margin-top: 16px;

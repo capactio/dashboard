@@ -7,21 +7,23 @@ import {
 import { JSONSchema7 } from "json-schema";
 import { errorOrUndefined, parseToJSONSchema7 } from "../JSONSchema";
 
-interface InputParametersContainerProps {
-  name?: string;
-  typeRef: TypeReference;
-  setImplAdditionalInput: (name: string, data: any) => void;
-}
-
 export interface AdditionalInputSchema {
   name: string;
   jsonSchema: JSONSchema7;
+}
+
+interface InputParametersContainerProps {
+  name: string;
+  typeRef: TypeReference;
+  setImplAdditionalInput: (name: string, data: any) => void;
+  resetImplAdditionalInput: (name: string) => void;
 }
 
 function ImplAdditionalInputSectionContainer({
   name,
   typeRef,
   setImplAdditionalInput,
+  resetImplAdditionalInput,
 }: InputParametersContainerProps) {
   const { data, isLoading, error } = useGetTypeJsonSchemaQuery({
     path: typeRef.path,
@@ -30,43 +32,22 @@ function ImplAdditionalInputSectionContainer({
   const rawJSONSchema = data?.type?.revision?.spec.jsonSchema ?? "{}";
   const parsedSchema = parseToJSONSchema7(rawJSONSchema);
 
-  const additionalInputSchema = convertToAdditionalInput(
-    name,
-    parsedSchema.schema
-  );
-
-  return (
-    <>
-      <ImplAdditionalInputSection
-        isLoading={isLoading}
-        error={errorOrUndefined([
-          error,
-          parsedSchema.error,
-          additionalInputSchema.error,
-        ])}
-        additionalInputSchema={additionalInputSchema.additionalInput}
-        setImplAdditionalInput={setImplAdditionalInput}
-      />
-    </>
-  );
-}
-
-function convertToAdditionalInput(
-  name: string | undefined,
-  schema: JSONSchema7
-): { error?: string; additionalInput: AdditionalInputSchema } {
-  if (!name) {
-    return {
-      error: `name for schema cannot be undefined`,
-      additionalInput: {} as AdditionalInputSchema,
-    };
-  }
-  return {
+  const additionalInputSchema = {
     additionalInput: {
       name: name,
-      jsonSchema: schema,
+      jsonSchema: parsedSchema.schema,
     },
   };
+
+  return (
+    <ImplAdditionalInputSection
+      isLoading={isLoading}
+      error={errorOrUndefined([error, parsedSchema.error])}
+      additionalInputSchema={additionalInputSchema.additionalInput}
+      setImplAdditionalInput={setImplAdditionalInput}
+      resetImplAdditionalInput={resetImplAdditionalInput}
+    />
+  );
 }
 
 export default ImplAdditionalInputSectionContainer;

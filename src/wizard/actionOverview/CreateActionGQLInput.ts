@@ -107,7 +107,7 @@ function getSpecificImplRule(
           path: implPath,
         },
         inject: {
-          // TODO(https://github.com/capactio/backlog/issues/32): requiredTypeInstances
+          // TODO(https://github.com/capactio/backlog/issues/30): requiredTypeInstances
           additionalParameters: [],
         },
       },

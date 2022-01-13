@@ -1,10 +1,8 @@
 import React from "react";
-import { Col, Empty, Radio, Row, Typography } from "antd";
+import { Col, Empty, Radio, Row, Space } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { TypeInstance } from "../../generated/graphql";
-
-const { Text } = Typography;
 
 interface InputTypeInstanceGroupProps {
   isLoading: boolean;
@@ -35,17 +33,16 @@ function InputTypeInstanceGroup({
     ({ id, lockedBy, latestResourceVersion }) => {
       const createdBy = latestResourceVersion?.createdBy;
       return (
-        <Radio.Button
-          className="huge-radio"
+        <Radio
           key={id}
           disabled={lockedBy}
           value={id}
           onClick={() => setInputTypeInstanceID(id)}
         >
-          {createdBy && <strong>Created by: {createdBy}</strong>}
-          {lockedBy && <Text>Locked by: {lockedBy}</Text>}
-          <p>{id}</p>
-        </Radio.Button>
+          <strong>{id}</strong>
+          {createdBy && <p>Created by: {createdBy}</p>}
+          {lockedBy && <p>Locked by: {lockedBy}</p>}
+        </Radio>
       );
     }
   );
@@ -68,12 +65,8 @@ function InputTypeInstanceGroup({
       {radioBtns.length > 0 && (
         <Row>
           <Col span={24} className="huge-radio-group">
-            <Radio.Group
-              size="large"
-              buttonStyle="solid"
-              value={inputTypeInstanceID}
-            >
-              {radioBtns}
+            <Radio.Group value={inputTypeInstanceID}>
+              <Space direction="vertical">{radioBtns}</Space>
             </Radio.Group>
           </Col>
         </Row>

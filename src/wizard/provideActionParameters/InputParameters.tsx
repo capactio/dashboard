@@ -70,27 +70,6 @@ function InputParameters({
     };
   });
 
-  const requiredLen = inputParamsSchemas.length ?? 0;
-  const submittedLen = Object.keys(initInputParametersData ?? {}).length;
-
-  const wasAllDataProvided = requiredLen === submittedLen;
-  const allDataProvidedMsg =
-    requiredLen > 0
-      ? "All input parameters were provided."
-      : "Action does not require any input parameters.";
-
-  if (wasAllDataProvided) {
-    return (
-      <Empty
-        image={<CheckCircleOutlined />}
-        imageStyle={{
-          fontSize: "60px",
-        }}
-        description={<span>{allDataProvidedMsg}</span>}
-      />
-    );
-  }
-
   return (
     <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />
   );
