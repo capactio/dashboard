@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import { ISubmitEvent } from "@rjsf/core";
-import { Button, Modal } from "antd";
+import { Button, Modal, Space } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { AdditionalInputSchema } from "./SelectImplAdditionalInput.container";
 import ErrorAlert from "../../layout/ErrorAlert";
@@ -50,17 +50,19 @@ function ImplAdditionalInputSection({
       <Title level={4}>
         {formData ? <CheckCircleOutlined /> : null} {additionalInputSchema.name}
       </Title>
-      <Button type="default" onClick={() => setVisible(true)}>
-        Provide input
-      </Button>
-      <Button
-        disabled={!formData}
-        type="link"
-        danger
-        onClick={() => resetData()}
-      >
-        Reset
-      </Button>
+      <Space size="middle">
+        <Button type="default" onClick={() => setVisible(true)}>
+          Provide input
+        </Button>
+        <Button
+          disabled={!formData}
+          type="default"
+          danger
+          onClick={() => resetData()}
+        >
+          Reset
+        </Button>
+      </Space>
       <Modal
         visible={visible}
         title={`The "${additionalInputSchema.name}"  additional input`}

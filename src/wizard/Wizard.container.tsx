@@ -22,8 +22,6 @@ export interface WizardData {
 export type WizardSteps = {
   title: string;
   content: StepComponent;
-
-  // TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor
   canProceed: (data: WizardData) => boolean;
   replaceNextBtn: (data: WizardData) => boolean;
 }[];
@@ -62,6 +60,16 @@ function WizardContainer({
       actionInterface,
     } as WizardData);
   }
+
+  // TODO: Remove testing
+  // if (data) {
+  //   const params = data!.interface!.revision!.spec!.input.parameters[0];
+  //   data!.interface!.revision!.spec!.input.parameters = [params, {
+  //     name: "foo",
+  //     typeRef: params.typeRef,
+  //   }]
+  // }
+
   const nextStep = () => {
     setCurrentStep(currentStepIdx + 1);
   };

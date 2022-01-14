@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Radio, Row, Space, Typography } from "antd";
+import { Button, Col, Radio, Row, Space, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import "./SelectActionImpl.css";
 import { Implementation } from "./SelectActionImpl.container";
@@ -15,8 +15,10 @@ interface ClusterProvisioningProps {
   error?: Error;
   setActionImplAdditionalInput: (name: string, data: any) => void;
   setActionImplPath: (actionImplPath: string) => void;
+  resetActionImplPath: () => void;
   resetActionImplAdditionalInput: (name: string) => void;
   implementation: Implementation[];
+  currentImplPath: string | undefined;
 }
 
 function SelectActionImpl({
@@ -24,6 +26,8 @@ function SelectActionImpl({
   error,
   implementation,
   setActionImplPath,
+  resetActionImplPath,
+  currentImplPath,
   setActionImplAdditionalInput,
   resetActionImplAdditionalInput,
 }: ClusterProvisioningProps) {
@@ -43,7 +47,7 @@ function SelectActionImpl({
     return (
       <Radio
         key={implRef.key()}
-        value={implRef.key()}
+        value={implRef.path}
         onClick={() => {
           setActionImplPath(implRef.path);
           setAdditionalInputTypes(typeRef);
@@ -63,13 +67,22 @@ function SelectActionImpl({
           Select a specific Implementation, instead of having it resolved by
           Engine for you.
         </Text>
+        <Button
+          style={{ display: "block", marginTop: "16px" }}
+          disabled={!currentImplPath}
+          type="default"
+          danger
+          onClick={() => resetActionImplPath()}
+        >
+          Reset
+        </Button>
       </Col>
       <Col span={24}>
-        <Radio.Group style={{ margin: "24px 0" }}>
+        <Radio.Group style={{ margin: "24px 0" }} value={currentImplPath}>
           <Space direction="vertical">{radioBtns}</Space>
         </Radio.Group>
       </Col>
-      {additionalInputTypes.length > 0 && (
+      {currentImplPath && additionalInputTypes.length > 0 && (
         <>
           <Col span={24}>
             <Title level={3}>

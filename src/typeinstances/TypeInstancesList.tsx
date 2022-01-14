@@ -39,9 +39,11 @@ function TypeInstancesList({
           </>
         );
 
+        const itemKey = `${ti.name || ""}-${ti.id}`;
+
         return (
           <List.Item
-            key={ti.id}
+            key={itemKey}
             actions={[linkToDetails(ti.id, "See details")]}
           >
             <List.Item.Meta

@@ -38,7 +38,13 @@ function InputTypeInstances({
     const onSuccessSubmit = (data: string) => {
       setInputTypeInstance(item.name, data);
       if (current + 1 >= inputTypeInstancesRefs.length) {
-        setCurrent(getFirstNotSetItemIdx());
+        const idx = getFirstNotSetItemIdx();
+        if (idx === -1) {
+          // everything already set, do nothing
+          return;
+        }
+
+        setCurrent(idx);
       } else {
         setCurrent(current + 1);
       }

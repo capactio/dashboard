@@ -43,6 +43,14 @@ function SelectActionImplContainer({
     });
   };
 
+  const resetActionImplPath = () => {
+    setAdvancedModeInput({
+      ...advancedModeInput,
+      actionImplPath: undefined,
+      actionImplAdditionalInput: undefined,
+    });
+  };
+
   const resetActionImplAdditionalInput = (name: string) => {
     const actionImplAdditionalInput = {
       ...advancedModeInput.actionImplAdditionalInput,
@@ -73,7 +81,9 @@ function SelectActionImplContainer({
     <SelectActionImpl
       isLoading={isLoading}
       implementation={impls}
+      currentImplPath={advancedModeInput.actionImplPath}
       setActionImplPath={setActionImplPath}
+      resetActionImplPath={resetActionImplPath}
       setActionImplAdditionalInput={setActionImplAdditionalInput}
       resetActionImplAdditionalInput={resetActionImplAdditionalInput}
       error={error as Error | undefined}
