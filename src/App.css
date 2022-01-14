@@ -4,6 +4,7 @@
 
 .site-layout-background {
   background: #fff;
+  border-radius: 6px;
 }
 
 .page-header {

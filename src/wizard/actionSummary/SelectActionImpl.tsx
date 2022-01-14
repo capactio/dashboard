@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Radio, Row, Space, Typography } from "antd";
+import { Button, Col, Radio, Row, Space, Tooltip, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import "./SelectActionImpl.css";
 import { Implementation } from "./SelectActionImpl.container";
@@ -19,6 +19,10 @@ interface ClusterProvisioningProps {
   resetActionImplAdditionalInput: (name: string) => void;
   implementation: Implementation[];
   currentImplPath: string | undefined;
+}
+
+interface ImplementationExtended extends Implementation {
+  disabled: boolean;
 }
 
 function SelectActionImpl({
@@ -43,37 +47,67 @@ function SelectActionImpl({
     return <ErrorAlert error={error} />;
   }
 
-  const radioBtns = implementation.map(({ displayName, implRef, typeRef }) => {
+  const implsExtended: ImplementationExtended[] = implementation.map((impl) => {
     // currently we cannot pick Implementation by path and revision, we automatically select latest revision
     let disabled = false;
+
     const implsWithEqualPaths = implementation.filter(
-      ({ implRef: itemImplRef }) => implRef.path === itemImplRef.path
+      ({ implRef: itemImplRef }) => impl.implRef.path === itemImplRef.path
     );
     if (implsWithEqualPaths.length > 1) {
       const isFound = implsWithEqualPaths.some(
-        ({ implRef: itemImplRef }) => itemImplRef.revision > implRef.revision
+        ({ implRef: itemImplRef }) =>
+          itemImplRef.revision > impl.implRef.revision
       );
       disabled = isFound;
     }
 
-    // avoid selecting all Implementations with the same path at once
-    const value = disabled ? implRef.key() : implRef.path;
-
-    return (
-      <Radio
-        key={implRef.key()}
-        value={value}
-        onClick={() => {
-          setActionImplPath(implRef.path);
-          setAdditionalInputTypes(typeRef);
-        }}
-        disabled={disabled}
-      >
-        <strong>{displayName}</strong>
-        <p>{implRef.key()}</p>
-      </Radio>
-    );
+    return {
+      ...impl,
+      disabled,
+    };
   });
+
+  const radioBtns = implsExtended
+    .sort((a: ImplementationExtended, b: ImplementationExtended) => {
+      return Number(a.disabled) - Number(b.disabled);
+    })
+    .map(({ displayName, implRef, typeRef, disabled }) => {
+      // avoid selecting all Implementations with the same path at once
+      const value = disabled ? implRef.key() : implRef.path;
+
+      const radioBtn = (
+        <Radio
+          key={implRef.key()}
+          value={value}
+          onClick={() => {
+            setActionImplPath(implRef.path);
+            setAdditionalInputTypes(typeRef);
+          }}
+          disabled={disabled}
+        >
+          <strong>{displayName}</strong>
+          <p>{implRef.key()}</p>
+        </Radio>
+      );
+
+      if (disabled) {
+        return (
+          <Tooltip
+            placement="topLeft"
+            overlayStyle={{ maxWidth: "420px" }}
+            title={
+              "Not implemented: Because of the current Capact Engine limitation, you can select only the latest revision for a given Implementation path."
+            }
+            arrowPointAtCenter
+          >
+            {radioBtn}
+          </Tooltip>
+        );
+      }
+
+      return radioBtn;
+    });
 
   return (
     <Row>

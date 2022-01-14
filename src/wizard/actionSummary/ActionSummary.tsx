@@ -10,7 +10,7 @@ import {
   ActionSummaryInput,
   AdvancedModeInput,
 } from "./ActionSummary.container";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, SettingOutlined } from "@ant-design/icons";
 import TypeInstancesListContainer, {
   GenericTypeInstanceData,
 } from "../../typeinstances/TypeInstancesList.container";
@@ -148,7 +148,15 @@ function ActionSummary({
             </Descriptions.Item>
           </Descriptions>
         </TabPane>
-        <TabPane tab={"Advanced Settings"} key="2">
+        <TabPane
+          tab={
+            <>
+              <SettingOutlined style={{ marginRight: "6px" }} />
+              {"Advanced Settings"}
+            </>
+          }
+          key="2"
+        >
           <SelectActionImplContainer
             actRef={
               new ResourceReference(

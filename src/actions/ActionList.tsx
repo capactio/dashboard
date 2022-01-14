@@ -87,6 +87,7 @@ function ActionList({ data, isLoading, error }: ActionListProps) {
 
   return (
     <Table
+      className="content-bg-rounded"
       loading={isLoading}
       dataSource={dataSource}
       columns={columns}

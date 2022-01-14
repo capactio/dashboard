@@ -53,15 +53,6 @@ function WizardContainer({
     revision: interfaceRevision,
   });
 
-  // TODO: Remove before merge - it's just for testing to make it easier for reviewer :-)
-  // if (data) {
-  //   const params = data!.interface!.revision!.spec!.input.parameters[0];
-  //   data!.interface!.revision!.spec!.input.parameters = [params, {
-  //     name: "foo",
-  //     typeRef: params.typeRef,
-  //   }]
-  // }
-
   const actionInterface = data?.interface?.revision as InterfaceRevision;
   if (actionInterface && actionInterface !== wizardData.actionInterface) {
     setWizardData({

@@ -27,9 +27,16 @@ function ActionContainer({ name }: ActionContainerProps) {
   const runActionMutation = useRunActionMutation();
   const deleteActionMutation = useDeleteActionMutation();
 
-  const runAction = () => {
-    runActionMutation.mutate({ actionName: name });
-    message.success(`Action '${name}' run successfully`);
+  const runAction = async () => {
+    try {
+      await runActionMutation.mutateAsync({ actionName: name });
+      message.success(`Action '${name}' run successfully`);
+    } catch (err) {
+      const error = err as Error;
+      message.error(
+        `Failed to run Action. Got error: ${error.name}: ${error.message}`
+      );
+    }
   };
 
   const deleteAction = async () => {

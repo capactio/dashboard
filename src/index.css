@@ -72,3 +72,54 @@ samp {
 .ant-card-actions > li > span a:not(.ant-btn) {
   color: var(--capact-blue);
 }
+
+.content-bg-rounded {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.content-bg-rounded .ant-table {
+  background: transparent;
+}
+
+.content-bg-rounded .ant-table table {
+  border-radius: 6px;
+}
+
+.content-bg-rounded .ant-table-container,
+.content-bg-rounded
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  th:first-child {
+  border-top-left-radius: 6px;
+}
+
+.content-bg-rounded
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  th:last-child {
+  border-top-right-radius: 6px;
+}
+
+.content-bg-rounded
+  .ant-table-container
+  table
+  > tbody
+  > tr:last-child
+  td:first-child {
+  border-bottom-left-radius: 6px;
+}
+
+.content-bg-rounded
+  .ant-table-container
+  table
+  > tbody
+  > tr:last-child
+  td:last-child {
+  border-bottom-right-radius: 6px;
+}
