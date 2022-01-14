@@ -7,6 +7,7 @@ import "./InputParameters.css";
 import InputParametersFormContainer from "./InputParametersForm.container";
 import Tabbing, { Tab } from "../Tabbing";
 import { FormButton } from "./InputParametersForm";
+import { message } from "antd";
 
 interface InputParametersProps {
   setInputParameter: (name: string, data: string) => void;
@@ -47,8 +48,19 @@ function InputParameters({
 
     const onSuccessSubmit = (data: string) => {
       setInputParameter(item.name, data);
+      if (inputParamsSchemas.length > 1) {
+        message.success(
+          `The '${item.name}' input parameters have been saved successfully`
+        );
+      }
       if (current + 1 >= inputParamsSchemas.length) {
-        setCurrent(getFirstNotSetItemIdx());
+        const idx = getFirstNotSetItemIdx();
+        if (idx === -1) {
+          // everything already set, do nothing
+          return;
+        }
+
+        setCurrent(idx);
       } else {
         setCurrent(current + 1);
       }

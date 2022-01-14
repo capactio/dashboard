@@ -67,6 +67,7 @@ function ActionContainer({ name }: ActionContainerProps) {
 
   return (
     <Action
+      canBeDeleted={canBeDeleted}
       data={data}
       error={error as Error}
       isLoading={isLoading}
