@@ -22,7 +22,7 @@ function InputParametersContainer({
     const submittedLen = Object.keys(actionInputParameters ?? {}).length;
     const wasAllDataProvided = requiredLen === submittedLen;
 
-    if (wasAllDataProvided) {
+    if (inputParams.length === 1 && wasAllDataProvided) {
       navigateToNextStep();
     }
   };

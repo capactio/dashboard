@@ -5,6 +5,11 @@
   right: 24px;
 }
 
+.form-save-btn {
+  margin-top: 24px;
+  float: right;
+}
+
 .position-static-col {
   position: unset;
 }

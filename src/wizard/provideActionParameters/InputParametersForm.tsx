@@ -13,6 +13,12 @@ interface InputParametersFormProps {
   schema: JSONSchema7;
   initData: unknown;
   setInputParameter: (data: string) => void;
+  formButton: FormButton;
+}
+
+export interface FormButton {
+  label: string;
+  className: string;
 }
 
 function InputParametersForm({
@@ -21,6 +27,7 @@ function InputParametersForm({
   schema,
   initData,
   setInputParameter,
+  formButton,
 }: InputParametersFormProps) {
   if (isLoading) {
     return <CenteredSpinner />;
@@ -42,8 +49,8 @@ function InputParametersForm({
       onSubmit={onSuccessSubmit}
       liveValidate={true}
     >
-      <Button htmlType="submit" className="form-submit-btn" type="primary">
-        Next
+      <Button htmlType="submit" className={formButton.className} type="primary">
+        {formButton.label}
       </Button>
     </Form>
   );

@@ -6,6 +6,7 @@ import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";
 import InputParametersFormContainer from "./InputParametersForm.container";
 import Tabbing, { Tab } from "../Tabbing";
+import { FormButton } from "./InputParametersForm";
 
 interface InputParametersProps {
   setInputParameter: (name: string, data: string) => void;
@@ -53,12 +54,18 @@ function InputParameters({
       }
     };
 
+    const formButton: FormButton =
+      inputParamsSchemas.length === 1
+        ? { label: "Next", className: "form-submit-btn" }
+        : { label: "Save", className: "form-save-btn" };
+
     return {
       name: item.name,
       showCheckmarkIcon: Boolean(initData),
       content: (
         <InputParametersFormContainer
           initData={initData}
+          formButton={formButton}
           name={item.name}
           typeRef={item.typeRef}
           rawJSONSchema={item.jsonSchema}

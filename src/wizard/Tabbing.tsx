@@ -41,7 +41,6 @@ function Tabbing({ data, setCurrentIdx, currentIdx }: TabbingProps) {
       return (
         <Tabs
           tabPosition="left"
-          style={{ maxHeight: 550, minHeight: 420, overflow: "auto" }}
           onChange={(item) => setCurrentIdx(Number(item))}
           activeKey={currentIdx.toString()}
         >

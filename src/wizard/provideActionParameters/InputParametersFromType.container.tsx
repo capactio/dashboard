@@ -3,19 +3,21 @@ import {
   TypeReference,
   useGetTypeJsonSchemaQuery,
 } from "../../generated/graphql";
-import InputParametersForm from "./InputParametersForm";
+import InputParametersForm, { FormButton } from "./InputParametersForm";
 import { errorOrUndefined, parseToJSONSchema7 } from "../JSONSchema";
 
 interface InputParametersContainerProps {
   typeRef: TypeReference;
   setInputParameter: (data: string) => void;
   initData: unknown;
+  formButton: FormButton;
 }
 
 function InputParametersFromTypeSectionContainer({
   typeRef,
   initData,
   setInputParameter,
+  formButton,
 }: InputParametersContainerProps) {
   const { data, isLoading, error } = useGetTypeJsonSchemaQuery({
     path: typeRef.path,
@@ -28,6 +30,7 @@ function InputParametersFromTypeSectionContainer({
     <InputParametersForm
       isLoading={isLoading}
       initData={initData}
+      formButton={formButton}
       error={errorOrUndefined([error as Error | undefined, parsedSchema.error])}
       schema={parsedSchema.schema}
       setInputParameter={setInputParameter}

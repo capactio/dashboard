@@ -39,3 +39,21 @@
   > label {
   font-size: 20px;
 }
+
+.json-schema-form .form-group .ant-btn-primary {
+  /* make default button from primary */
+  color: rgba(0, 0, 0, 0.85);
+  background: #fff;
+  border: 1px solid #d9d9d9;
+}
+
+.json-schema-form .form-group .ant-btn-primary:hover {
+  color: var(--ant-primary-color-hover);
+  border-color: var(--ant-primary-color-hover);
+  background: #fff;
+}
+
+.json-schema-form .form-group .ant-btn-primary:active {
+  color: var(--ant-primary-color-active);
+  border-color: var(--ant-primary-color-active);
+}
