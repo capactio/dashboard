@@ -15,7 +15,7 @@ export interface AdditionalInputSchema {
 interface InputParametersContainerProps {
   name: string;
   typeRef: TypeReference;
-  setImplAdditionalInput: (name: string, data: any) => void;
+  setImplAdditionalInput: (name: string, data: unknown) => void;
   resetImplAdditionalInput: (name: string) => void;
 }
 
@@ -42,7 +42,7 @@ function ImplAdditionalInputSectionContainer({
   return (
     <ImplAdditionalInputSection
       isLoading={isLoading}
-      error={errorOrUndefined([error, parsedSchema.error])}
+      error={errorOrUndefined([error as Error | undefined, parsedSchema.error])}
       additionalInputSchema={additionalInputSchema.additionalInput}
       setImplAdditionalInput={setImplAdditionalInput}
       resetImplAdditionalInput={resetImplAdditionalInput}

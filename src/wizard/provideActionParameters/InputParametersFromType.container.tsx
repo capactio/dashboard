@@ -8,8 +8,8 @@ import { errorOrUndefined, parseToJSONSchema7 } from "../JSONSchema";
 
 interface InputParametersContainerProps {
   typeRef: TypeReference;
-  setInputParameter: (data: any) => void;
-  initData: any;
+  setInputParameter: (data: string) => void;
+  initData: unknown;
 }
 
 function InputParametersFromTypeSectionContainer({
@@ -28,7 +28,7 @@ function InputParametersFromTypeSectionContainer({
     <InputParametersForm
       isLoading={isLoading}
       initData={initData}
-      error={errorOrUndefined([error, parsedSchema.error])}
+      error={errorOrUndefined([error as Error | undefined, parsedSchema.error])}
       schema={parsedSchema.schema}
       setInputParameter={setInputParameter}
     />

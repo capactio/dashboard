@@ -11,8 +11,8 @@ interface InputParametersFormProps {
   isLoading: boolean;
   error?: Error;
   schema: JSONSchema7;
-  initData: any;
-  setInputParameter: (data: any) => void;
+  initData: unknown;
+  setInputParameter: (data: string) => void;
 }
 
 function InputParametersForm({
@@ -30,7 +30,7 @@ function InputParametersForm({
     return <ErrorAlert error={error} />;
   }
 
-  const onSuccessSubmit = ({ formData }: ISubmitEvent<any>) => {
+  const onSuccessSubmit = ({ formData }: ISubmitEvent<string>) => {
     setInputParameter(formData);
   };
 

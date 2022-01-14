@@ -11,7 +11,7 @@ function InputParametersContainer({
 }: InputParametersContainerProps) {
   const inputParams = wizardData?.actionInterface?.spec.input.parameters ?? [];
 
-  const submitFn = async (name: string, data: any) => {
+  const submitFn = async (name: string, data: unknown) => {
     const actionInputParameters = {
       ...wizardData.actionInputParameters,
       [name]: data,

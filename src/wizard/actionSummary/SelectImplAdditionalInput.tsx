@@ -10,7 +10,7 @@ import Title from "antd/lib/typography/Title";
 
 interface ImplAdditionalInputSectionProps {
   additionalInputSchema: AdditionalInputSchema;
-  setImplAdditionalInput: (name: string, data: any) => void;
+  setImplAdditionalInput: (name: string, data: unknown) => void;
   resetImplAdditionalInput: (name: string) => void;
   isLoading: boolean;
   error?: Error;
@@ -23,7 +23,7 @@ function ImplAdditionalInputSection({
   isLoading,
   error,
 }: ImplAdditionalInputSectionProps) {
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState<unknown>(null);
   const [visible, setVisible] = useState(false);
 
   if (isLoading) {
@@ -34,7 +34,7 @@ function ImplAdditionalInputSection({
     return <ErrorAlert error={error} />;
   }
 
-  const onSuccessSubmit = ({ formData }: ISubmitEvent<any>) => {
+  const onSuccessSubmit = ({ formData }: ISubmitEvent<unknown>) => {
     setImplAdditionalInput(additionalInputSchema.name, formData);
     setFormData(formData);
     setVisible(false);

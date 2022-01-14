@@ -8,8 +8,8 @@ interface InputParametersFormContainerProps {
   typeRef?: TypeReference | null;
   name: string;
   rawJSONSchema: string;
-  initData: any;
-  onSuccessSubmit: (data: any) => void;
+  initData: unknown;
+  onSuccessSubmit: (data: string) => void;
 }
 
 function InputParametersFormContainer({

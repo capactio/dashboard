@@ -8,7 +8,6 @@ interface InputTypeInstancesContainerProps extends StepComponentProps {}
 function InputTypeInstancesContainer({
   wizardData,
   setWizardData,
-  navigateToNextStep,
 }: InputTypeInstancesContainerProps) {
   const allInputTI =
     wizardData?.actionInterface?.spec.input.typeInstances ?? [];

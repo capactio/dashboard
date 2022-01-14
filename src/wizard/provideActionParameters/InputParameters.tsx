@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Empty } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { InputParameter } from "../../generated/graphql";
-import { CheckCircleOutlined } from "@ant-design/icons";
 import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";
 import InputParametersFormContainer from "./InputParametersForm.container";
 import Tabbing, { Tab } from "../Tabbing";
 
 interface InputParametersProps {
-  setInputParameter: (name: string, data: any) => void;
+  setInputParameter: (name: string, data: string) => void;
   isLoading: boolean;
   error?: Error;
   inputParamsSchemas: InputParameter[];
@@ -39,14 +37,14 @@ function InputParameters({
       initInputParametersData && initInputParametersData[item.name];
 
     const getFirstNotSetItemIdx = () => {
-      return inputParamsSchemas.findIndex((item, idx) => {
+      return inputParamsSchemas.findIndex((item) => {
         const initData =
           initInputParametersData && initInputParametersData[item.name];
         return !initData;
       });
     };
 
-    const onSuccessSubmit = (data: any) => {
+    const onSuccessSubmit = (data: string) => {
       setInputParameter(item.name, data);
       if (current + 1 >= inputParamsSchemas.length) {
         setCurrent(getFirstNotSetItemIdx());

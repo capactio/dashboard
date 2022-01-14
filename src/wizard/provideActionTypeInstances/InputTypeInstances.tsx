@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Empty } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import { InputTypeInstance } from "../../generated/graphql";
-import { CheckCircleOutlined } from "@ant-design/icons";
 import InputParametersFromTypeSectionContainer from "./InputTypeInstanceGroup.container";
 import { InputCollectionObj } from "../Wizard.container";
 import Tabbing, { Tab } from "../Tabbing";
 
 interface InputParametersProps {
-  setInputTypeInstance: (name: string, data: any) => void;
+  setInputTypeInstance: (name: string, data: string) => void;
   inputTypeInstances?: InputCollectionObj;
   isLoading: boolean;
   inputTypeInstancesRefs: InputTypeInstance[];

@@ -32,7 +32,7 @@ function SelectActionImplContainer({
       actionImplPath,
     });
 
-  const setActionImplAdditionalInput = (name: string, data: any) => {
+  const setActionImplAdditionalInput = (name: string, data: unknown) => {
     const actionImplAdditionalInput = {
       ...advancedModeInput.actionImplAdditionalInput,
       [name]: data,

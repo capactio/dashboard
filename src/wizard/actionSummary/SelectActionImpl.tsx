@@ -13,7 +13,7 @@ const { Text } = Typography;
 interface ClusterProvisioningProps {
   isLoading: boolean;
   error?: Error;
-  setActionImplAdditionalInput: (name: string, data: any) => void;
+  setActionImplAdditionalInput: (name: string, data: unknown) => void;
   setActionImplPath: (actionImplPath: string) => void;
   resetActionImplPath: () => void;
   resetActionImplAdditionalInput: (name: string) => void;
