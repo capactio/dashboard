@@ -1,32 +1,19 @@
 import { InputCollectionObj, WizardData } from "../Wizard.container";
 import {
   CreateActionWithInputMutationVariables,
+  InterfaceRevision,
   PolicyInput,
   RulesForInterfaceInput,
 } from "../../generated/graphql";
-import {
-  Config,
-  adjectives,
-  colors,
-  names,
-  uniqueNamesGenerator,
-} from "unique-names-generator";
+import { AdvancedModeInput } from "./ActionOverview.container";
 
-// generated name must match: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
-const genAdjsColorsAndNames: Config = {
-  dictionaries: [adjectives, colors, names],
-  separator: "-",
-  length: 3,
-};
-
-export function createActionInput(
-  wizardData: WizardData
+export function createActionGQLInput(
+  wizardData: WizardData,
+  advancedInput: AdvancedModeInput
 ): CreateActionWithInputMutationVariables {
-  const actName: string = uniqueNamesGenerator(genAdjsColorsAndNames);
-
   const out = {
     input: {
-      name: actName.toLocaleLowerCase(),
+      name: advancedInput.actionName.toLocaleLowerCase(),
       advancedRendering: false,
       dryRun: false,
       actionRef: {
@@ -38,7 +25,7 @@ export function createActionInput(
 
   const inputTIs = renderTypeInstances(wizardData);
   const inputParams = renderParams(wizardData);
-  const policy = renderPolicy(wizardData);
+  const policy = renderPolicy(wizardData.actionInterface, advancedInput);
   if (!inputTIs && !inputParams && !policy) {
     return out;
   }
@@ -72,12 +59,11 @@ function renderTypeInstances({ actionInputTypeInstances: ti }: WizardData) {
   }));
 }
 
-function renderPolicy({
-  actionInterface,
-  actionImplPath,
-  actionImplAdditionalInput,
-}: WizardData): PolicyInput | undefined {
-  if (!actionImplPath || !actionInterface) {
+function renderPolicy(
+  actionInterface: InterfaceRevision | undefined,
+  advancedInput: AdvancedModeInput
+): PolicyInput | undefined {
+  if (!actionInterface || !advancedInput.actionImplPath) {
     return undefined;
   }
 
@@ -85,8 +71,8 @@ function renderPolicy({
     rules: [
       getSpecificImplRule(
         actionInterface.metadata.path,
-        actionImplPath,
-        actionImplAdditionalInput
+        advancedInput.actionImplPath,
+        advancedInput.actionImplAdditionalInput
       ),
       anyKubernetesImplRule(),
     ],

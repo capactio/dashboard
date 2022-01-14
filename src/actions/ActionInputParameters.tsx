@@ -3,20 +3,19 @@ import { List, Typography } from "antd";
 
 const { Text, Paragraph } = Typography;
 
-interface InputParametersProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: { [key: string]: any };
+export interface InputParamsSource {
+  name: string;
+  value: string;
 }
 
-function InputParameters({ data }: InputParametersProps) {
-  if (!data) {
+interface InputParametersProps {
+  dataSource?: InputParamsSource[];
+}
+
+function InputParameters({ dataSource }: InputParametersProps) {
+  if (!dataSource) {
     return <Text key="empty">No input parameters</Text>;
   }
-
-  const dataSource = Object.keys(data).map((key) => ({
-    name: key,
-    value: JSON.parse(data[key]),
-  }));
 
   return (
     <List

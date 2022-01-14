@@ -1,5 +1,5 @@
 import React from "react";
-import ImplAdditionalInputSection from "./ImplAdditionalInput";
+import ImplAdditionalInputSection from "./SelectImplAdditionalInput";
 import {
   TypeReference,
   useGetTypeJsonSchemaQuery,

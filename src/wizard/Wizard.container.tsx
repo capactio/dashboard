@@ -1,14 +1,13 @@
 import React from "react";
 import "./Wizard.css";
 import Wizard from "./Wizard";
-import SelectActionImplContainer from "./selectActionImplementation/SelectActionImpl.container";
 import {
   InterfaceRevision,
   useListInterfaceRevisionQuery,
 } from "../generated/graphql";
 import InputParametersContainer from "./provideActionParameters/InputParameters.container";
 import InputTypeInstancesContainer from "./provideActionTypeInstances/InputTypeInstances.container";
-import SubmitActionContainer from "./submitAction/SubmitAction.container";
+import ActionOverviewContainer from "./actionOverview/ActionOverview.container";
 
 export type InputCollectionObj = { [key: string]: any };
 
@@ -17,17 +16,13 @@ export interface WizardData {
   actionInterface?: InterfaceRevision;
   actionInputParameters?: InputCollectionObj;
   actionInputTypeInstances?: InputCollectionObj;
-
-  // policy - advanced mode
-  actionImplAdditionalInput?: InputCollectionObj;
-  actionImplPath?: string;
 }
 
 export type WizardSteps = {
   title: string;
   content: StepComponent;
 
-  // TODO(https://github.com/capactio/backlog/issues/32): Logic associated with buttons will be moved to proper containers.
+  // TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor
   canProceed: (data: WizardData) => boolean;
   replaceNextBtn: (data: WizardData) => boolean;
 }[];
@@ -89,7 +84,6 @@ function WizardContainer({
       nextStepFn={nextStep}
       previousStepFn={previousStep}
       isNextBtnTakenOver={takeOverNextBtn}
-      submitBtn={<SubmitActionContainer {...stepProps} />}
     />
   );
 }
@@ -132,12 +126,10 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
   }
 
   steps.push({
-    title: "Advanced mode",
-    content: <SelectActionImplContainer {...stepProps} />,
-    canProceed: (data) => {
-      return data.actionImplPath !== undefined;
-    },
-    replaceNextBtn: () => false,
+    title: "Overview",
+    content: <ActionOverviewContainer {...stepProps} />,
+    canProceed: () => true,
+    replaceNextBtn: () => true,
   });
 
   return steps;

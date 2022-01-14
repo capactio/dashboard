@@ -5,7 +5,7 @@ import "./SelectActionImpl.css";
 import { Implementation } from "./SelectActionImpl.container";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { ResourceReference } from "../ResourceRef";
-import ImplAdditionalInputSectionContainer from "./ImplAdditionalInput.container";
+import ImplAdditionalInputSectionContainer from "./SelectImplAdditionalInput.container";
 
 const { Text } = Typography;
 
