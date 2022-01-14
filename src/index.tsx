@@ -6,8 +6,15 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { ConfigProvider } from "antd";
 
 const queryClient = new QueryClient({});
+
+ConfigProvider.config({
+  theme: {
+    primaryColor: "#004c91",
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>

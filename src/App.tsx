@@ -10,32 +10,32 @@ import NewInterfacesCatalog from "./routes/hub-interfaces";
 import { Layout } from "antd";
 import Menu from "./layout/Menu";
 import NotFoundPage from "./layout/NotFound";
-
-const { Header } = Layout;
+import { RequireAuthContainer } from "./auth/RequireAuth.container";
+import Header from "./layout/Header";
 
 function App() {
   return (
-    <Layout>
-      <Header className="layout-header">
-        <div className="logo" />
-      </Header>
+    <RequireAuthContainer>
       <Layout>
-        <Menu />
-        <Routes>
-          <Route path="/" element={<Navigate to="/hub/interface-groups" />} />
-          <Route path="/hub/interface-groups">
-            <Route index element={<NewInterfaceGroupCatalog />} />
-            <Route path=":name" element={<NewInterfacesCatalog />} />
-          </Route>
-          <Route path="actions">
-            <Route index element={<Actions />} />
-            <Route path="new/:path/:revision" element={<NewAction />} />
-            <Route path=":name" element={<Action />} />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Header />
+        <Layout>
+          <Menu />
+          <Routes>
+            <Route path="/" element={<Navigate to="/hub/interface-groups" />} />
+            <Route path="/hub/interface-groups">
+              <Route index element={<NewInterfaceGroupCatalog />} />
+              <Route path=":name" element={<NewInterfacesCatalog />} />
+            </Route>
+            <Route path="actions">
+              <Route index element={<Actions />} />
+              <Route path="new/:path/:revision" element={<NewAction />} />
+              <Route path=":name" element={<Action />} />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Layout>
       </Layout>
-    </Layout>
+    </RequireAuthContainer>
   );
 }
 

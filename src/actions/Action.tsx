@@ -1,9 +1,22 @@
 import React from "react";
 
-import { Button, Descriptions, Layout, Tooltip, Typography } from "antd";
+import {
+  Button,
+  Descriptions,
+  Layout,
+  Popconfirm,
+  Space,
+  Tooltip,
+  Typography,
+} from "antd";
 import ActionStatus from "./ActionStatus";
 import "./Action.css";
-import { CheckCircleOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  DeleteOutlined,
+  InfoCircleOutlined,
+  PlaySquareOutlined,
+} from "@ant-design/icons";
 import { ActionQuery } from "../generated/graphql";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import ErrorAlert from "../layout/ErrorAlert";
@@ -19,7 +32,10 @@ interface ActionProps {
   error?: Error;
   runAction: () => void;
   isRunActionLoading: boolean;
+  deleteAction: () => void;
+  isDeleteActionLoading: boolean;
   canBeRun: boolean;
+  canBeDeleted: boolean;
   hasBeenRun: boolean;
   argoWorkflowLink?: string;
   showTypeInstanceDetails: (typeInstanceID: string) => void;
@@ -31,7 +47,10 @@ function Action({
   error,
   runAction,
   isRunActionLoading,
+  deleteAction,
+  isDeleteActionLoading,
   canBeRun,
+  canBeDeleted,
   hasBeenRun,
   argoWorkflowLink,
   showTypeInstanceDetails,
@@ -50,21 +69,54 @@ function Action({
     return <ErrorAlert errorMessage={`Action doesn't exist`} />;
   }
 
-  const runActionBtn = (
+  const deleteButton = (
     <Button
-      type="primary"
-      onClick={() => runAction()}
-      disabled={!canBeRun}
-      loading={isRunActionLoading}
-      icon={hasBeenRun ? <CheckCircleOutlined /> : null}
+      type="default"
+      danger
+      loading={isDeleteActionLoading}
+      icon={<DeleteOutlined />}
+      disabled={!canBeDeleted}
     >
-      Run Action
+      Delete
     </Button>
+  );
+
+  const extraButtons = (
+    <Space size="middle">
+      <Button
+        type="primary"
+        onClick={() => runAction()}
+        disabled={!canBeRun}
+        loading={isRunActionLoading}
+        icon={hasBeenRun ? <CheckCircleOutlined /> : <PlaySquareOutlined />}
+      >
+        Run
+      </Button>
+      <Popconfirm
+        title="Are you sure to delete this Action?"
+        onConfirm={() => deleteAction()}
+        okText="Yes"
+        cancelText="No"
+        placement="left"
+        disabled={!canBeDeleted}
+      >
+        {canBeDeleted ? (
+          deleteButton
+        ) : (
+          <Tooltip
+            placement="rightTop"
+            title={"Deleting running Action is not allowed"}
+          >
+            {deleteButton}
+          </Tooltip>
+        )}
+      </Popconfirm>
+    </Space>
   );
 
   return (
     <Content className="site-layout-background" style={{ padding: 24 }}>
-      <Descriptions column={1} bordered title="General" extra={runActionBtn}>
+      <Descriptions column={1} bordered title="General" extra={extraButtons}>
         <Descriptions.Item label="Name">{action?.name}</Descriptions.Item>
         <Descriptions.Item label="Created at">
           <Text>{new Date(action?.createdAt).toUTCString()}</Text>

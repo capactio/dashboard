@@ -22,8 +22,11 @@ function SubmitActionContainer({
         `Action '${data?.createAction.name}' created successfully`
       );
       navigate(`/actions/${data?.createAction.name}`);
-    } catch (error) {
-      message.error(`Failed to submit Action. Got error: ${error}`);
+    } catch (err) {
+      const error = err as Error;
+      message.error(
+        `Failed to submit Action. Got error: ${error.name}: ${error.message}`
+      );
     }
   };
 

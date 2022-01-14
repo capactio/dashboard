@@ -11,14 +11,7 @@ generates:
       - "typescript-operations"
       - "typescript-react-query"
     config:
-      fetcher:
-        endpoint: "process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT"
-        fetchParams: >
-          {
-            headers: {
-              "Authorization": `${process.env.REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER}`
-            }
-          }
+      fetcher: "../http/graphql-fetcher#Fetcher" # path relative to the `src/generated/graphql.ts` file
   ./graphql.schema.json:
     plugins:
       - "introspection"
