@@ -44,14 +44,30 @@ function SelectActionImpl({
   }
 
   const radioBtns = implementation.map(({ displayName, implRef, typeRef }) => {
+    // currently we cannot pick Implementation by path and revision, we automatically select latest revision
+    let disabled = false;
+    const implsWithEqualPaths = implementation.filter(
+      ({ implRef: itemImplRef }) => implRef.path === itemImplRef.path
+    );
+    if (implsWithEqualPaths.length > 1) {
+      const isFound = implsWithEqualPaths.some(
+        ({ implRef: itemImplRef }) => itemImplRef.revision > implRef.revision
+      );
+      disabled = isFound;
+    }
+
+    // avoid selecting all Implementations with the same path at once
+    const value = disabled ? implRef.key() : implRef.path;
+
     return (
       <Radio
         key={implRef.key()}
-        value={implRef.path}
+        value={value}
         onClick={() => {
           setActionImplPath(implRef.path);
           setAdditionalInputTypes(typeRef);
         }}
+        disabled={disabled}
       >
         <strong>{displayName}</strong>
         <p>{implRef.key()}</p>

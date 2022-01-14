@@ -61,15 +61,6 @@ function WizardContainer({
     } as WizardData);
   }
 
-  // TODO: Remove testing
-  // if (data) {
-  //   const params = data!.interface!.revision!.spec!.input.parameters[0];
-  //   data!.interface!.revision!.spec!.input.parameters = [params, {
-  //     name: "foo",
-  //     typeRef: params.typeRef,
-  //   }]
-  // }
-
   const nextStep = () => {
     setCurrentStep(currentStepIdx + 1);
   };
