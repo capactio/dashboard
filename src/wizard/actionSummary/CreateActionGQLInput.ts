@@ -5,7 +5,7 @@ import {
   PolicyInput,
   RulesForInterfaceInput,
 } from "../../generated/graphql";
-import { AdvancedModeInput } from "./ActionOverview.container";
+import { AdvancedModeInput } from "./ActionSummary.container";
 
 export function createActionGQLInput(
   wizardData: WizardData,
@@ -107,7 +107,7 @@ function getSpecificImplRule(
           path: implPath,
         },
         inject: {
-          // TODO(https://github.com/capactio/backlog/issues/32): requiredTypeInstances
+          // TODO: Support requiredTypeInstances
           additionalParameters: [],
         },
       },
@@ -115,7 +115,11 @@ function getSpecificImplRule(
   };
 
   if (inputs) {
-    rule.oneOf[0].inject!.additionalParameters! = Object.keys(inputs).map(
+    if (!rule.oneOf[0].inject) {
+      rule.oneOf[0].inject = {};
+    }
+
+    rule.oneOf[0].inject.additionalParameters = Object.keys(inputs).map(
       (key) => ({
         name: key,
         value: inputs[key],

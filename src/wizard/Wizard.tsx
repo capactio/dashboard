@@ -38,14 +38,8 @@ function Wizard({
   }
 
   return (
-    <Content
-      className="site-layout-background"
-      style={{
-        padding: 24,
-        position: "relative",
-      }}
-    >
-      <Steps current={currentStepIndex}>
+    <Content className="wizard-content">
+      <Steps className="steps-indicator" current={currentStepIndex}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
         ))}

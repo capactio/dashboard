@@ -1,27 +1,21 @@
 import { Button, Descriptions, Spin, Tabs, Tooltip, Typography } from "antd";
 import React from "react";
 import InputParameters from "./ActionInputParameters";
-import TypeInstancesList from "./ActionTypeInstancesList";
 import { ActionQuery, ActionStatusPhase } from "../generated/graphql";
 import { ProfileOutlined } from "@ant-design/icons";
 import ErrorAlert from "../layout/ErrorAlert";
+import TypeInstancesListContainer from "../typeinstances/TypeInstancesList.container";
 
 const { TabPane } = Tabs;
 const { Text, Paragraph } = Typography;
 
 interface ActionTabsProps {
   data: ActionQuery;
-  showTypeInstanceDetails: (typeInstanceID: string) => void;
   hasBeenRun: boolean;
   argoWorkflowLink?: string;
 }
 
-function ActionTabs({
-  data,
-  showTypeInstanceDetails,
-  hasBeenRun,
-  argoWorkflowLink,
-}: ActionTabsProps) {
+function ActionTabs({ data, hasBeenRun, argoWorkflowLink }: ActionTabsProps) {
   if (!data.action) {
     return <ErrorAlert errorMessage="Action cannot be undefined" />;
   }
@@ -38,6 +32,7 @@ function ActionTabs({
     action.status?.phase === ActionStatusPhase.Initial ||
     action.status?.phase === ActionStatusPhase.BeingRendered;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const inputParamsSource = (parameters: any) => {
     if (!parameters) {
       return undefined;
@@ -70,10 +65,7 @@ function ActionTabs({
               />
             </Descriptions.Item>
             <Descriptions.Item label="Input TypeInstances">
-              <TypeInstancesList
-                data={action.input?.typeInstances}
-                showTypeInstanceDetails={showTypeInstanceDetails}
-              />
+              <TypeInstancesListContainer data={action.input?.typeInstances} />
             </Descriptions.Item>
             <Descriptions.Item label="Action Policy">
               {action.input?.actionPolicy ? (
@@ -144,10 +136,7 @@ function ActionTabs({
             style={{ marginTop: "24px" }}
           >
             <Descriptions.Item label="TypeInstances">
-              <TypeInstancesList
-                data={action.output?.typeInstances}
-                showTypeInstanceDetails={showTypeInstanceDetails}
-              />
+              <TypeInstancesListContainer data={action.output?.typeInstances} />
             </Descriptions.Item>
           </Descriptions>
         </TabPane>

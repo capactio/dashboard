@@ -11,8 +11,14 @@ interface InputParametersFormProps {
   isLoading: boolean;
   error?: Error;
   schema: JSONSchema7;
-  initData: any;
-  setInputParameter: (data: any) => void;
+  initData: unknown;
+  setInputParameter: (data: string) => void;
+  formButton: FormButton;
+}
+
+export interface FormButton {
+  label: string;
+  className: string;
 }
 
 function InputParametersForm({
@@ -21,6 +27,7 @@ function InputParametersForm({
   schema,
   initData,
   setInputParameter,
+  formButton,
 }: InputParametersFormProps) {
   if (isLoading) {
     return <CenteredSpinner />;
@@ -30,25 +37,22 @@ function InputParametersForm({
     return <ErrorAlert error={error} />;
   }
 
-  const onSuccessSubmit = ({ formData }: ISubmitEvent<any>) => {
+  const onSuccessSubmit = ({ formData }: ISubmitEvent<string>) => {
     setInputParameter(formData);
   };
 
   return (
-    <>
-      <Form
-        showErrorList={false}
-        schema={schema}
-        formData={initData}
-        onSubmit={onSuccessSubmit}
-        liveValidate={true}
-      >
-        {/*TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor*/}
-        <Button htmlType="submit" className="form-submit-btn" type="primary">
-          Next
-        </Button>
-      </Form>
-    </>
+    <Form
+      showErrorList={false}
+      schema={schema}
+      formData={initData}
+      onSubmit={onSuccessSubmit}
+      liveValidate={true}
+    >
+      <Button htmlType="submit" className={formButton.className} type="primary">
+        {formButton.label}
+      </Button>
+    </Form>
   );
 }
 

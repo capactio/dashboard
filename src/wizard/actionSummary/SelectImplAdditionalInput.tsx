@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import { ISubmitEvent } from "@rjsf/core";
-import { Button, Modal } from "antd";
+import { Button, Modal, Space } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { AdditionalInputSchema } from "./SelectImplAdditionalInput.container";
 import ErrorAlert from "../../layout/ErrorAlert";
 import Form from "../../layout/Form";
+import Title from "antd/lib/typography/Title";
 
 interface ImplAdditionalInputSectionProps {
   additionalInputSchema: AdditionalInputSchema;
-  setImplAdditionalInput: (name: string, data: any) => void;
+  setImplAdditionalInput: (name: string, data: unknown) => void;
+  resetImplAdditionalInput: (name: string) => void;
   isLoading: boolean;
   error?: Error;
 }
@@ -17,10 +19,11 @@ interface ImplAdditionalInputSectionProps {
 function ImplAdditionalInputSection({
   additionalInputSchema,
   setImplAdditionalInput,
+  resetImplAdditionalInput,
   isLoading,
   error,
 }: ImplAdditionalInputSectionProps) {
-  const [formData, setFormData] = useState(null);
+  const [formData, setFormData] = useState<unknown>(null);
   const [visible, setVisible] = useState(false);
 
   if (isLoading) {
@@ -31,21 +34,35 @@ function ImplAdditionalInputSection({
     return <ErrorAlert error={error} />;
   }
 
-  const onSuccessSubmit = ({ formData }: ISubmitEvent<any>) => {
+  const onSuccessSubmit = ({ formData }: ISubmitEvent<unknown>) => {
     setImplAdditionalInput(additionalInputSchema.name, formData);
     setFormData(formData);
     setVisible(false);
   };
 
+  const resetData = () => {
+    resetImplAdditionalInput(additionalInputSchema.name);
+    setFormData(null);
+  };
+
   return (
     <>
-      <Button
-        type="default"
-        onClick={() => setVisible(true)}
-        icon={formData ? <CheckCircleOutlined /> : null}
-      >
-        Provide "{additionalInputSchema.name}" input
-      </Button>
+      <Title level={4}>
+        {formData ? <CheckCircleOutlined /> : null} {additionalInputSchema.name}
+      </Title>
+      <Space size="middle">
+        <Button type="default" onClick={() => setVisible(true)}>
+          Provide input
+        </Button>
+        <Button
+          disabled={!formData}
+          type="default"
+          danger
+          onClick={() => resetData()}
+        >
+          Reset
+        </Button>
+      </Space>
       <Modal
         visible={visible}
         title={`The "${additionalInputSchema.name}"  additional input`}

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { Empty } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import { InputTypeInstance } from "../../generated/graphql";
-import { CheckCircleOutlined } from "@ant-design/icons";
 import InputParametersFromTypeSectionContainer from "./InputTypeInstanceGroup.container";
 import { InputCollectionObj } from "../Wizard.container";
 import Tabbing, { Tab } from "../Tabbing";
 
 interface InputParametersProps {
-  setInputTypeInstance: (name: string, data: any) => void;
+  setInputTypeInstance: (name: string, data: string) => void;
   inputTypeInstances?: InputCollectionObj;
   isLoading: boolean;
   inputTypeInstancesRefs: InputTypeInstance[];
@@ -38,7 +36,13 @@ function InputTypeInstances({
     const onSuccessSubmit = (data: string) => {
       setInputTypeInstance(item.name, data);
       if (current + 1 >= inputTypeInstancesRefs.length) {
-        setCurrent(getFirstNotSetItemIdx());
+        const idx = getFirstNotSetItemIdx();
+        if (idx === -1) {
+          // everything already set, do nothing
+          return;
+        }
+
+        setCurrent(idx);
       } else {
         setCurrent(current + 1);
       }
@@ -57,26 +61,6 @@ function InputTypeInstances({
       ),
     };
   });
-
-  const requiredLen = inputTypeInstancesRefs.length ?? 0;
-  const selectedLen = Object.keys(inputTypeInstances ?? {}).length;
-  const wasAllDataProvided = requiredLen === selectedLen;
-  const allDataProvidedMsg =
-    requiredLen > 0
-      ? "All TypeInstances were provided."
-      : "Action does not require any input TypeInstances.";
-
-  if (wasAllDataProvided) {
-    return (
-      <Empty
-        image={<CheckCircleOutlined />}
-        imageStyle={{
-          fontSize: "60px",
-        }}
-        description={<span>{allDataProvidedMsg}</span>}
-      />
-    );
-  }
 
   return (
     <Tabbing setCurrentIdx={setCurrent} currentIdx={current} data={tabs} />

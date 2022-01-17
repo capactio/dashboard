@@ -7,8 +7,9 @@ import {
 } from "../generated/graphql";
 import InputParametersContainer from "./provideActionParameters/InputParameters.container";
 import InputTypeInstancesContainer from "./provideActionTypeInstances/InputTypeInstances.container";
-import ActionOverviewContainer from "./actionOverview/ActionOverview.container";
+import ActionSummaryContainer from "./actionSummary/ActionSummary.container";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type InputCollectionObj = { [key: string]: any };
 
 export interface WizardData {
@@ -21,8 +22,6 @@ export interface WizardData {
 export type WizardSteps = {
   title: string;
   content: StepComponent;
-
-  // TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor
   canProceed: (data: WizardData) => boolean;
   replaceNextBtn: (data: WizardData) => boolean;
 }[];
@@ -32,6 +31,7 @@ export type StepComponent = React.ReactElement<StepComponentProps>;
 export interface StepComponentProps {
   wizardData: WizardData;
   setWizardData: (data: WizardData) => void;
+  navigateToNextStep: () => void;
 }
 
 interface WizardContainerProps {
@@ -61,11 +61,6 @@ function WizardContainer({
     } as WizardData);
   }
 
-  const stepProps = { wizardData, setWizardData };
-  const steps = collectRequiredSteps(stepProps);
-  const canProceed = steps[currentStepIdx].canProceed(wizardData);
-  const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
-
   const nextStep = () => {
     setCurrentStep(currentStepIdx + 1);
   };
@@ -73,6 +68,11 @@ function WizardContainer({
   const previousStep = () => {
     setCurrentStep(currentStepIdx - 1);
   };
+
+  const stepProps = { wizardData, setWizardData, navigateToNextStep: nextStep };
+  const steps = collectRequiredSteps(stepProps);
+  const canProceed = steps[currentStepIdx].canProceed(wizardData);
+  const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
 
   return (
     <Wizard
@@ -103,10 +103,7 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
         return requiredLen === 0 || submittedLen === requiredLen;
       },
       replaceNextBtn: (data) => {
-        const { requiredLen, submittedLen } = requiredAddSubmittedParams(
-          stepProps.wizardData
-        );
-        return requiredLen > 0 && submittedLen < requiredLen;
+        return actionInput.parameters.length === 1;
       },
     });
   }
@@ -126,8 +123,8 @@ function collectRequiredSteps(stepProps: StepComponentProps) {
   }
 
   steps.push({
-    title: "Overview",
-    content: <ActionOverviewContainer {...stepProps} />,
+    title: "Summary",
+    content: <ActionSummaryContainer {...stepProps} />,
     canProceed: () => true,
     replaceNextBtn: () => true,
   });

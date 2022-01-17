@@ -1,9 +1,8 @@
-.action-overview .ant-descriptions-item-content {
+.action-summary .ant-descriptions-item-content {
   background: #fff;
 }
 
-/*TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor*/
-.overview-submit-btn {
+.summary-submit-btn {
   /* important needs to be set as the loading class `.ant-btn.ant-btn-loading` has the `position: relative;` property */
   position: absolute !important;
   bottom: 24px;

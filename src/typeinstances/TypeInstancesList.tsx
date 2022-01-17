@@ -1,14 +1,8 @@
 import React from "react";
 import { Button, List, Typography } from "antd";
-import { ManifestReference } from "../generated/graphql";
+import { GenericTypeInstanceData } from "./TypeInstancesList.container";
 
 const { Text } = Typography;
-
-interface GenericTypeInstanceData {
-  id: string;
-  name?: string;
-  typeRef?: ManifestReference;
-}
 
 interface TypeInstancesListProps {
   data?: GenericTypeInstanceData[];
@@ -45,9 +39,11 @@ function TypeInstancesList({
           </>
         );
 
+        const itemKey = `${ti.name || ""}-${ti.id}`;
+
         return (
           <List.Item
-            key={ti.id}
+            key={itemKey}
             actions={[linkToDetails(ti.id, "See details")]}
           >
             <List.Item.Meta

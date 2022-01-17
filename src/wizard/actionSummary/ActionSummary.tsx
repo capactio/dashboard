@@ -3,38 +3,43 @@ import "./SelectActionImpl.css";
 import ErrorAlert from "../../layout/ErrorAlert";
 import { Button, Descriptions, Input, Layout, Tabs, Typography } from "antd";
 import InputParameters from "../../actions/ActionInputParameters";
-import "./ActionOverview.css";
+import "./ActionSummary.css";
 import SelectActionImplContainer from "./SelectActionImpl.container";
 import { ResourceReference } from "../ResourceRef";
-import { ActionOverviewInput } from "./ActionOverview.container";
-import { EditOutlined } from "@ant-design/icons";
-import { InputMaybe, Scalars } from "../../generated/graphql";
+import {
+  ActionSummaryInput,
+  AdvancedModeInput,
+} from "./ActionSummary.container";
+import { EditOutlined, SettingOutlined } from "@ant-design/icons";
+import TypeInstancesListContainer, {
+  GenericTypeInstanceData,
+} from "../../typeinstances/TypeInstancesList.container";
 
 const { Content } = Layout;
 const { Text, Paragraph } = Typography;
 const { TabPane } = Tabs;
 
-interface ActionOverviewProps {
-  data: ActionOverviewInput;
+interface ActionSummaryProps {
+  data: ActionSummaryInput;
   error?: Error;
 
   isSubmitLoading: boolean;
   submitFunc: () => void;
 
   setActionName: (name: string) => void;
-  setActionImplAdditionalInput: (name: string, data: any) => void;
-  setActionImplPath: (actionImplPath: string) => void;
+  advancedModeInput: AdvancedModeInput;
+  setAdvancedModeInput: (advModeInput: AdvancedModeInput) => void;
 }
 
-function ActionOverview({
+function ActionSummary({
   error,
   data,
   isSubmitLoading,
+  advancedModeInput,
   submitFunc,
   setActionName,
-  setActionImplAdditionalInput,
-  setActionImplPath,
-}: ActionOverviewProps) {
+  setAdvancedModeInput,
+}: ActionSummaryProps) {
   const [editableInputName, setEditableInputName] = useState(false);
 
   if (error) {
@@ -84,13 +89,21 @@ function ActionOverview({
     });
   };
 
+  const inputTypeInstances = data.input.input?.typeInstances ?? [];
+  const inputTypeInstanceData: GenericTypeInstanceData[] =
+    inputTypeInstances.map((ti) => {
+      return {
+        id: ti.id,
+        name: ti.name,
+      };
+    });
+
   // maybe extra as switch to advance mode?
   return (
-    <Content className="action-overview">
+    <Content className="action-summary">
       <Descriptions column={1} bordered>
         <Descriptions.Item label="Name">{actionNameField()}</Descriptions.Item>
         <Descriptions.Item label="Interface">
-          g
           <Text code>
             {data.input.actionRef.path}:{data.input.actionRef.revision}
           </Text>
@@ -99,10 +112,10 @@ function ActionOverview({
           {data.actionImplPath ? (
             <Text code>{data.actionImplPath}</Text>
           ) : (
-            <Text code>
+            <Text>
               Select by Engine, during render process. Can be preselected in
               advanced settings tab.
-            </Text> // to note style or btn to navigate to advanced tab?
+            </Text>
           )}
         </Descriptions.Item>
       </Descriptions>
@@ -120,11 +133,7 @@ function ActionOverview({
               />
             </Descriptions.Item>
             <Descriptions.Item label="Input TypeInstances">
-              {/*TODO: display Input TypeInstances. The TypeInstancesList needs to be refactored:
-                   - change to container and embed modal with details
-                   - change data to dataSource
-                */}
-              <Text>No Input TypeInstances</Text>
+              <TypeInstancesListContainer data={inputTypeInstanceData} />
             </Descriptions.Item>
             <Descriptions.Item label="Action Policy">
               {data.input.input?.actionPolicy ? (
@@ -139,8 +148,15 @@ function ActionOverview({
             </Descriptions.Item>
           </Descriptions>
         </TabPane>
-        <TabPane tab="Advanced Settings" key="2">
-          {/*TODO: add reset option*/}
+        <TabPane
+          tab={
+            <>
+              <SettingOutlined style={{ marginRight: "6px" }} />
+              {"Advanced Settings"}
+            </>
+          }
+          key="2"
+        >
           <SelectActionImplContainer
             actRef={
               new ResourceReference(
@@ -148,14 +164,13 @@ function ActionOverview({
                 data?.input.actionRef.revision
               )
             }
-            setActionImplPath={setActionImplPath}
-            setActionImplAdditionalInput={setActionImplAdditionalInput}
+            advancedModeInput={advancedModeInput}
+            setAdvancedModeInput={setAdvancedModeInput}
           />
         </TabPane>
       </Tabs>
-      {/*TODO(https://github.com/capactio/backlog/issues/30): Remove after btn refactor */}
       <Button
-        className="overview-submit-btn"
+        className="summary-submit-btn"
         type="primary"
         onClick={submitFunc}
         loading={isSubmitLoading}
@@ -166,4 +181,4 @@ function ActionOverview({
   );
 }
 
-export default ActionOverview;
+export default ActionSummary;

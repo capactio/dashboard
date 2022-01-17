@@ -10,7 +10,7 @@ import {
   names,
   uniqueNamesGenerator,
 } from "unique-names-generator";
-import ActionOverview from "./ActionOverview";
+import ActionSummary from "./ActionSummary";
 import React, { useState } from "react";
 import { createActionGQLInput } from "./CreateActionGQLInput";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +23,9 @@ const genAdjsColorsAndNames: Config = {
   length: 3,
 };
 
-interface ActionOverviewContainerProps extends StepComponentProps {}
+interface ActionSummaryContainerProps extends StepComponentProps {}
 
-export interface ActionOverviewInput
+export interface ActionSummaryInput
   extends CreateActionWithInputMutationVariables {
   actionImplPath: string;
 }
@@ -40,35 +40,13 @@ export interface AdvancedModeInput {
   actionImplPath?: string;
 }
 
-function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
-  const [advanceInput, setAdvancedInput] = useState<AdvancedModeInput>({
-    actionName: uniqueNamesGenerator(genAdjsColorsAndNames), // default random name
+function ActionSummaryContainer({ wizardData }: ActionSummaryContainerProps) {
+  const defaultActionRandomName = uniqueNamesGenerator(genAdjsColorsAndNames);
+  const [advancedInput, setAdvancedInput] = useState<AdvancedModeInput>({
+    actionName: defaultActionRandomName,
   });
 
-  const input = createActionGQLInput(wizardData, advanceInput);
-
-  const setActionName = (actionName: string) =>
-    setAdvancedInput({
-      ...advanceInput,
-      actionName,
-    });
-
-  const setActionImplPath = (actionImplPath: string) =>
-    setAdvancedInput({
-      ...advanceInput,
-      actionImplPath,
-    });
-
-  const setActionImplAdditionalInput = (name: string, data: any) => {
-    const actionImplAdditionalInput = {
-      ...advanceInput.actionImplAdditionalInput,
-      [name]: data,
-    };
-    setAdvancedInput({
-      ...advanceInput,
-      actionImplAdditionalInput,
-    });
-  };
+  const input = createActionGQLInput(wizardData, advancedInput);
 
   const { mutateAsync, isLoading } = useCreateActionWithInputMutation();
   const navigate = useNavigate();
@@ -85,23 +63,28 @@ function ActionOverviewContainer({ wizardData }: ActionOverviewContainerProps) {
     }
   };
 
+  const setActionName = (actionName: string) => {
+    setAdvancedInput({
+      ...advancedInput,
+      actionName,
+    });
+  };
+
   return (
-    <>
-      <ActionOverview
-        data={
-          {
-            ...input,
-            actionImplPath: advanceInput.actionImplPath,
-          } as ActionOverviewInput
-        }
-        isSubmitLoading={isLoading}
-        submitFunc={submitFn}
-        setActionName={setActionName}
-        setActionImplPath={setActionImplPath}
-        setActionImplAdditionalInput={setActionImplAdditionalInput}
-      />
-    </>
+    <ActionSummary
+      data={
+        {
+          ...input,
+          actionImplPath: advancedInput.actionImplPath,
+        } as ActionSummaryInput
+      }
+      isSubmitLoading={isLoading}
+      submitFunc={submitFn}
+      setAdvancedModeInput={setAdvancedInput}
+      advancedModeInput={advancedInput}
+      setActionName={setActionName}
+    />
   );
 }
 
-export default ActionOverviewContainer;
+export default ActionSummaryContainer;

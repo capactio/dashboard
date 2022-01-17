@@ -38,7 +38,6 @@ interface ActionProps {
   canBeDeleted: boolean;
   hasBeenRun: boolean;
   argoWorkflowLink?: string;
-  showTypeInstanceDetails: (typeInstanceID: string) => void;
 }
 
 function Action({
@@ -53,7 +52,6 @@ function Action({
   canBeDeleted,
   hasBeenRun,
   argoWorkflowLink,
-  showTypeInstanceDetails,
 }: ActionProps) {
   if (error) {
     return <ErrorAlert error={error} />;
@@ -115,7 +113,7 @@ function Action({
   );
 
   return (
-    <Content className="site-layout-background" style={{ padding: 24 }}>
+    <Content className="content-bg-rounded" style={{ padding: 24 }}>
       <Descriptions column={1} bordered title="General" extra={extraButtons}>
         <Descriptions.Item label="Name">{action?.name}</Descriptions.Item>
         <Descriptions.Item label="Created at">
@@ -144,7 +142,6 @@ function Action({
 
       <ActionTabs
         data={data}
-        showTypeInstanceDetails={showTypeInstanceDetails}
         hasBeenRun={hasBeenRun}
         argoWorkflowLink={argoWorkflowLink}
       />

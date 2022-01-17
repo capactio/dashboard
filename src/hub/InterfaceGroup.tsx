@@ -36,6 +36,7 @@ function InterfaceGroup({
     return (
       <Col span={6} key={metadata.path}>
         <Card
+          className="content-bg-rounded"
           hoverable={ifaceCnt > 0}
           onClick={() => {
             ifaceCnt && navigate(`/hub/interface-groups/${metadata.path}`);
