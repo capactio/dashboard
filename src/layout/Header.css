@@ -12,7 +12,7 @@
 }
 
 .header-menu {
-  flex-direction: row-reverse;
+  justify-content: flex-end;
 }
 
 .header-logo-image {
@@ -27,4 +27,15 @@
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--capact-white);
+}
+
+.header-menu.ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover,
+.header-menu.ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu:hover,
+.header-menu.ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu-open {
+  background-color: var(--ant-primary-color);
+}
+
+.ant-menu-horizontal > .ant-menu-submenu > .ant-menu-submenu-title {
+  margin: 0 -20px;
+  padding: 0 20px;
 }

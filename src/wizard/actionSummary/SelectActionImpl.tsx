@@ -94,6 +94,7 @@ function SelectActionImpl({
       if (disabled) {
         return (
           <Tooltip
+            key={implRef.key()}
             placement="topLeft"
             overlayStyle={{ maxWidth: "420px" }}
             title={
