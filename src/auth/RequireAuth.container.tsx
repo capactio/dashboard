@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-  defaultLoginDetails,
+  loadDefaultLoginDetails,
   LoginDetails,
   requestConfigLoader,
 } from "../http/connection";
@@ -55,6 +55,7 @@ export function RequireAuthContainer({ children }: RequireAuthContainerProps) {
   }
 
   if (!authenticated) {
+    const defaultLoginDetails = loadDefaultLoginDetails();
     return (
       <LoginForm
         loading={query.isLoading}

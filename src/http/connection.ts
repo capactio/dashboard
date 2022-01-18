@@ -1,3 +1,5 @@
+import { loadRuntimeConfig } from "../config/runtime";
+
 interface RequestConfig {
   endpoint: string;
   headers: { [key: string]: string };
@@ -10,11 +12,14 @@ export interface LoginDetails {
   password: string;
 }
 
-export const defaultLoginDetails: LoginDetails = {
-  endpoint: "https://gateway.capact.local/graphql",
-  username: "graphql",
-  password: "t0p_s3cr3t",
-};
+export function loadDefaultLoginDetails(): LoginDetails {
+  const { defaultGatewayEndpoint } = loadRuntimeConfig();
+  return {
+    endpoint: defaultGatewayEndpoint,
+    username: "",
+    password: "",
+  };
+}
 
 class RequestConfigLoader {
   private static LS_KEY = "capact-gateway";

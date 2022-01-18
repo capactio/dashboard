@@ -122,4 +122,6 @@ To run built Docker image, execute:
 docker run --rm -it -p 3000:8080 ghcr.io/capactio/dashboard:latest
 ```
 
+> **NOTE:** To test the `/healthz` endpoint, add `-p 3001:8082` to the `docker run` command. Once the container is run, you can call the `http://localhost:3001/healthz` endpoint.
+
 To access Dashboard, open [http://127.0.0.1:3000](http://127.0.0.1:3000).
