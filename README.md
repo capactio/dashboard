@@ -119,7 +119,7 @@ Supported environmental variables:
 To run built Docker image, execute:
 
 ```bash
-docker run --rm -it -p 3000:80 ghcr.io/capactio/dashboard:latest
+docker run --rm -it -p 3000:8080 ghcr.io/capactio/dashboard:latest
 ```
 
 To access Dashboard, open [http://127.0.0.1:3000](http://127.0.0.1:3000).
