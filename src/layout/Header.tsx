@@ -3,7 +3,11 @@ import "./Header.css";
 
 import { Layout, Menu } from "antd";
 import { AuthContext } from "../auth/AuthContext";
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  LogoutOutlined,
+  QuestionCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import SubMenu from "antd/lib/menu/SubMenu";
 import { Link } from "react-router-dom";
 
@@ -23,7 +27,12 @@ function Header() {
         <b className="header-logo-title">Capact</b>
       </Link>
       <Menu theme="dark" mode="horizontal" className="header-menu">
-        <SubMenu key="SubMenu" title="User" icon={<UserOutlined />}>
+        <Menu.Item key="docs" icon={<QuestionCircleOutlined />}>
+          <a href="https://capact.io/docs" target="_blank" rel="noreferrer">
+            Documentation
+          </a>
+        </Menu.Item>
+        <SubMenu key="account" title="User" icon={<UserOutlined />}>
           <Menu.Item
             key="logout"
             icon={<LogoutOutlined />}

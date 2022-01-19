@@ -1,13 +1,14 @@
 import React from "react";
-import { QUERY_REFETCH_INTERVAL_MS } from "../config";
+import { loadRuntimeConfig } from "../config/runtime";
 
 import { useActionListQuery } from "../generated/graphql";
 
 import ActionList, { ActionItem } from "./ActionList";
 
 function ActionListContainer() {
+  const { queryRefetchIntervalMS } = loadRuntimeConfig();
   const query = useActionListQuery(undefined, {
-    refetchInterval: QUERY_REFETCH_INTERVAL_MS,
+    refetchInterval: queryRefetchIntervalMS,
   });
 
   const rawData = query.data?.actions ?? [];

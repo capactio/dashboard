@@ -1,10 +1,7 @@
 import { message } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  ARGO_WORKFLOWS_UI_BASE_URL,
-  QUERY_REFETCH_INTERVAL_MS,
-} from "../config";
+import { loadRuntimeConfig } from "../config/runtime";
 import {
   ActionStatusPhase,
   useActionQuery,
@@ -19,9 +16,10 @@ interface ActionContainerProps {
 }
 
 function ActionContainer({ name }: ActionContainerProps) {
+  const { queryRefetchIntervalMS } = loadRuntimeConfig();
   const { data, error, isLoading } = useActionQuery(
     { actionName: name },
-    { refetchInterval: QUERY_REFETCH_INTERVAL_MS }
+    { refetchInterval: queryRefetchIntervalMS }
   );
   const navigate = useNavigate();
   const runActionMutation = useRunActionMutation();
@@ -69,7 +67,8 @@ function ActionContainer({ name }: ActionContainerProps) {
     // Unfortunately we cannot do that now as Runner reports its status at the end of this workflow,
     // which is a tad late
     const namespace = "default";
-    argoWorkflowLink = `${ARGO_WORKFLOWS_UI_BASE_URL}/workflows/${namespace}/${name}?tab=workflow`;
+    const { argoWorkflowsUIBaseURL } = loadRuntimeConfig();
+    argoWorkflowLink = `${argoWorkflowsUIBaseURL}/workflows/${namespace}/${name}?tab=workflow`;
   }
 
   return (
