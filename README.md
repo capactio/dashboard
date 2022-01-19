@@ -1,7 +1,5 @@
 # Dashboard
 
-> **🚧 UNDER CONSTRUCTION:** This project is in an early stage. In the near future, Dashboard will be provided as a part of Capact installation.
-
 ## Overview
 
 Dashboard is a general purpose, web-based UI for Capact cluster. It allows users to manage Capact resources running in the target cluster. It is an official alternative for [CLI](https://capact.io/docs/cli/getting-started).
@@ -14,7 +12,7 @@ Dashboard is a general purpose, web-based UI for Capact cluster. It allows users
   >
   > `capact install --helm-repo=@latest --version=@latest`
 
-- [Node.js 16](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
+- [Node.js 17](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
 - [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed.
 
 ## Usage
