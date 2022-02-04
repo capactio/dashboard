@@ -1,5 +1,10 @@
 name: Main branch
 
+# TODO: Temporary solution. Remove it once migration to Lerna is completed 
+defaults:
+  run:
+    working-directory: packages/dashboard-ui  
+
 on:
   push:
     paths-ignore:
@@ -32,6 +37,7 @@ jobs:
         with:
           node-version: '17.x'
           cache: 'npm'
+          cache-dependency-path: packages/dashboard-ui/package-lock.json
 
       - name: Install dependencies
         run: npm install

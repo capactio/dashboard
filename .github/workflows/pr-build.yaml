@@ -1,5 +1,10 @@
 name: PR build
 
+# TODO: Temporary solution. Remove it once migration to Lerna is completed 
+defaults:
+  run:
+    working-directory: packages/dashboard-ui  
+
 on:
   pull_request_target:
     types: [ opened, synchronize, reopened ]
@@ -34,7 +39,7 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       contents: read
-
+   
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -46,6 +51,7 @@ jobs:
         with:
           node-version: '17.x'
           cache: 'npm'
+          cache-dependency-path: packages/dashboard-ui/package-lock.json
 
       - name: Install dependencies
         run: npm install
@@ -79,6 +85,10 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       packages: write
+    defaults: # temporary until Lerna configuration is not finalized
+      run:
+        working-directory: packages/dashboard-ui
+      
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
