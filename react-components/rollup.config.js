@@ -29,7 +29,6 @@ const config = [
       },
     ],
     plugins: [
-      // peerDepsExternal(),
       resolve(),
       commonJS(),
       typescript({ tsconfig: "./tsconfig.json" }),
