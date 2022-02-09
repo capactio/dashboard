@@ -11,15 +11,15 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "start": "lerna run start --parallel",
-    "storybook": "lerna run storybook",
-    "lint": "eslint ./packages/**",
+    "lint": "eslint . -c ./.eslintrc.js",
     "test": "lerna run test",
     "build": "lerna run build",
+    "publish": "lerna publish",
     "docker:build": "lerna run docker:build",
     "docker:save": "lerna run docker:save",
     "docker:load": "lerna run docker:load",
     "docker:push": "lerna run docker:push",
-    "prettify": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss,md,graphql}\""
+    "prettify": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md,graphql}\""
   },
   "browserslist": {
     "production": [

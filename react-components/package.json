@@ -11,9 +11,9 @@
     "start": "npm run build -- --watch",
     "build": "rollup -c",
     "test": "jest",
-    "lint": "eslint ./src",
+    "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook:build": "build-storybook"
   },
   "peerDependencies": {
     "antd": "^4.18.5",

@@ -31,7 +31,8 @@
   "scripts": {
     "start": "react-scripts --max_old_space_size=4096 start",
     "build": "react-scripts --max_old_space_size=4096 build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test --passWithNoTests",
+    "test:watch": "react-scripts test",
     "eject": "react-scripts eject",
     "generate-graphql": "set -o allexport;. .env; set +o allexport; graphql-codegen --config codegen.yml; prettier --write 'src/generated/**/*.{js,jsx,ts,tsx,json,css,scss,md,graphql}' 'graphql.schema.json'",
     "docker:build": "./scripts/build-image.sh",
