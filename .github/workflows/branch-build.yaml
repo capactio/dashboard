@@ -3,7 +3,7 @@ name: Main branch
 # TODO: Temporary solution. Remove it once migration to Lerna is completed 
 defaults:
   run:
-    working-directory: packages/dashboard-ui  
+    working-directory: dashboard
 
 on:
   push:
