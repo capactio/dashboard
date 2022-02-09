@@ -1,5 +1,10 @@
 name: Main branch
 
+# TODO: Temporary solution. Remove it once migration to Lerna is completed 
+defaults:
+  run:
+    working-directory: dashboard
+
 on:
   push:
     paths-ignore:
@@ -21,9 +26,6 @@ jobs:
       DOCKER_REPOSITORY: "ghcr.io/capactio"
 
     steps:
-      - name: Set Docker tag env
-        run: echo "DOCKER_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -32,6 +34,7 @@ jobs:
         with:
           node-version: '17.x'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -44,6 +47,9 @@ jobs:
         # on CI is setting `CI` env to `false`.
         # See the issue https://github.com/facebook/create-react-app/issues/3657
         run: CI=false npm run build
+
+      - name: Set Docker tag env
+        run: echo "DOCKER_TAG=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: npm run docker:build-image

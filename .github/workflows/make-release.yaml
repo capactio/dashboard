@@ -1,5 +1,10 @@
 name: Make release
 
+# TODO: Temporary solution. Remove it once migration to Lerna is completed 
+defaults:
+  run:
+    working-directory: packages/dashboard-ui  
+
 # Required secrets:
 # GH_PAT - GitHub username with personal access token with permissions to make commits to repository, must be in format: "<username>:<PAT>"
 
@@ -17,6 +22,7 @@ jobs:
     environment: Release
     permissions:
       contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

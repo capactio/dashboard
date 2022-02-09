@@ -1,5 +1,10 @@
 name: PR build
 
+# TODO: Temporary solution. Remove it once migration to Lerna is completed 
+defaults:
+  run:
+    working-directory: dashboard
+
 on:
   pull_request_target:
     types: [ opened, synchronize, reopened ]
@@ -46,6 +51,7 @@ jobs:
         with:
           node-version: '17.x'
           cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
         run: npm install
@@ -79,6 +85,7 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       packages: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
