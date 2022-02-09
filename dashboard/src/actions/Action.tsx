@@ -19,7 +19,7 @@ import {
 } from "@ant-design/icons";
 import { ActionQuery } from "../generated/graphql";
 import CenteredSpinner from "../layout/CenteredSpinner";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 
 import ActionTabs from "./ActionTabs";
 

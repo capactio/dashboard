@@ -3,7 +3,7 @@ import { Button, Col, Radio, Row, Space, Tooltip, Typography } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
 import "./SelectActionImpl.css";
 import { Implementation } from "./SelectActionImpl.container";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { ResourceReference } from "../ResourceRef";
 import ImplAdditionalInputSectionContainer from "./SelectImplAdditionalInput.container";
 import Title from "antd/lib/typography/Title";

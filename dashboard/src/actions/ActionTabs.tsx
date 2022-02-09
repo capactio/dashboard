@@ -3,7 +3,7 @@ import React from "react";
 import InputParameters from "./ActionInputParameters";
 import { ActionQuery, ActionStatusPhase } from "../generated/graphql";
 import { ProfileOutlined } from "@ant-design/icons";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import TypeInstancesListContainer from "../typeinstances/TypeInstancesList.container";
 
 const { TabPane } = Tabs;

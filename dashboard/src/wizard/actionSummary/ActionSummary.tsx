@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./SelectActionImpl.css";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { Button, Descriptions, Input, Layout, Tabs, Typography } from "antd";
 import InputParameters from "../../actions/ActionInputParameters";
 import "./ActionSummary.css";

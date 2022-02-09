@@ -1,7 +1,8 @@
 import React from "react";
-import "./LoginForm.css";
 import { Form, Input, Button, Card, Alert } from "antd";
 import { LoginDetails } from "../http/connection";
+import { ErrorAlert } from "@capactio/react-components";
+import styled from "styled-components";
 
 interface LoginFormProps {
   error?: Error;
@@ -10,6 +11,24 @@ interface LoginFormProps {
   onLoginFormSubmit: (values: LoginDetails) => void;
 }
 
+const LoginFormWrapper = styled.div`
+  padding: 20px;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+`;
+
+const FixedWidthCard = styled(Card)`
+  width: 500px;
+`;
+
+const AlertWithMargin = styled(Alert)`
+  margin-bottom: 24px;
+`;
+
 function LoginForm({
   loading,
   error,
@@ -17,19 +36,16 @@ function LoginForm({
   onLoginFormSubmit,
 }: LoginFormProps) {
   return (
-    <div className="login-form">
-      <Card
-        title="Capact Dashboard Login"
-        bordered={false}
-        style={{ width: 500 }}
-      >
+    <LoginFormWrapper>
+      <FixedWidthCard title="Capact Dashboard Login" bordered={false}>
+        {/* TODO: Just for testing purposes - remove before merge */}
+        <ErrorAlert errorMessage="Testing components library integration" />
         {error && (
-          <Alert
+          <AlertWithMargin
             message={`Error`}
             description={error.message}
             type="error"
             showIcon
-            style={{ marginBottom: "24px" }}
           />
         )}
         <Form
@@ -75,8 +91,8 @@ function LoginForm({
             </Button>
           </Form.Item>
         </Form>
-      </Card>
-    </div>
+      </FixedWidthCard>
+    </LoginFormWrapper>
   );
 }
 

@@ -4,7 +4,7 @@ import { ISubmitEvent } from "@rjsf/core";
 import { Button, Modal, Space } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { AdditionalInputSchema } from "./SelectImplAdditionalInput.container";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import Form from "../../layout/Form";
 import Title from "antd/lib/typography/Title";
 

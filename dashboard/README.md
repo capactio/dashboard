@@ -1,7 +1,6 @@
 # Dashboard
 
-## Overview
-
+This directory contains source code for the Capact Dashboard.
 Dashboard is a general purpose, web-based UI for Capact cluster. It allows users to manage Capact resources running in the target cluster. It is an official alternative for [CLI](https://capact.io/docs/cli/getting-started).
 
 ## Prerequisites
@@ -17,25 +16,27 @@ Dashboard is a general purpose, web-based UI for Capact cluster. It allows users
 
 ## Usage
 
-Download the NPM dependencies using:
+1. Install dependencies and build applications according to the main [Readme](../README.md) document.
+
+1. Navigate to this subdirectory:
 
 ```bash
-npm install
+cd dashboard
 ```
 
-Run the Dashboard locally:
+1. Run the Dashboard locally:
 
 ```bash
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-**(Optional)** Make the Argo Workflows UI accessible to be able to use Argo Workflows UI link on Action details view:
+1. **(Optional)** To be able to use Argo Workflows UI link on Action details view, make the Argo Workflows UI accessible:
 
 ```bash
 kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
 ```
+
+1. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Configuration
 

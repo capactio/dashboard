@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Empty, Radio, Row, Space } from "antd";
 import CenteredSpinner from "../../layout/CenteredSpinner";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { TypeInstance } from "../../generated/graphql";
 
 interface InputTypeInstanceGroupProps {

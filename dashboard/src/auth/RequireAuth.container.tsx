@@ -9,7 +9,7 @@ import {
 import { useTestConnectionQuery } from "../generated/graphql";
 
 import { useQueryClient } from "react-query";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import LoginForm from "./LoginForm";
 import { AuthContext } from "./AuthContext";
 

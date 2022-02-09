@@ -1,0 +1,36 @@
+{
+  "name": "@capactio/dashboard-root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^4.0.0",
+    "prettier": "^2.5.0"
+  },
+  "scripts": {
+    "postinstall": "if [ \"${SKIP_POSTINSTALL}\" != \"true\" ]; then npm run setup-hooks; else echo \"Post install script skipped as the env SKIP_POSTINSTALL is set to true.\"; fi",
+    "setup-hooks": "git config core.hooksPath ./scripts/git-hooks",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "start": "lerna run start --parallel",
+    "storybook": "lerna run storybook",
+    "lint": "eslint ./packages/**",
+    "test": "lerna run test",
+    "build": "lerna run build",
+    "docker:build": "lerna run docker:build",
+    "docker:save": "lerna run docker:save",
+    "docker:load": "lerna run docker:load",
+    "docker:push": "lerna run docker:push",
+    "prettify": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss,md,graphql}\""
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 import { Card, Col, Row, Statistic } from "antd";
 import React from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import {
   interfaceActionsButtons,
   InterfaceRevisionWithKey,

@@ -1,23 +1,20 @@
 name: PR build
 
-# TODO: Temporary solution. Remove it once migration to Lerna is completed 
-defaults:
-  run:
-    working-directory: dashboard
-
 on:
   pull_request_target:
     types: [ opened, synchronize, reopened ]
     paths-ignore:
       - "LICENSE"
       - "CODEOWNERS"
+      - "**.md"
     branches:
       - "main"
 
 env:
   DOCKER_TAG: PR-${{ github.event.pull_request.number }}
   DOCKER_REPOSITORY: "ghcr.io/capactio/pr"
-  APP_NAME: "dashboard"
+  DOCKER_IMAGES_DIR: "/tmp/docker-images"
+  DOCKER_IMAGES_ARTIFACT_NAME_PREFIX: "dashboard-images"
 
 jobs:
   cancel-previous-workflows:
@@ -39,7 +36,7 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       contents: read
-
+   
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -51,31 +48,32 @@ jobs:
         with:
           node-version: '17.x'
           cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm run bootstrap
 
       - name: Lint code
         run: npm run lint
 
-      - name: Build application
+      - name: Build applications
         # Unfortunately, the only way to not treat warnings as errors
-        # on CI is setting `CI` env to `false`.
+        # on CI is setting `CI` env to `false` for create-react-app.
         # See the issue https://github.com/facebook/create-react-app/issues/3657
         run: CI=false npm run build
 
-      - name: Build Docker image
-        run: npm run docker:build-image
+      - name: Build Docker images
+        run: npm run docker:build
 
-      - name: Save Docker image
-        run: docker save "${DOCKER_REPOSITORY}/${APP_NAME}:${DOCKER_TAG}" > "/tmp/${APP_NAME}.tar"
+      - name: Save Docker images
+        run: npm run docker:save 
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.APP_NAME }}-${{github.sha}}
-          path: /tmp/${{ env.APP_NAME }}.tar
+          name: ${{ env.DOCKER_IMAGES_ARTIFACT_NAME_PREFIX }}-${{github.sha}}
+          path: ${{ env.DOCKER_IMAGES_DIR }}
           retention-days: 1
 
   push:
@@ -85,7 +83,6 @@ jobs:
     if: github.event.pull_request.draft == false
     permissions:
       packages: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -93,14 +90,14 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.APP_NAME }}-${{github.sha}}
-          path: /tmp
+          name: ${{ env.DOCKER_IMAGES_ARTIFACT_NAME_PREFIX }}-${{github.sha}}
+          path: ${{ env.DOCKER_IMAGES_DIR }}
 
-      - name: Load Docker image
-        run: docker load --input "/tmp/${APP_NAME}.tar"
+      - name: Load Docker images
+        run: npm run docker:load 
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push Docker image
-        run: npm run docker:push-image
+      - name: Push Docker images
+        run: npm run docker:push

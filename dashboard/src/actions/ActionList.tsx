@@ -4,7 +4,7 @@ import { Table, Typography } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import ActionStatus from "./ActionStatus";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 
 const { Text } = Typography;
 
