@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import "./Header.css";
 
 import { Layout, Menu } from "antd";
-import { AuthContext } from "../auth/AuthContext";
+import { AuthContext } from "@capactio/react-components";
 import {
   LogoutOutlined,
   QuestionCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import SubMenu from "antd/lib/menu/SubMenu";
 import { Link } from "react-router-dom";
 
+const { SubMenu } = Menu;
 const { Header: AntHeader } = Layout;
 
 function Header() {

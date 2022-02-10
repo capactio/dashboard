@@ -2,5 +2,10 @@
   "packages": ["dashboard", "react-components"],
   "hoist": true,
   "stream": true,
-  "version": "0.1.0"
+  "version": "0.0.1",
+  "command": {
+    "publish": {
+      "message": "Bump version to %s"
+    }
+  }
 }

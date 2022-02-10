@@ -5,17 +5,26 @@ import NewAction from "./routes/new-action";
 import Actions from "./routes/actions";
 import Action from "./routes/action";
 import { Navigate, Route, Routes } from "react-router-dom";
-import NewInterfaceGroupCatalog from "./routes/hub-interface-groups";
-import NewInterfacesCatalog from "./routes/hub-interfaces";
+import InterfaceGroupCatalog from "./routes/hub-interface-groups";
+import InterfacesCatalog from "./routes/hub-interfaces";
 import { Layout } from "antd";
 import Menu from "./layout/Menu";
 import NotFoundPage from "./layout/NotFound";
-import { RequireAuthContainer } from "./auth/RequireAuth.container";
+import { RequireAuthContainer, LoginDetails } from "@capactio/react-components";
 import Header from "./layout/Header";
+import { loadRuntimeConfig } from "./config/runtime";
 
 function App() {
+
+  const { defaultGatewayEndpoint } = loadRuntimeConfig();
+  const defaultLoginDetails: LoginDetails = {
+    endpoint: defaultGatewayEndpoint,
+    username: "",
+    password: "",
+  }
+
   return (
-    <RequireAuthContainer>
+    <RequireAuthContainer defaultLoginDetails={defaultLoginDetails}>
       <Layout>
         <Header />
         <Layout>
@@ -23,8 +32,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/hub/interface-groups" />} />
             <Route path="/hub/interface-groups">
-              <Route index element={<NewInterfaceGroupCatalog />} />
-              <Route path=":name" element={<NewInterfacesCatalog />} />
+              <Route index element={<InterfaceGroupCatalog />} />
+              <Route path=":name" element={<InterfacesCatalog />} />
             </Route>
             <Route path="actions">
               <Route index element={<Actions />} />
