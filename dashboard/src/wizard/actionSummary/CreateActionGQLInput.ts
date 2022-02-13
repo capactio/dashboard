@@ -68,14 +68,16 @@ function renderPolicy(
   }
 
   return {
-    rules: [
-      getSpecificImplRule(
-        actionInterface.metadata.path,
-        advancedInput.actionImplPath,
-        advancedInput.actionImplAdditionalInput
-      ),
-      anyKubernetesImplRule(),
-    ],
+    interface: {
+      rules: [
+        getSpecificImplRule(
+          actionInterface.metadata.path,
+          advancedInput.actionImplPath,
+          advancedInput.actionImplAdditionalInput
+        ),
+        anyKubernetesImplRule(),
+      ],
+    },
   };
 }
 

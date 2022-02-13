@@ -239,6 +239,8 @@ export type CreateTypeInstanceInput = {
   /** Used to define the relationships, between the created TypeInstances */
   alias?: InputMaybe<Scalars["String"]>;
   attributes?: InputMaybe<Array<AttributeReferenceInput>>;
+  /** If not provided, TypeInstance value is stored as static value in Local Hub core storage. */
+  backend?: InputMaybe<TypeInstanceBackendInput>;
   createdBy?: InputMaybe<Scalars["String"]>;
   typeRef: TypeInstanceTypeReferenceInput;
   value?: InputMaybe<Scalars["Any"]>;
@@ -500,6 +502,15 @@ export type InterfaceOutput = {
   typeInstances: Array<Maybe<OutputTypeInstance>>;
 };
 
+export type InterfacePolicy = {
+  __typename?: "InterfacePolicy";
+  rules: Array<RulesForInterface>;
+};
+
+export type InterfacePolicyInput = {
+  rules: Array<RulesForInterfaceInput>;
+};
+
 export type InterfaceReference = {
   __typename?: "InterfaceReference";
   path: Scalars["NodePath"];
@@ -668,17 +679,20 @@ export type OutputTypeInstance = TypeInstanceFields & {
 /** Describes output TypeInstance of an Action */
 export type OutputTypeInstanceDetails = {
   __typename?: "OutputTypeInstanceDetails";
+  backend: TypeInstanceBackendDetails;
   id: Scalars["ID"];
   typeRef: ManifestReference;
 };
 
 export type Policy = {
   __typename?: "Policy";
-  rules: Array<RulesForInterface>;
+  interface?: Maybe<InterfacePolicy>;
+  typeInstance?: Maybe<TypeInstancePolicy>;
 };
 
 export type PolicyInput = {
-  rules: Array<RulesForInterfaceInput>;
+  interface?: InputMaybe<InterfacePolicyInput>;
+  typeInstance?: InputMaybe<TypeInstancePolicyInput>;
 };
 
 export type PolicyRule = {
@@ -873,6 +887,17 @@ export type RulesForInterfaceInput = {
   oneOf: Array<PolicyRuleInput>;
 };
 
+export type RulesForTypeInstance = {
+  __typename?: "RulesForTypeInstance";
+  backend: TypeInstanceBackendRule;
+  typeRef: ManifestReferenceWithOptionalRevision;
+};
+
+export type RulesForTypeInstanceInput = {
+  backend: TypeInstanceBackendRuleInput;
+  typeRef: ManifestReferenceInput;
+};
+
 /** Additional Action status from the Runner */
 export type RunnerStatus = {
   __typename?: "RunnerStatus";
@@ -910,6 +935,7 @@ export type TypeFilter = {
 
 export type TypeInstance = {
   __typename?: "TypeInstance";
+  backend: TypeInstanceBackendReference;
   firstResourceVersion?: Maybe<TypeInstanceResourceVersion>;
   id: Scalars["ID"];
   latestResourceVersion?: Maybe<TypeInstanceResourceVersion>;
@@ -925,6 +951,33 @@ export type TypeInstance = {
 
 export type TypeInstanceResourceVersionArgs = {
   resourceVersion: Scalars["Int"];
+};
+
+export type TypeInstanceBackendDetails = {
+  __typename?: "TypeInstanceBackendDetails";
+  abstract: Scalars["Boolean"];
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendInput = {
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendReference = {
+  __typename?: "TypeInstanceBackendReference";
+  abstract: Scalars["Boolean"];
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendRule = {
+  __typename?: "TypeInstanceBackendRule";
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+};
+
+export type TypeInstanceBackendRuleInput = {
+  description?: InputMaybe<Scalars["String"]>;
+  id: Scalars["ID"];
 };
 
 export type TypeInstanceFields = {
@@ -981,6 +1034,15 @@ export enum TypeInstanceOperationVerb {
   List = "LIST",
   Update = "UPDATE",
 }
+
+export type TypeInstancePolicy = {
+  __typename?: "TypeInstancePolicy";
+  rules: Array<RulesForTypeInstance>;
+};
+
+export type TypeInstancePolicyInput = {
+  rules: Array<RulesForTypeInstanceInput>;
+};
 
 export type TypeInstanceRelationItem = {
   __typename?: "TypeInstanceRelationItem";
@@ -1287,13 +1349,6 @@ export enum _RelationDirections {
   Out = "OUT",
 }
 
-export type TestConnectionQueryVariables = Exact<{ [key: string]: never }>;
-
-export type TestConnectionQuery = {
-  __typename?: "Query";
-  policy: { __typename: "Policy" };
-};
-
 export type ActionQueryVariables = Exact<{
   actionName: Scalars["String"];
 }>;
@@ -1318,70 +1373,79 @@ export type ActionQuery = {
               actionPolicy?:
                 | {
                     __typename?: "Policy";
-                    rules: Array<{
-                      __typename?: "RulesForInterface";
-                      interface: {
-                        __typename?: "ManifestReferenceWithOptionalRevision";
-                        path: any;
-                        revision?: any | null | undefined;
-                      };
-                      oneOf: Array<{
-                        __typename?: "PolicyRule";
-                        implementationConstraints?:
-                          | {
-                              __typename?: "PolicyRuleImplementationConstraints";
-                              path?: any | null | undefined;
-                              requires?:
-                                | Array<{
-                                    __typename?: "ManifestReferenceWithOptionalRevision";
-                                    path: any;
-                                    revision?: any | null | undefined;
-                                  }>
+                    interface?:
+                      | {
+                          __typename?: "InterfacePolicy";
+                          rules: Array<{
+                            __typename?: "RulesForInterface";
+                            interface: {
+                              __typename?: "ManifestReferenceWithOptionalRevision";
+                              path: any;
+                              revision?: any | null | undefined;
+                            };
+                            oneOf: Array<{
+                              __typename?: "PolicyRule";
+                              implementationConstraints?:
+                                | {
+                                    __typename?: "PolicyRuleImplementationConstraints";
+                                    path?: any | null | undefined;
+                                    requires?:
+                                      | Array<{
+                                          __typename?: "ManifestReferenceWithOptionalRevision";
+                                          path: any;
+                                          revision?: any | null | undefined;
+                                        }>
+                                      | null
+                                      | undefined;
+                                    attributes?:
+                                      | Array<{
+                                          __typename?: "ManifestReferenceWithOptionalRevision";
+                                          path: any;
+                                          revision?: any | null | undefined;
+                                        }>
+                                      | null
+                                      | undefined;
+                                  }
                                 | null
                                 | undefined;
-                              attributes?:
-                                | Array<{
-                                    __typename?: "ManifestReferenceWithOptionalRevision";
-                                    path: any;
-                                    revision?: any | null | undefined;
-                                  }>
+                              inject?:
+                                | {
+                                    __typename?: "PolicyRuleInjectData";
+                                    requiredTypeInstances?:
+                                      | Array<{
+                                          __typename?: "RequiredTypeInstanceReference";
+                                          id: string;
+                                          description?:
+                                            | string
+                                            | null
+                                            | undefined;
+                                        }>
+                                      | null
+                                      | undefined;
+                                    additionalParameters?:
+                                      | Array<{
+                                          __typename?: "AdditionalParameter";
+                                          name: string;
+                                          value: any;
+                                        }>
+                                      | null
+                                      | undefined;
+                                    additionalTypeInstances?:
+                                      | Array<{
+                                          __typename?: "AdditionalTypeInstanceReference";
+                                          name: string;
+                                          id: string;
+                                        }>
+                                      | null
+                                      | undefined;
+                                  }
                                 | null
                                 | undefined;
-                            }
-                          | null
-                          | undefined;
-                        inject?:
-                          | {
-                              __typename?: "PolicyRuleInjectData";
-                              requiredTypeInstances?:
-                                | Array<{
-                                    __typename?: "RequiredTypeInstanceReference";
-                                    id: string;
-                                    description?: string | null | undefined;
-                                  }>
-                                | null
-                                | undefined;
-                              additionalParameters?:
-                                | Array<{
-                                    __typename?: "AdditionalParameter";
-                                    name: string;
-                                    value: any;
-                                  }>
-                                | null
-                                | undefined;
-                              additionalTypeInstances?:
-                                | Array<{
-                                    __typename?: "AdditionalTypeInstanceReference";
-                                    name: string;
-                                    id: string;
-                                  }>
-                                | null
-                                | undefined;
-                            }
-                          | null
-                          | undefined;
-                      }>;
-                    }>;
+                            }>;
+                          }>;
+                        }
+                      | null
+                      | undefined;
                   }
                 | null
                 | undefined;
@@ -1464,70 +1528,76 @@ export type ActionFieldsFragment = {
         actionPolicy?:
           | {
               __typename?: "Policy";
-              rules: Array<{
-                __typename?: "RulesForInterface";
-                interface: {
-                  __typename?: "ManifestReferenceWithOptionalRevision";
-                  path: any;
-                  revision?: any | null | undefined;
-                };
-                oneOf: Array<{
-                  __typename?: "PolicyRule";
-                  implementationConstraints?:
-                    | {
-                        __typename?: "PolicyRuleImplementationConstraints";
-                        path?: any | null | undefined;
-                        requires?:
-                          | Array<{
-                              __typename?: "ManifestReferenceWithOptionalRevision";
-                              path: any;
-                              revision?: any | null | undefined;
-                            }>
+              interface?:
+                | {
+                    __typename?: "InterfacePolicy";
+                    rules: Array<{
+                      __typename?: "RulesForInterface";
+                      interface: {
+                        __typename?: "ManifestReferenceWithOptionalRevision";
+                        path: any;
+                        revision?: any | null | undefined;
+                      };
+                      oneOf: Array<{
+                        __typename?: "PolicyRule";
+                        implementationConstraints?:
+                          | {
+                              __typename?: "PolicyRuleImplementationConstraints";
+                              path?: any | null | undefined;
+                              requires?:
+                                | Array<{
+                                    __typename?: "ManifestReferenceWithOptionalRevision";
+                                    path: any;
+                                    revision?: any | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                              attributes?:
+                                | Array<{
+                                    __typename?: "ManifestReferenceWithOptionalRevision";
+                                    path: any;
+                                    revision?: any | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                            }
                           | null
                           | undefined;
-                        attributes?:
-                          | Array<{
-                              __typename?: "ManifestReferenceWithOptionalRevision";
-                              path: any;
-                              revision?: any | null | undefined;
-                            }>
+                        inject?:
+                          | {
+                              __typename?: "PolicyRuleInjectData";
+                              requiredTypeInstances?:
+                                | Array<{
+                                    __typename?: "RequiredTypeInstanceReference";
+                                    id: string;
+                                    description?: string | null | undefined;
+                                  }>
+                                | null
+                                | undefined;
+                              additionalParameters?:
+                                | Array<{
+                                    __typename?: "AdditionalParameter";
+                                    name: string;
+                                    value: any;
+                                  }>
+                                | null
+                                | undefined;
+                              additionalTypeInstances?:
+                                | Array<{
+                                    __typename?: "AdditionalTypeInstanceReference";
+                                    name: string;
+                                    id: string;
+                                  }>
+                                | null
+                                | undefined;
+                            }
                           | null
                           | undefined;
-                      }
-                    | null
-                    | undefined;
-                  inject?:
-                    | {
-                        __typename?: "PolicyRuleInjectData";
-                        requiredTypeInstances?:
-                          | Array<{
-                              __typename?: "RequiredTypeInstanceReference";
-                              id: string;
-                              description?: string | null | undefined;
-                            }>
-                          | null
-                          | undefined;
-                        additionalParameters?:
-                          | Array<{
-                              __typename?: "AdditionalParameter";
-                              name: string;
-                              value: any;
-                            }>
-                          | null
-                          | undefined;
-                        additionalTypeInstances?:
-                          | Array<{
-                              __typename?: "AdditionalTypeInstanceReference";
-                              name: string;
-                              id: string;
-                            }>
-                          | null
-                          | undefined;
-                      }
-                    | null
-                    | undefined;
-                }>;
-              }>;
+                      }>;
+                    }>;
+                  }
+                | null
+                | undefined;
             }
           | null
           | undefined;
@@ -1567,70 +1637,76 @@ export type ActionFieldsFragment = {
 
 export type PolicyFieldsFragment = {
   __typename?: "Policy";
-  rules: Array<{
-    __typename?: "RulesForInterface";
-    interface: {
-      __typename?: "ManifestReferenceWithOptionalRevision";
-      path: any;
-      revision?: any | null | undefined;
-    };
-    oneOf: Array<{
-      __typename?: "PolicyRule";
-      implementationConstraints?:
-        | {
-            __typename?: "PolicyRuleImplementationConstraints";
-            path?: any | null | undefined;
-            requires?:
-              | Array<{
-                  __typename?: "ManifestReferenceWithOptionalRevision";
-                  path: any;
-                  revision?: any | null | undefined;
-                }>
+  interface?:
+    | {
+        __typename?: "InterfacePolicy";
+        rules: Array<{
+          __typename?: "RulesForInterface";
+          interface: {
+            __typename?: "ManifestReferenceWithOptionalRevision";
+            path: any;
+            revision?: any | null | undefined;
+          };
+          oneOf: Array<{
+            __typename?: "PolicyRule";
+            implementationConstraints?:
+              | {
+                  __typename?: "PolicyRuleImplementationConstraints";
+                  path?: any | null | undefined;
+                  requires?:
+                    | Array<{
+                        __typename?: "ManifestReferenceWithOptionalRevision";
+                        path: any;
+                        revision?: any | null | undefined;
+                      }>
+                    | null
+                    | undefined;
+                  attributes?:
+                    | Array<{
+                        __typename?: "ManifestReferenceWithOptionalRevision";
+                        path: any;
+                        revision?: any | null | undefined;
+                      }>
+                    | null
+                    | undefined;
+                }
               | null
               | undefined;
-            attributes?:
-              | Array<{
-                  __typename?: "ManifestReferenceWithOptionalRevision";
-                  path: any;
-                  revision?: any | null | undefined;
-                }>
+            inject?:
+              | {
+                  __typename?: "PolicyRuleInjectData";
+                  requiredTypeInstances?:
+                    | Array<{
+                        __typename?: "RequiredTypeInstanceReference";
+                        id: string;
+                        description?: string | null | undefined;
+                      }>
+                    | null
+                    | undefined;
+                  additionalParameters?:
+                    | Array<{
+                        __typename?: "AdditionalParameter";
+                        name: string;
+                        value: any;
+                      }>
+                    | null
+                    | undefined;
+                  additionalTypeInstances?:
+                    | Array<{
+                        __typename?: "AdditionalTypeInstanceReference";
+                        name: string;
+                        id: string;
+                      }>
+                    | null
+                    | undefined;
+                }
               | null
               | undefined;
-          }
-        | null
-        | undefined;
-      inject?:
-        | {
-            __typename?: "PolicyRuleInjectData";
-            requiredTypeInstances?:
-              | Array<{
-                  __typename?: "RequiredTypeInstanceReference";
-                  id: string;
-                  description?: string | null | undefined;
-                }>
-              | null
-              | undefined;
-            additionalParameters?:
-              | Array<{
-                  __typename?: "AdditionalParameter";
-                  name: string;
-                  value: any;
-                }>
-              | null
-              | undefined;
-            additionalTypeInstances?:
-              | Array<{
-                  __typename?: "AdditionalTypeInstanceReference";
-                  name: string;
-                  id: string;
-                }>
-              | null
-              | undefined;
-          }
-        | null
-        | undefined;
-    }>;
-  }>;
+          }>;
+        }>;
+      }
+    | null
+    | undefined;
 };
 
 export type ActionListQueryVariables = Exact<{ [key: string]: never }>;
@@ -1668,6 +1744,13 @@ export type ActionListItemFieldsFragment = {
       }
     | null
     | undefined;
+};
+
+export type TestConnectionQueryVariables = Exact<{ [key: string]: never }>;
+
+export type TestConnectionQuery = {
+  __typename?: "Query";
+  policy: { __typename: "Policy" };
 };
 
 export type ListInterfaceGroupsQueryVariables = Exact<{ [key: string]: never }>;
@@ -2152,35 +2235,37 @@ export type TypeInstanceDataFragment = {
 
 export const PolicyFieldsFragmentDoc = `
     fragment PolicyFields on Policy {
-  rules {
-    interface {
-      path
-      revision
-    }
-    oneOf {
-      implementationConstraints {
-        requires {
-          path
-          revision
-        }
-        attributes {
-          path
-          revision
-        }
+  interface {
+    rules {
+      interface {
         path
+        revision
       }
-      inject {
-        requiredTypeInstances {
-          id
-          description
+      oneOf {
+        implementationConstraints {
+          requires {
+            path
+            revision
+          }
+          attributes {
+            path
+            revision
+          }
+          path
         }
-        additionalParameters {
-          name
-          value
-        }
-        additionalTypeInstances {
-          name
-          id
+        inject {
+          requiredTypeInstances {
+            id
+            description
+          }
+          additionalParameters {
+            name
+            value
+          }
+          additionalTypeInstances {
+            name
+            id
+          }
         }
       }
     }
@@ -2313,30 +2398,6 @@ export const TypeInstanceDataFragmentDoc = `
   }
 }
     `;
-export const TestConnectionDocument = `
-    query TestConnection {
-  policy {
-    __typename
-  }
-}
-    `;
-export const useTestConnectionQuery = <
-  TData = TestConnectionQuery,
-  TError = unknown
->(
-  variables?: TestConnectionQueryVariables,
-  options?: UseQueryOptions<TestConnectionQuery, TError, TData>
-) =>
-  useQuery<TestConnectionQuery, TError, TData>(
-    variables === undefined
-      ? ["TestConnection"]
-      : ["TestConnection", variables],
-    Fetcher<TestConnectionQuery, TestConnectionQueryVariables>(
-      TestConnectionDocument,
-      variables
-    ),
-    options
-  );
 export const ActionDocument = `
     query Action($actionName: String!) {
   action(name: $actionName) {
@@ -2421,6 +2482,30 @@ export const useActionListQuery = <TData = ActionListQuery, TError = unknown>(
     variables === undefined ? ["ActionList"] : ["ActionList", variables],
     Fetcher<ActionListQuery, ActionListQueryVariables>(
       ActionListDocument,
+      variables
+    ),
+    options
+  );
+export const TestConnectionDocument = `
+    query TestConnection {
+  policy {
+    __typename
+  }
+}
+    `;
+export const useTestConnectionQuery = <
+  TData = TestConnectionQuery,
+  TError = unknown
+>(
+  variables?: TestConnectionQueryVariables,
+  options?: UseQueryOptions<TestConnectionQuery, TError, TData>
+) =>
+  useQuery<TestConnectionQuery, TError, TData>(
+    variables === undefined
+      ? ["TestConnection"]
+      : ["TestConnection", variables],
+    Fetcher<TestConnectionQuery, TestConnectionQueryVariables>(
+      TestConnectionDocument,
       variables
     ),
     options
