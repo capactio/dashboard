@@ -1,7 +1,6 @@
 import React from "react";
 import { Form, Input, Button, Card, Alert } from "antd";
 import { LoginDetails } from "../http/connection";
-import { ErrorAlert } from "@capactio/react-components";
 import styled from "styled-components";
 
 interface LoginFormProps {
@@ -38,8 +37,6 @@ function LoginForm({
   return (
     <LoginFormWrapper>
       <FixedWidthCard title="Capact Dashboard Login" bordered={false}>
-        {/* TODO: Just for testing purposes - remove before merge */}
-        <ErrorAlert errorMessage="Testing components library integration" />
         {error && (
           <AlertWithMargin
             message={`Error`}

@@ -1,6 +1,6 @@
 # Capact Dashboard
 
-This repository contains the source code for Dashboard, the Capact UI, and additional development packages.
+This repository contains the source code for Capact Dashboard UI and additional development packages, such as React components library.
 
 ## Componets
 

@@ -39,6 +39,9 @@ jobs:
       - name: Lint code
         run: npm run lint
 
+      - name: Test code
+        run: npm run test
+
       - name: Build applications
         # Unfortunately, the only way to not treat warnings as errors
         # on CI is setting `CI` env to `false`.

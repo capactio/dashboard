@@ -1,8 +1,8 @@
 {
   "name": "@capactio/dashboard-ui",
   "version": "0.1.0",
-  "private": true,
   "license": "Apache 2.0",
+  "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@capactio/react-components": "^0.1.0",
