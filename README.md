@@ -30,7 +30,17 @@ npm run bootstrap
 
 Now you are ready to develop one of the packages!
 
+### Build packages
+
+To build all packages, run:
+
+```bash
+npm run build
+```
+
 ### Run development mode
+
+> **NOTE:** It is recommended to [build packages](#build-packages) first to make sure all Dashboard dependencies are built.
 
 To run Dashboard with all related packages, run:
 
@@ -57,14 +67,6 @@ To lint the source code of all packages, run:
 
 ```bash
 npm run lint
-```
-
-### Build packages
-
-To build all packages, run:
-
-```bash
-npm run build
 ```
 
 ### Publish packages
