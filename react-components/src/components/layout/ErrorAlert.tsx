@@ -1,8 +1,6 @@
 import React from "react";
 import { Alert } from "antd";
 
-import "./CenteredSpinner.css";
-
 function ErrorAlert({
   error,
   errorMessage = "Unknown error. See the development tools console.",
@@ -14,7 +12,11 @@ function ErrorAlert({
 
   return (
     <div className="spinner-wrapper">
-      <Alert message={alertMessage} type="error" />
+      <Alert
+        className="error-alert"
+        message={alertMessage}
+        type="error"
+      />
     </div>
   );
 }

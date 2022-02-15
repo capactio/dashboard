@@ -2,7 +2,7 @@ import { Card, Col, Descriptions, Input, List, Row, Tag, Tooltip } from "antd";
 import "./InterfacesList.css";
 import React, { useState } from "react";
 import CenteredSpinner from "../layout/CenteredSpinner";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { SearchOutlined } from "@ant-design/icons";
 import {
   interfaceActionsButtons,

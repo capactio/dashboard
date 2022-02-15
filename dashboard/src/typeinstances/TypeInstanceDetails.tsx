@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Descriptions, List, Modal, Typography } from "antd";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import CenteredSpinner from "../layout/CenteredSpinner";
 import { TypeInstanceQuery } from "../generated/graphql";
 import Paragraph from "antd/lib/typography/Paragraph";

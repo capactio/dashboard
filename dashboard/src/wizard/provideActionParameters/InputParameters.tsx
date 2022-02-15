@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CenteredSpinner from "../../layout/CenteredSpinner";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { InputParameter } from "../../generated/graphql";
 import { InputCollectionObj } from "../Wizard.container";
 import "./InputParameters.css";

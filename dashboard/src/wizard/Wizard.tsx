@@ -3,7 +3,7 @@ import "./Wizard.css";
 import { Button, Layout, Steps } from "antd";
 import { WizardSteps } from "./Wizard.container";
 import CenteredSpinner from "../layout/CenteredSpinner";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 
 const { Step } = Steps;
 const { Content } = Layout;

@@ -1,7 +1,7 @@
 import { Avatar, Badge, Card, Col, Row, Skeleton, Typography } from "antd";
 import React from "react";
 import { InterfaceGroup as InterfaceGroupGQL } from "../generated/graphql";
-import ErrorAlert from "../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import { useNavigate } from "react-router-dom";
 import "./InterfaceGroup.css";
 

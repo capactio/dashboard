@@ -4,7 +4,7 @@ import { JSONSchema7 } from "json-schema";
 import { Button } from "antd";
 import { ISubmitEvent } from "@rjsf/core";
 import CenteredSpinner from "../../layout/CenteredSpinner";
-import ErrorAlert from "../../layout/ErrorAlert";
+import { ErrorAlert } from "@capactio/react-components";
 import Form from "../../layout/Form";
 
 interface InputParametersFormProps {
