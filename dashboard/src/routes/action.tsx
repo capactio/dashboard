@@ -1,11 +1,13 @@
 import React from "react";
-import Page from "../layout/Page";
-
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Breadcrumb } from "antd";
-import ActionContainer from "../actions/Action.container";
+import { ActionDetailsContainer } from "@capactio/react-components";
+import Page from "../layout/Page";
+import { loadRuntimeConfig } from "../config/runtime";
 
 function Action() {
+  const navigate = useNavigate();
   const { name } = useParams();
 
   const actionName = name ?? "";
@@ -22,9 +24,20 @@ function Action() {
     </Breadcrumb>
   );
 
+  const { queryRefetchIntervalMS, argoWorkflowsUIBaseURL } = loadRuntimeConfig();
+
+  const onDeleteAction = (_: string) => {
+    navigate("/actions");
+  }
+
   return (
     <Page breadcrumb={breadcrumb} title="Action details">
-      <ActionContainer name={actionName} />
+      <ActionDetailsContainer
+        name={actionName}
+        refetchInterval={queryRefetchIntervalMS}
+        argoWorkflowsUIBaseURL={argoWorkflowsUIBaseURL}
+        onDeleteAction={onDeleteAction}
+      />
     </Page>
   );
 }

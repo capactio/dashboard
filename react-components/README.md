@@ -51,3 +51,21 @@ The build is minified and the filenames include the hashes.
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+#### `npm run generate-graphql-hooks`
+
+Introspects schema of the Capact Gateway GraphQL endpoint and generates TypeScript types and React hooks for the operations defined in `*.graphql` files under `src` directory.
+
+Before you run this command, create the `.env` file for your environment. For local Capact with default user basic auth, use:
+
+```bash
+cat > .env << ENDOFFILE
+REACT_APP_CAPACT_GATEWAY_ENDPOINT="https://gateway.capact.local/graphql"
+REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER="Basic Z3JhcGhxbDp0MHBfczNjcjN0"
+ENDOFFILE
+```
+
+where:
+
+- `REACT_APP_CAPACT_GATEWAY_ENDPOINT` is the Capact Gateway endpoint URL,
+- `REACT_APP_CAPACT_GATEWAY_ENDPOINT_AUTH_HEADER` is the authorization header used for any request to Capact Gateway.

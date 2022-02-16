@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb } from "antd";
+import { WizardContainer } from "@capactio/react-components";
 import Page from "../layout/Page";
-import WizardContainer from "../wizard/Wizard.container";
 
 function NewAction() {
+  const navigate = useNavigate();
   const { path, revision } = useParams();
 
   if (!path) {
@@ -23,13 +24,17 @@ function NewAction() {
     </Breadcrumb>
   );
 
+  const onActionCreate = (name: string) => {
+    navigate(`/actions/${name}`);
+  }
+
   return (
     <Page
       breadcrumb={breadcrumb}
       title="Create a new Action"
       onBack={() => window.history.back()}
     >
-      <WizardContainer interfacePath={path} interfaceRevision={revision} />
+      <WizardContainer interfacePath={path} interfaceRevision={revision} onActionCreate={onActionCreate} />
     </Page>
   );
 }

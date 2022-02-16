@@ -1,10 +1,16 @@
 import { Breadcrumb } from "antd";
 import React from "react";
-import InterfaceGroupsContainer from "../hub/InterfaceGroups.container";
-import Page from "../layout/Page";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { InterfaceGroupCardsContainer } from "@capactio/react-components";
+import Page from "../layout/Page";
 
-function NewInterfaceGroupCatalog() {
+function InterfaceGroupCatalog() {
+  const navigate = useNavigate();
+  const onInterfaceGroupClick = (interfaceGroupPath: string) => {
+    navigate(`/hub/interface-groups/${interfaceGroupPath}`)
+  }
+
   const breadcrumb = (
     <Breadcrumb>
       <Breadcrumb.Item>Hub</Breadcrumb.Item>
@@ -15,9 +21,9 @@ function NewInterfaceGroupCatalog() {
   );
   return (
     <Page breadcrumb={breadcrumb} title="Public Hub">
-      <InterfaceGroupsContainer />
+      <InterfaceGroupCardsContainer onInterfaceGroupClick={onInterfaceGroupClick} />
     </Page>
   );
 }
 
-export default NewInterfaceGroupCatalog;
+export default InterfaceGroupCatalog;

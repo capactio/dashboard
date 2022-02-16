@@ -30,7 +30,17 @@ npm run bootstrap
 
 Now you are ready to develop one of the packages!
 
+### Build packages
+
+To build all packages, run:
+
+```bash
+npm run build
+```
+
 ### Run development mode
+
+> **NOTE:** It is recommended to [build packages](#build-packages) first to make sure all Dashboard dependencies are built.
 
 To run Dashboard with all related packages, run:
 
@@ -39,6 +49,8 @@ npm start
 ```
 
 This command watches for changes to Dashboard of any related packages to build them and live reload the page.
+
+> **NOTE:** As this command builds dependant packages and the Dashboard at the same time, the build result may be unpredictable because of some occasional race conditions. You may need to trigger rebuild to ensure the latest subpackages are taken into account during Dashboard build. To have a predictable setup, develop the subpackages and Dashboard in isolation.
 
 ### Test packages
 
@@ -56,14 +68,6 @@ To lint the source code of all packages, run:
 npm run lint
 ```
 
-### Build packages
-
-To build all packages, run:
-
-```bash
-npm run build
-```
-
 ### Publish packages
 
 To publish all public packages, on run:
@@ -71,6 +75,15 @@ To publish all public packages, on run:
 ```bash
 npm run publish
 ```
+
+### Update packages
+
+This repository uses [Lerna hoisting](https://github.com/lerna/lerna/blob/main/doc/hoist.md), which results in all dependencies installed on the root.
+
+To update packages, follow these steps:
+1. Adjust `package.json` files in the subdirectories if necessary.
+1. Delete root `package-lock.json` file,
+1. Run `npm run bootstrap`.
 
 ### Other commands
 

@@ -1,16 +1,14 @@
 import { Breadcrumb } from "antd";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import InterfacesContainer, {
-  InterfacesView,
-} from "../hub/Interfaces.container";
-import Page from "../layout/Page";
+import { InterfacesContainer, InterfacesView } from "@capactio/react-components";
 import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
+import Page from "../layout/Page";
 
 const activeStyle = { fontSize: 22 };
 const inactiveStyle = { ...activeStyle, color: "rgba(0, 0, 0, 0.2)" };
 
-function NewInterfacesCatalog() {
+function InterfacesCatalog() {
   const [view, setView] = useState<InterfacesView>(InterfacesView.List);
   const { name } = useParams();
   const navigate = useNavigate();
@@ -27,6 +25,11 @@ function NewInterfacesCatalog() {
       <Breadcrumb.Item>{name}</Breadcrumb.Item>
     </Breadcrumb>
   );
+
+  const onInterfaceClick =  (path: string, revision: string) => {
+    navigate(`/actions/new/${path}/${revision}`)
+  }
+
   return (
     <Page
       breadcrumb={breadcrumb}
@@ -45,9 +48,9 @@ function NewInterfacesCatalog() {
       title="Public Hub"
       onBack={() => navigate("/hub/interface-groups")}
     >
-      <InterfacesContainer path={name} view={view} />
+      <InterfacesContainer path={name} view={view} onInterfaceClick={onInterfaceClick} />
     </Page>
   );
 }
 
-export default NewInterfacesCatalog;
+export default InterfacesCatalog;
