@@ -48,8 +48,7 @@ To run Dashboard with all related packages, run:
 npm start
 ```
 
-This command watches for changes to Dashboard of any related packages to build 
-them and live reload the page.
+This command watches for changes to Dashboard of any related packages to build them and live reload the page.
 
 > **NOTE:** As this command builds dependant packages and the Dashboard at the same time, the build result may be unpredictable because of some occasional race conditions. You may need to trigger rebuild to ensure the latest subpackages are taken into account during Dashboard build. To have a predictable setup, develop the subpackages and Dashboard in isolation.
 

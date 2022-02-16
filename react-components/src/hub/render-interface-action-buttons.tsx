@@ -23,4 +23,3 @@ export function renderInterfaceActionsButtons(rev: InterfaceRevisionWithKey, onI
     }
     return btns;
   }
-  
