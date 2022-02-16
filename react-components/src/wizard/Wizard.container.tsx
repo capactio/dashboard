@@ -71,7 +71,11 @@ export function WizardContainer({
     setCurrentStep(currentStepIdx - 1);
   };
 
-  const stepProps = { wizardData, setWizardData, navigateToNextStep: nextStep };
+  const stepProps = {
+    wizardData,
+    setWizardData,
+    navigateToNextStep: nextStep,
+  };
   const steps = collectRequiredSteps(stepProps, onActionCreate);
   const canProceed = steps[currentStepIdx].canProceed(wizardData);
   const takeOverNextBtn = steps[currentStepIdx].replaceNextBtn(wizardData);
@@ -90,7 +94,10 @@ export function WizardContainer({
   );
 }
 
-function collectRequiredSteps(stepProps: StepComponentProps, onActionCreate: (name: string) => void) {
+function collectRequiredSteps(
+  stepProps: StepComponentProps,
+  onActionCreate: (name: string) => void
+) {
   const steps: WizardSteps = [];
   const actionInput = stepProps.wizardData?.actionInterface?.spec.input;
 
@@ -126,7 +133,9 @@ function collectRequiredSteps(stepProps: StepComponentProps, onActionCreate: (na
 
   steps.push({
     title: "Summary",
-    content: <ActionSummaryContainer {...stepProps} onActionCreate={onActionCreate}  />,
+    content: (
+      <ActionSummaryContainer {...stepProps} onActionCreate={onActionCreate} />
+    ),
     canProceed: () => true,
     replaceNextBtn: () => true,
   });

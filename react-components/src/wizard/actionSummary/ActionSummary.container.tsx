@@ -41,7 +41,10 @@ export interface AdvancedModeInput {
   actionImplPath?: string;
 }
 
-export function ActionSummaryContainer({ wizardData, onActionCreate }: ActionSummaryContainerProps) {
+export function ActionSummaryContainer({
+  wizardData,
+  onActionCreate,
+}: ActionSummaryContainerProps) {
   const defaultActionRandomName = uniqueNamesGenerator(genAdjsColorsAndNames);
   const [advancedInput, setAdvancedInput] = useState<AdvancedModeInput>({
     actionName: defaultActionRandomName,

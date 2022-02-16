@@ -24,11 +24,12 @@ function Action() {
     </Breadcrumb>
   );
 
-  const { queryRefetchIntervalMS, argoWorkflowsUIBaseURL } = loadRuntimeConfig();
+  const { queryRefetchIntervalMS, argoWorkflowsUIBaseURL } =
+    loadRuntimeConfig();
 
   const onDeleteAction = (_: string) => {
     navigate("/actions");
-  }
+  };
 
   return (
     <Page breadcrumb={breadcrumb} title="Action details">

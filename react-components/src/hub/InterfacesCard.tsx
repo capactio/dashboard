@@ -12,7 +12,12 @@ export interface InterfacesCardProps {
   onInterfaceClick: (path: string, revision: string) => void;
 }
 
-export function InterfacesCard({ interfaces, error, isLoading, onInterfaceClick }: InterfacesCardProps) {
+export function InterfacesCard({
+  interfaces,
+  error,
+  isLoading,
+  onInterfaceClick,
+}: InterfacesCardProps) {
   if (isLoading) {
     return <CenteredSpinner />;
   }
@@ -25,7 +30,9 @@ export function InterfacesCard({ interfaces, error, isLoading, onInterfaceClick 
     const inputParams = rev?.spec.input.parameters.length ?? "None";
     const inputTIss = rev?.spec.input.typeInstances.length ?? "None";
     const output = rev?.spec.output.typeInstances.length ?? "None";
-    const actions = renderInterfaceActionsButtons(rev, () => onInterfaceClick(rev.metadata.path, rev.revision));
+    const actions = renderInterfaceActionsButtons(rev, () =>
+      onInterfaceClick(rev.metadata.path, rev.revision)
+    );
 
     return (
       <Col key={rev.key} span={6}>

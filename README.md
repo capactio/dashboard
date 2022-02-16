@@ -81,6 +81,7 @@ npm run publish
 This repository uses [Lerna hoisting](https://github.com/lerna/lerna/blob/main/doc/hoist.md), which results in all dependencies installed on the root.
 
 To update packages, follow these steps:
+
 1. Adjust `package.json` files in the subdirectories if necessary.
 1. Delete root `package-lock.json` file,
 1. Run `npm run bootstrap`.

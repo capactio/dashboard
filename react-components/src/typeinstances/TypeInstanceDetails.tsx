@@ -64,6 +64,10 @@ export function TypeInstanceDetails({
             {typeInstance?.typeRef.path}:{typeInstance?.typeRef.revision}
           </Text>
         </Descriptions.Item>
+        <Descriptions.Item label="Backend storage">
+          <Text code>{typeInstance.backend.id}</Text>{" "}
+          {typeInstance.backend.abstract && <Text>(abstract)</Text>}
+        </Descriptions.Item>
         <Descriptions.Item label="Locked by">
           {typeInstance.lockedBy ? (
             <Text code>{typeInstance.lockedBy}</Text>

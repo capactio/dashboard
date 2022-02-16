@@ -8,8 +8,8 @@ import Page from "../layout/Page";
 function InterfaceGroupCatalog() {
   const navigate = useNavigate();
   const onInterfaceGroupClick = (interfaceGroupPath: string) => {
-    navigate(`/hub/interface-groups/${interfaceGroupPath}`)
-  }
+    navigate(`/hub/interface-groups/${interfaceGroupPath}`);
+  };
 
   const breadcrumb = (
     <Breadcrumb>
@@ -21,7 +21,9 @@ function InterfaceGroupCatalog() {
   );
   return (
     <Page breadcrumb={breadcrumb} title="Public Hub">
-      <InterfaceGroupCardsContainer onInterfaceGroupClick={onInterfaceGroupClick} />
+      <InterfaceGroupCardsContainer
+        onInterfaceGroupClick={onInterfaceGroupClick}
+      />
     </Page>
   );
 }

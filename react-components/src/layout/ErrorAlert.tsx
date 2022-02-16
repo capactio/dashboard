@@ -12,11 +12,7 @@ export function ErrorAlert({
 
   return (
     <div className="spinner-wrapper">
-      <Alert
-        className="error-alert"
-        message={alertMessage}
-        type="error"
-      />
+      <Alert className="error-alert" message={alertMessage} type="error" />
     </div>
   );
 }

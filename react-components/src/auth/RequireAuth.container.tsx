@@ -1,9 +1,6 @@
 import React from "react";
 
-import {
-  LoginDetails,
-  requestConfigLoader,
-} from "../http";
+import { LoginDetails, requestConfigLoader } from "../http";
 
 import { useTestConnectionQuery } from "../generated/graphql";
 
@@ -17,7 +14,10 @@ interface RequireAuthContainerProps {
   defaultLoginDetails?: LoginDetails;
 }
 
-export function RequireAuthContainer({ children, defaultLoginDetails }: RequireAuthContainerProps) {
+export function RequireAuthContainer({
+  children,
+  defaultLoginDetails,
+}: RequireAuthContainerProps) {
   const [authenticated, setAuthenticated] = React.useState(false);
   const queryClient = useQueryClient();
 
@@ -55,7 +55,6 @@ export function RequireAuthContainer({ children, defaultLoginDetails }: RequireA
   }
 
   if (!authenticated) {
-
     return (
       <LoginForm
         loading={query.isLoading}
@@ -70,4 +69,3 @@ export function RequireAuthContainer({ children, defaultLoginDetails }: RequireA
     <AuthContext.Provider value={{ logout }}>{children}</AuthContext.Provider>
   );
 }
-

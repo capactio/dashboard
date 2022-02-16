@@ -73,7 +73,12 @@ export function LoginForm({
           <Form.Item
             label="Username"
             name="username"
-            rules={[{ required: true, message: "Provide the username." }]}
+            rules={[
+              {
+                required: true,
+                message: "Provide the username.",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -81,7 +86,12 @@ export function LoginForm({
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Provide the user password." }]}
+            rules={[
+              {
+                required: true,
+                message: "Provide the user password.",
+              },
+            ]}
           >
             <Input.Password />
           </Form.Item>

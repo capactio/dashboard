@@ -9,7 +9,10 @@ export interface ActionListContainerProps {
   onActionClick: (name: string) => void;
 }
 
-export function ActionListContainer({ refetchInterval, onActionClick }: ActionListContainerProps) {
+export function ActionListContainer({
+  refetchInterval,
+  onActionClick,
+}: ActionListContainerProps) {
   const query = useActionListQuery(undefined, {
     refetchInterval,
   });

@@ -239,6 +239,8 @@ export type CreateTypeInstanceInput = {
   /** Used to define the relationships, between the created TypeInstances */
   alias?: InputMaybe<Scalars["String"]>;
   attributes?: InputMaybe<Array<AttributeReferenceInput>>;
+  /** If not provided, TypeInstance value is stored as static value in Local Hub core storage. */
+  backend?: InputMaybe<TypeInstanceBackendInput>;
   createdBy?: InputMaybe<Scalars["String"]>;
   typeRef: TypeInstanceTypeReferenceInput;
   value?: InputMaybe<Scalars["Any"]>;
@@ -677,6 +679,7 @@ export type OutputTypeInstance = TypeInstanceFields & {
 /** Describes output TypeInstance of an Action */
 export type OutputTypeInstanceDetails = {
   __typename?: "OutputTypeInstanceDetails";
+  backend: TypeInstanceBackendDetails;
   id: Scalars["ID"];
   typeRef: ManifestReference;
 };
@@ -684,10 +687,12 @@ export type OutputTypeInstanceDetails = {
 export type Policy = {
   __typename?: "Policy";
   interface?: Maybe<InterfacePolicy>;
+  typeInstance?: Maybe<TypeInstancePolicy>;
 };
 
 export type PolicyInput = {
   interface?: InputMaybe<InterfacePolicyInput>;
+  typeInstance?: InputMaybe<TypeInstancePolicyInput>;
 };
 
 export type PolicyRule = {
@@ -882,6 +887,17 @@ export type RulesForInterfaceInput = {
   oneOf: Array<PolicyRuleInput>;
 };
 
+export type RulesForTypeInstance = {
+  __typename?: "RulesForTypeInstance";
+  backend: TypeInstanceBackendRule;
+  typeRef: ManifestReferenceWithOptionalRevision;
+};
+
+export type RulesForTypeInstanceInput = {
+  backend: TypeInstanceBackendRuleInput;
+  typeRef: ManifestReferenceInput;
+};
+
 /** Additional Action status from the Runner */
 export type RunnerStatus = {
   __typename?: "RunnerStatus";
@@ -919,6 +935,7 @@ export type TypeFilter = {
 
 export type TypeInstance = {
   __typename?: "TypeInstance";
+  backend: TypeInstanceBackendReference;
   firstResourceVersion?: Maybe<TypeInstanceResourceVersion>;
   id: Scalars["ID"];
   latestResourceVersion?: Maybe<TypeInstanceResourceVersion>;
@@ -934,6 +951,33 @@ export type TypeInstance = {
 
 export type TypeInstanceResourceVersionArgs = {
   resourceVersion: Scalars["Int"];
+};
+
+export type TypeInstanceBackendDetails = {
+  __typename?: "TypeInstanceBackendDetails";
+  abstract: Scalars["Boolean"];
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendInput = {
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendReference = {
+  __typename?: "TypeInstanceBackendReference";
+  abstract: Scalars["Boolean"];
+  id: Scalars["String"];
+};
+
+export type TypeInstanceBackendRule = {
+  __typename?: "TypeInstanceBackendRule";
+  description?: Maybe<Scalars["String"]>;
+  id: Scalars["ID"];
+};
+
+export type TypeInstanceBackendRuleInput = {
+  description?: InputMaybe<Scalars["String"]>;
+  id: Scalars["ID"];
 };
 
 export type TypeInstanceFields = {
@@ -990,6 +1034,15 @@ export enum TypeInstanceOperationVerb {
   List = "LIST",
   Update = "UPDATE",
 }
+
+export type TypeInstancePolicy = {
+  __typename?: "TypeInstancePolicy";
+  rules: Array<RulesForTypeInstance>;
+};
+
+export type TypeInstancePolicyInput = {
+  rules: Array<RulesForTypeInstanceInput>;
+};
 
 export type TypeInstanceRelationItem = {
   __typename?: "TypeInstanceRelationItem";
@@ -1674,6 +1727,11 @@ export type TypeInstanceQuery = {
       path: any;
       revision: any;
     };
+    backend: {
+      __typename?: "TypeInstanceBackendReference";
+      id: string;
+      abstract: boolean;
+    };
     latestResourceVersion?: {
       __typename?: "TypeInstanceResourceVersion";
       resourceVersion: number;
@@ -1699,6 +1757,11 @@ export type TypeInstanceFieldsFragment = {
     __typename?: "TypeInstanceTypeReference";
     path: any;
     revision: any;
+  };
+  backend: {
+    __typename?: "TypeInstanceBackendReference";
+    id: string;
+    abstract: boolean;
   };
   latestResourceVersion?: {
     __typename?: "TypeInstanceResourceVersion";
@@ -2061,6 +2124,10 @@ export const TypeInstanceFieldsFragmentDoc = `
   typeRef {
     path
     revision
+  }
+  backend {
+    id
+    abstract
   }
   lockedBy
   latestResourceVersion {

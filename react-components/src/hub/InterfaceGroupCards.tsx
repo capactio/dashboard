@@ -21,9 +21,8 @@ export function InterfaceGroupCards({
   interfaceGroups,
   error,
   isLoading,
-  onInterfaceGroupClick
+  onInterfaceGroupClick,
 }: InterfaceGroupCardsProps) {
-
   if (isLoading) {
     return LoadingCards();
   }

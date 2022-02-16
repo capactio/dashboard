@@ -26,7 +26,7 @@ function NewAction() {
 
   const onActionCreate = (name: string) => {
     navigate(`/actions/${name}`);
-  }
+  };
 
   return (
     <Page
@@ -34,7 +34,11 @@ function NewAction() {
       title="Create a new Action"
       onBack={() => window.history.back()}
     >
-      <WizardContainer interfacePath={path} interfaceRevision={revision} onActionCreate={onActionCreate} />
+      <WizardContainer
+        interfacePath={path}
+        interfaceRevision={revision}
+        onActionCreate={onActionCreate}
+      />
     </Page>
   );
 }

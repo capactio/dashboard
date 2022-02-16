@@ -15,7 +15,11 @@ export interface ActionTabsProps {
   argoWorkflowLink?: string;
 }
 
-export function ActionTabs({ data, hasBeenRun, argoWorkflowLink }: ActionTabsProps) {
+export function ActionTabs({
+  data,
+  hasBeenRun,
+  argoWorkflowLink,
+}: ActionTabsProps) {
   if (!data.action) {
     return <ErrorAlert errorMessage="Action cannot be undefined" />;
   }

@@ -1,7 +1,5 @@
 import React from "react";
-import {
-  useListInterfacesFromInterfaceGroupQuery,
-} from "../generated/graphql";
+import { useListInterfacesFromInterfaceGroupQuery } from "../generated/graphql";
 import { InterfacesCard } from "./InterfacesCard";
 import { ResourceReference } from "../wizard/ResourceRef";
 import { InterfacesList } from "./InterfacesList";
@@ -19,7 +17,11 @@ export interface InterfacesContainerProps {
   onInterfaceClick: (path: string, revision: string) => void;
 }
 
-export function InterfacesContainer({ path, view, onInterfaceClick }: InterfacesContainerProps) {
+export function InterfacesContainer({
+  path,
+  view,
+  onInterfaceClick,
+}: InterfacesContainerProps) {
   const { data, error, isLoading } = useListInterfacesFromInterfaceGroupQuery({
     path: path,
   });
