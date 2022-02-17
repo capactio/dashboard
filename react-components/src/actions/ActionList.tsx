@@ -22,13 +22,18 @@ export interface ActionListProps {
   onActionClick: (name: string) => void;
 }
 
-export function ActionList({ data, isLoading, error, onActionClick }: ActionListProps) {
+export function ActionList({
+  data,
+  isLoading,
+  error,
+  onActionClick,
+}: ActionListProps) {
   if (error) {
     return <ErrorAlert error={error} />;
   }
 
   const dataSource = data ?? [];
-  const columns = createColumns(onActionClick)
+  const columns = createColumns(onActionClick);
 
   return (
     <Table
@@ -41,7 +46,6 @@ export function ActionList({ data, isLoading, error, onActionClick }: ActionList
   );
 }
 
-
 function createColumns(onActionClick: (name: string) => void) {
   return [
     {
@@ -49,7 +53,9 @@ function createColumns(onActionClick: (name: string) => void) {
       dataIndex: "name",
       key: "name",
       render: (name: string) => (
-        <Button type="link" onClick={() => onActionClick(name)}><strong>{name}</strong></Button>
+        <Button type="link" onClick={() => onActionClick(name)}>
+          <strong>{name}</strong>
+        </Button>
       ),
       sorter: (a: ActionItem, b: ActionItem) => a.name.localeCompare(b.name),
     },
@@ -90,8 +96,10 @@ function createColumns(onActionClick: (name: string) => void) {
       align: "center" as const,
       key: "action",
       render: (name: string) => (
-        <Button type="link" onClick={() => onActionClick(name)}><EyeOutlined /></Button>
+        <Button type="link" onClick={() => onActionClick(name)}>
+          <EyeOutlined />
+        </Button>
       ),
     },
-  ]
+  ];
 }

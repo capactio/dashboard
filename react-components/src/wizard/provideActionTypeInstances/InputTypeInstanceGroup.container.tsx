@@ -23,13 +23,13 @@ export function InputTypeInstanceGroupContainer({
   });
 
   return (
-      <InputTypeInstanceGroup
-        name={`${typeRef.path}:${typeRef.revision}`}
-        isLoading={isLoading}
-        error={error as Error | undefined}
-        typeInstances={data?.typeInstances as TypeInstance[]}
-        setInputTypeInstanceID={setInputTypeInstanceID}
-        inputTypeInstanceID={inputTypeInstanceID}
-      />
+    <InputTypeInstanceGroup
+      name={`${typeRef.path}:${typeRef.revision}`}
+      isLoading={isLoading}
+      error={error as Error | undefined}
+      typeInstances={data?.typeInstances as TypeInstance[]}
+      setInputTypeInstanceID={setInputTypeInstanceID}
+      inputTypeInstanceID={inputTypeInstanceID}
+    />
   );
 }

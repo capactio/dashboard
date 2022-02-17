@@ -15,13 +15,12 @@ import Header from "./layout/Header";
 import { loadRuntimeConfig } from "./config/runtime";
 
 function App() {
-
   const { defaultGatewayEndpoint } = loadRuntimeConfig();
   const defaultLoginDetails: LoginDetails = {
     endpoint: defaultGatewayEndpoint,
     username: "",
     password: "",
-  }
+  };
 
   return (
     <RequireAuthContainer defaultLoginDetails={defaultLoginDetails}>

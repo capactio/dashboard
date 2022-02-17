@@ -17,7 +17,12 @@ export interface ActionDetailsContainerProps {
   onDeleteAction?: (name: string) => void;
 }
 
-export function ActionDetailsContainer({ name, refetchInterval, argoWorkflowsUIBaseURL, onDeleteAction }: ActionDetailsContainerProps) {
+export function ActionDetailsContainer({
+  name,
+  refetchInterval,
+  argoWorkflowsUIBaseURL,
+  onDeleteAction,
+}: ActionDetailsContainerProps) {
   const { data, error, isLoading } = useActionQuery(
     { actionName: name },
     { refetchInterval }

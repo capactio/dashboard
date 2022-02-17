@@ -77,7 +77,7 @@ function renderPolicy(
         ),
         anyKubernetesImplRule(),
       ],
-    }
+    },
   };
 }
 

@@ -10,6 +10,10 @@ fragment TypeInstanceFields on TypeInstance {
     path
     revision
   }
+  backend {
+    id
+    abstract
+  }
   lockedBy
   latestResourceVersion {
     ...TypeInstanceResourceVersionFields

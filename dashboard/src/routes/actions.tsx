@@ -8,7 +8,7 @@ import { loadRuntimeConfig } from "../config/runtime";
 
 function Actions() {
   const navigate = useNavigate();
-  
+
   const breadcrumb = (
     <Breadcrumb>
       <Breadcrumb.Item>
@@ -21,11 +21,14 @@ function Actions() {
 
   const onActionClick = (name: string) => {
     navigate(`/actions/${name}`);
-  }
+  };
 
   return (
     <Page breadcrumb={breadcrumb} title="Created Actions">
-      <ActionListContainer refetchInterval={queryRefetchIntervalMS} onActionClick={onActionClick} />
+      <ActionListContainer
+        refetchInterval={queryRefetchIntervalMS}
+        onActionClick={onActionClick}
+      />
     </Page>
   );
 }

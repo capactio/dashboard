@@ -9,7 +9,9 @@ export interface InterfaceGroupCardsContainerProps {
   onInterfaceGroupClick: (interfaceGroupPath: string) => void;
 }
 
-export function InterfaceGroupCardsContainer({onInterfaceGroupClick}:InterfaceGroupCardsContainerProps) {
+export function InterfaceGroupCardsContainer({
+  onInterfaceGroupClick,
+}: InterfaceGroupCardsContainerProps) {
   const { data, error, isLoading } = useListInterfaceGroupsQuery();
 
   const groups = (data?.interfaceGroups as InterfaceGroupGQL[]) ?? [];

@@ -16,7 +16,12 @@ export interface InterfacesListProps {
   onInterfaceClick: (path: string, revision: string) => void;
 }
 
-export function InterfacesList({ interfaces, error, isLoading, onInterfaceClick }: InterfacesListProps) {
+export function InterfacesList({
+  interfaces,
+  error,
+  isLoading,
+  onInterfaceClick,
+}: InterfacesListProps) {
   const [namePrefix, setNamePrefix] = useState("");
 
   if (isLoading) {
@@ -60,7 +65,9 @@ export function InterfacesList({ interfaces, error, isLoading, onInterfaceClick 
           const inputParams = toCodeItemList(rev?.spec.input.parameters);
           const inputTIss = toCodeItemList(rev?.spec.input.typeInstances);
           const output = toCodeItemList(rev?.spec.output.typeInstances);
-          const actions = renderInterfaceActionsButtons(rev, () => onInterfaceClick(rev.metadata.path, rev.revision));
+          const actions = renderInterfaceActionsButtons(rev, () =>
+            onInterfaceClick(rev.metadata.path, rev.revision)
+          );
 
           return (
             <Item className="list-item" actions={actions}>

@@ -12,7 +12,9 @@ export interface ActionInputParametersProps {
   dataSource?: ActionInputParamsSource[];
 }
 
-export function ActionInputParameters({ dataSource }: ActionInputParametersProps) {
+export function ActionInputParameters({
+  dataSource,
+}: ActionInputParametersProps) {
   if (!dataSource) {
     return <Text key="empty">No input parameters</Text>;
   }

@@ -19,13 +19,13 @@ Dashboard is a general purpose, web-based UI for Capact cluster. It allows users
 
 1. Run development mode according to the [Run development mode](../README.md#run-development-mode) section from the main Readme.
 
-> **NOTE:** Alternatively, you can build all dependencies by [building all packages](../README.md#build-packages) and running [`npm start`](#npm-start) command in the `dashboard` directory.
+   > **NOTE:** Alternatively, you can build all dependencies by [building all packages](../README.md#build-packages) and running [`npm start`](#npm-start) command in the `dashboard` directory.
 
 1. **(Optional)** To be able to use Argo Workflows UI link on Action details view, make the Argo Workflows UI accessible:
 
-```bash
-kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
-```
+   ```bash
+   kubectl -n capact-system port-forward svc/argo-argo-workflows-server 2746
+   ```
 
 1. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 

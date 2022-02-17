@@ -24,7 +24,9 @@ export interface TypeInstancesListContainerProps {
   data?: GenericTypeInstanceData[];
 }
 
-export function TypeInstancesListContainer({ data }: TypeInstancesListContainerProps) {
+export function TypeInstancesListContainer({
+  data,
+}: TypeInstancesListContainerProps) {
   const [typeInstanceDetailsState, setTypeInstanceDetailsState] =
     useState<TypeInstanceDetailsModalData>({ visible: false });
 
@@ -61,4 +63,3 @@ export function TypeInstancesListContainer({ data }: TypeInstancesListContainerP
     </>
   );
 }
-

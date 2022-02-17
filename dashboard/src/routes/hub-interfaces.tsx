@@ -1,7 +1,10 @@
 import { Breadcrumb } from "antd";
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { InterfacesContainer, InterfacesView } from "@capactio/react-components";
+import {
+  InterfacesContainer,
+  InterfacesView,
+} from "@capactio/react-components";
 import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
 import Page from "../layout/Page";
 
@@ -26,9 +29,9 @@ function InterfacesCatalog() {
     </Breadcrumb>
   );
 
-  const onInterfaceClick =  (path: string, revision: string) => {
-    navigate(`/actions/new/${path}/${revision}`)
-  }
+  const onInterfaceClick = (path: string, revision: string) => {
+    navigate(`/actions/new/${path}/${revision}`);
+  };
 
   return (
     <Page
@@ -48,7 +51,11 @@ function InterfacesCatalog() {
       title="Public Hub"
       onBack={() => navigate("/hub/interface-groups")}
     >
-      <InterfacesContainer path={name} view={view} onInterfaceClick={onInterfaceClick} />
+      <InterfacesContainer
+        path={name}
+        view={view}
+        onInterfaceClick={onInterfaceClick}
+      />
     </Page>
   );
 }
