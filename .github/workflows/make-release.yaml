@@ -35,4 +35,4 @@ jobs:
         env:
           RELEASE_VERSION: "${{ github.event.inputs.version }}"
           RUNNER_IMAGES_TAG: "${{ github.event.inputs.runner_image_tag }}"
-        run: ./scripts/make-release.sh
+        run: ./dashboard/scripts/make-release.sh
